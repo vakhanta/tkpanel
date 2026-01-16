@@ -1,0 +1,478 @@
+{
+  "meta": {
+    "fecha_procesamiento": "",
+    "fuente": "",
+    "total_items": 18,
+    "notas_parseo": []
+  },
+  "parametros": {
+    "MIN_VIEWS_FOR_RATE": 10000,
+    "definicion_score_interaccion": "score_interaccion = likes"
+  },
+  "data": {
+    "top_videos_by_likes": [
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7542967525940710711",
+        "username": "sophieraiin",
+        "video_id": "7542967525940710711",
+        "views": 95600000,
+        "likes": 8500000,
+        "score_interaccion": 8500000,
+        "like_rate": 0.08890125615763546,
+        "like_rate_pct": 8.89
+      },
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7548854272151047479",
+        "username": "sophieraiin",
+        "video_id": "7548854272151047479",
+        "views": 69900000,
+        "likes": 6200000,
+        "score_interaccion": 6200000,
+        "like_rate": 0.08869742523977973,
+        "like_rate_pct": 8.87
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7532581956085615886",
+        "username": "leximarvell",
+        "video_id": "7532581956085615886",
+        "views": 15700000,
+        "likes": 1200000,
+        "score_interaccion": 1200000,
+        "like_rate": 0.07643312101910828,
+        "like_rate_pct": 7.643
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7594920902601592095",
+        "username": "sondra_blust",
+        "video_id": "7594920902601592095",
+        "views": 3200000,
+        "likes": 357700,
+        "score_interaccion": 357700,
+        "like_rate": 0.11178125,
+        "like_rate_pct": 11.178
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595365951596514590",
+        "username": "sondra_blust",
+        "video_id": "7595365951596514590",
+        "views": 2700000,
+        "likes": 304500,
+        "score_interaccion": 304500,
+        "like_rate": 0.11277777777777778,
+        "like_rate_pct": 11.278
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "sondra_blust",
+        "video_id": "7595744200713391391",
+        "views": 2500000,
+        "likes": 280500,
+        "score_interaccion": 280500,
+        "like_rate": 0.1122,
+        "like_rate_pct": 11.22
+      },
+      {
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7594560761867849015",
+        "username": "realalinnarosee",
+        "video_id": "7594560761867849015",
+        "views": 776200,
+        "likes": 109400,
+        "score_interaccion": 109400,
+        "like_rate": 0.14096881354048266,
+        "like_rate_pct": 14.097
+      },
+      {
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595288854421163278",
+        "username": "realalinnarosee",
+        "video_id": "7595288854421163278",
+        "views": 356400,
+        "likes": 39100,
+        "score_interaccion": 39100,
+        "like_rate": 0.10968709536118023,
+        "like_rate_pct": 10.969
+      },
+      {
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350",
+        "username": "realalinnarosee",
+        "video_id": "7595759350132526350",
+        "views": 240900,
+        "likes": 18000,
+        "score_interaccion": 18000,
+        "like_rate": 0.07470180414980841,
+        "like_rate_pct": 7.47
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7595406502777654558",
+        "username": "leximarvell",
+        "video_id": "7595406502777654558",
+        "views": 145200,
+        "likes": 20900,
+        "score_interaccion": 20900,
+        "like_rate": 0.1439506172839506,
+        "like_rate_pct": 14.395
+      }
+    ],
+    "top_videos_by_like_rate_filtered": [
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "summerxiriss",
+        "video_id": "7596064162837646605",
+        "views": 11500,
+        "likes": 3232,
+        "score_interaccion": 3232,
+        "like_rate": 0.2810434782608696,
+        "like_rate_pct": 28.104
+      },
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7595326572849155342",
+        "username": "summerxiriss",
+        "video_id": "7595326572849155342",
+        "views": 120500,
+        "likes": 20300,
+        "score_interaccion": 20300,
+        "like_rate": 0.16843033509700177,
+        "like_rate_pct": 16.843
+      },
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "sophieraiin",
+        "video_id": "7596060610119388429",
+        "views": 88800,
+        "likes": 14800,
+        "score_interaccion": 14800,
+        "like_rate": 0.16666666666666666,
+        "like_rate_pct": 16.667
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7595406502777654558",
+        "username": "leximarvell",
+        "video_id": "7595406502777654558",
+        "views": 145200,
+        "likes": 20900,
+        "score_interaccion": 20900,
+        "like_rate": 0.1439506172839506,
+        "like_rate_pct": 14.395
+      },
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7594651261765537038",
+        "username": "summerxiriss",
+        "video_id": "7594651261765537038",
+        "views": 435100,
+        "likes": 62700,
+        "score_interaccion": 62700,
+        "like_rate": 0.1441632344299753,
+        "like_rate_pct": 14.416
+      },
+      {
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7594560761867849015",
+        "username": "realalinnarosee",
+        "video_id": "7594560761867849015",
+        "views": 776200,
+        "likes": 109400,
+        "score_interaccion": 109400,
+        "like_rate": 0.14096881354048266,
+        "like_rate_pct": 14.097
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595365951596514590",
+        "username": "sondra_blust",
+        "video_id": "7595365951596514590",
+        "views": 2700000,
+        "likes": 304500,
+        "score_interaccion": 304500,
+        "like_rate": 0.11277777777777778,
+        "like_rate_pct": 11.278
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7595717633471827231",
+        "username": "leximarvell",
+        "video_id": "7595717633471827231",
+        "views": 64300,
+        "likes": 7285,
+        "score_interaccion": 7285,
+        "like_rate": 0.11332238442922374,
+        "like_rate_pct": 11.332
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "sondra_blust",
+        "video_id": "7595744200713391391",
+        "views": 2500000,
+        "likes": 280500,
+        "score_interaccion": 280500,
+        "like_rate": 0.1122,
+        "like_rate_pct": 11.22
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7594920902601592095",
+        "username": "sondra_blust",
+        "video_id": "7594920902601592095",
+        "views": 3200000,
+        "likes": 357700,
+        "score_interaccion": 357700,
+        "like_rate": 0.11178125,
+        "like_rate_pct": 11.178
+      }
+    ],
+    "top_videos_by_like_rate_unfiltered": [
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "summerxiriss",
+        "video_id": "7596064162837646605",
+        "views": 11500,
+        "likes": 3232,
+        "score_interaccion": 3232,
+        "like_rate": 0.2810434782608696,
+        "like_rate_pct": 28.104
+      },
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7595326572849155342",
+        "username": "summerxiriss",
+        "video_id": "7595326572849155342",
+        "views": 120500,
+        "likes": 20300,
+        "score_interaccion": 20300,
+        "like_rate": 0.16843033509700177,
+        "like_rate_pct": 16.843
+      },
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "sophieraiin",
+        "video_id": "7596060610119388429",
+        "views": 88800,
+        "likes": 14800,
+        "score_interaccion": 14800,
+        "like_rate": 0.16666666666666666,
+        "like_rate_pct": 16.667
+      },
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7594651261765537038",
+        "username": "summerxiriss",
+        "video_id": "7594651261765537038",
+        "views": 435100,
+        "likes": 62700,
+        "score_interaccion": 62700,
+        "like_rate": 0.1441632344299753,
+        "like_rate_pct": 14.416
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7595406502777654558",
+        "username": "leximarvell",
+        "video_id": "7595406502777654558",
+        "views": 145200,
+        "likes": 20900,
+        "score_interaccion": 20900,
+        "like_rate": 0.1439506172839506,
+        "like_rate_pct": 14.395
+      },
+      {
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7594560761867849015",
+        "username": "realalinnarosee",
+        "video_id": "7594560761867849015",
+        "views": 776200,
+        "likes": 109400,
+        "score_interaccion": 109400,
+        "like_rate": 0.14096881354048266,
+        "like_rate_pct": 14.097
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7588330061787335954",
+        "username": "itsmiawaifu",
+        "video_id": "7588330061787335954",
+        "views": 32600,
+        "likes": 2317,
+        "score_interaccion": 2317,
+        "like_rate": 0.0710711662078336,
+        "like_rate_pct": 7.107
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7595717633471827231",
+        "username": "leximarvell",
+        "video_id": "7595717633471827231",
+        "views": 64300,
+        "likes": 7285,
+        "score_interaccion": 7285,
+        "like_rate": 0.11332238442922374,
+        "like_rate_pct": 11.332
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595365951596514590",
+        "username": "sondra_blust",
+        "video_id": "7595365951596514590",
+        "views": 2700000,
+        "likes": 304500,
+        "score_interaccion": 304500,
+        "like_rate": 0.11277777777777778,
+        "like_rate_pct": 11.278
+      },
+      {
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "sondra_blust",
+        "video_id": "7595744200713391391",
+        "views": 2500000,
+        "likes": 280500,
+        "score_interaccion": 280500,
+        "like_rate": 0.1122,
+        "like_rate_pct": 11.22
+      }
+    ],
+    "creators_ranking": [
+      {
+        "username": "sophieraiin",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 2,
+        "sum_views": 165788800,
+        "sum_likes": 14714800,
+        "avg_like_rate": 0.11475511602136062,
+        "avg_like_rate_pct": 11.476,
+        "top_video_urls_likes": [
+          "https://www.tiktok.com/@sophieraiin/video/7542967525940710711",
+          "https://www.tiktok.com/@sophieraiin/video/7548854272151047479"
+        ]
+      },
+      {
+        "username": "sondra_blust",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 3,
+        "sum_views": 8400000,
+        "sum_likes": 942700,
+        "avg_like_rate": 0.11225300925925926,
+        "avg_like_rate_pct": 11.225,
+        "top_video_urls_likes": [
+          "https://www.tiktok.com/@sondra_blust/video/7594920902601592095",
+          "https://www.tiktok.com/@sondra_blust/video/7595365951596514590",
+          "https://www.tiktok.com/@sondra_blust/video/7595744200713391391"
+        ]
+      },
+      {
+        "username": "leximarvell",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 2,
+        "sum_views": 15828800,
+        "sum_likes": 1222185,
+        "avg_like_rate": 0.11123537424409439,
+        "avg_like_rate_pct": 11.124,
+        "top_video_urls_likes": [
+          "https://www.tiktok.com/@leximarvell/video/7532581956085615886",
+          "https://www.tiktok.com/@leximarvell/video/7595406502777654558"
+        ]
+      },
+      {
+        "username": "realalinnarosee",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 3,
+        "sum_views": 1371500,
+        "sum_likes": 166500,
+        "avg_like_rate": 0.1084525703504901,
+        "avg_like_rate_pct": 10.845,
+        "top_video_urls_likes": [
+          "https://www.tiktok.com/@realalinnarosee/video/7594560761867849015",
+          "https://www.tiktok.com/@realalinnarosee/video/7595288854421163278",
+          "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350"
+        ]
+      },
+      {
+        "username": "summerxiriss",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 0,
+        "sum_views": 566100,
+        "sum_likes": 86232,
+        "avg_like_rate": 0.19787834926261553,
+        "avg_like_rate_pct": 19.788,
+        "top_video_urls_likes": []
+      },
+      {
+        "username": "itsmiawaifu",
+        "videos_total_en_dataset": 3,
+        "top_count_likes": 0,
+        "sum_views": 157700,
+        "sum_likes": 11901,
+        "avg_like_rate": 0.07687280209877752,
+        "avg_like_rate_pct": 7.687,
+        "top_video_urls_likes": []
+      }
+    ]
+  },
+  "outliers": {
+    "by_views": [
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7542967525940710711",
+        "username": "sophieraiin",
+        "video_id": "7542967525940710711",
+        "views": 95600000,
+        "likes": 8500000,
+        "like_rate": 0.08890125615763546,
+        "like_rate_pct": 8.89
+      },
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7548854272151047479",
+        "username": "sophieraiin",
+        "video_id": "7548854272151047479",
+        "views": 69900000,
+        "likes": 6200000,
+        "like_rate": 0.08869742523977973,
+        "like_rate_pct": 8.87
+      },
+      {
+        "url": "https://www.tiktok.com/@leximarvell/video/7532581956085615886",
+        "username": "leximarvell",
+        "video_id": "7532581956085615886",
+        "views": 15700000,
+        "likes": 1200000,
+        "like_rate": 0.07643312101910828,
+        "like_rate_pct": 7.643
+      }
+    ],
+    "by_like_rate_filtered": [
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "summerxiriss",
+        "video_id": "7596064162837646605",
+        "views": 11500,
+        "likes": 3232,
+        "like_rate": 0.2810434782608696,
+        "like_rate_pct": 28.104
+      },
+      {
+        "url": "https://www.tiktok.com/@summerxiriss/video/7595326572849155342",
+        "username": "summerxiriss",
+        "video_id": "7595326572849155342",
+        "views": 120500,
+        "likes": 20300,
+        "like_rate": 0.16843033509700177,
+        "like_rate_pct": 16.843
+      },
+      {
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "sophieraiin",
+        "video_id": "7596060610119388429",
+        "views": 88800,
+        "likes": 14800,
+        "like_rate": 0.16666666666666666,
+        "like_rate_pct": 16.667
+      }
+    ]
+  },
+  "resumen": "Los videos con mayor cantidad de likes pertenecen principalmente a sophieraiin y sondra_blust. summerxiriss destaca por las tasas de like más altas, aunque con menos volumen absoluto de likes.",
+  "insights": [
+    "sophieraiin domina en volumen de likes y visualizaciones.",
+    "summerxiriss sobresale en tasa de likes, aunque con menos vistas.",
+    "sondra_blust tiene todos sus videos en el top por likes.",
+    "realalinnarosee mantiene presencia constante en las listas de likes.",
+    "La competencia por mejor tasa de interacción está repartida entre varios creadores."
+  ],
+  "acciones_recomendadas": [
+    {
+      "accion": "Colaborar con sophieraiin y sondra_blust para campañas masivas por su alto alcance y volumen de likes.",
+      "prioridad": "alta"
+    },
+    {
+      "accion": "Aprovechar los formatos de contenido de summerxiriss para replicar estrategias con alta tasa de engagement.",
+      "prioridad": "media"
+    },
+    {
+      "accion": "Monitorear a realalinnarosee por su regularidad en videos destacados, potencial para campañas de continuidad.",
+      "prioridad": "media"
+    }
+  ]
+}
