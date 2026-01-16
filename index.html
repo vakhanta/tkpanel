@@ -80,13 +80,6 @@
     }
     button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);box-shadow:0 14px 40px rgba(0,0,0,.45)}
     button:active{transform:translateY(1px)}
-    .primary{
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
-        linear-gradient(135deg, rgba(57,217,255,.95), rgba(255,59,212,.75));
-      border-color:rgba(255,255,255,.22);
-      color:rgba(0,0,0,.92);
-    }
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px}
     .card{
       grid-column:span 12;
@@ -191,7 +184,7 @@
         <div class="titleblock">
           <h1>TikTok Performance Panel</h1>
           <div class="subtitle">
-            <span class="pill"><span class="material-symbols-rounded">public</span><span id="src">bundle</span></span>
+            <span class="pill"><span class="material-symbols-rounded">folder</span><span id="src">reports/—.json</span></span>
             <span class="pill"><span class="material-symbols-rounded">event</span><span id="dateLabel">—</span></span>
             <span class="pill"><span class="material-symbols-rounded">tune</span><span id="minViewsLabel">—</span></span>
           </div>
@@ -275,7 +268,7 @@
     </div>
 
     <div class="footer">
-      <div>tiktok performance tracker — sin gpt, todo local</div>
+      <div>tiktok performance tracker — todo local</div>
       <div><span class="mono" id="errorsLine">—</span></div>
     </div>
   </div>
@@ -287,13 +280,8 @@
     const MIN_VIEWS_FOR_RATE_DEFAULT = 10000;
     const MAX_TOP = 10;
 
-    // =========================
-    // YOUR BUNDLE GOES HERE
-    // (Make can write the whole payload into this variable as JSON)
-    // =========================
-    // In producción: reemplaza BUNDLE_PAYLOAD por el JSON que te entrega Make.
-    // Debe ser un array con { json: "{...}" } y dentro ese string tener { text: "<li>...</li>..." }
-    // eslint-disable-next-line no-unused-vars
+    // Si quieres inyectar directo (opcional), pon aquí el objeto {text:"..."}
+    // const BUNDLE_PAYLOAD = {"text":"<li>...</li>"};
     const BUNDLE_PAYLOAD = null;
 
     // =========================
@@ -327,7 +315,9 @@
     }
 
     function safeNum(x){
-      const n = Number(String(x ?? "").replace(/[^\d.-]/g, ""));
+      const s = String(x ?? "").trim();
+      if(!s) return 0;
+      const n = Number(s.replace(/[^\d.-]/g, ""));
       return Number.isFinite(n) ? n : 0;
     }
 
@@ -338,26 +328,9 @@
     }
 
     // =========================
-    // Unwrap Make payload: [{ json: "{...}" }]
-    // =========================
-    function unwrapMake(payload){
-      // payload may already be the unwrapped object, or array wrapper
-      if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
-        if (typeof payload[0].json === "string") {
-          try { return JSON.parse(payload[0].json); } catch(e) { return null; }
-        }
-      }
-      return payload;
-    }
-
-    // =========================
-    // Parse the "text" field: it contains many <li> blocks
-    // We extract:
-    // - url: first <a href="..."> (with tiktok link)
-    // - cover_url: anchor that contains "Cover:" then href
-    // - username: text inside <strong>@...</strong>
-    // - views: value in Reproducciones <strong>...</strong>
-    // - likes: value in Likes <strong>...</strong>
+    // Parse the "text" field (HTML string with many <li>)
+    // Robust: username/views/likes by order of <strong> nodes:
+    //   0: @user, 1: views, 2: likes
     // =========================
     function parseItemsFromText(htmlText, errors){
       const out = [];
@@ -369,90 +342,50 @@
         const li = lis[i];
 
         const anchors = Array.from(li.querySelectorAll("a"));
-        // url: first anchor with tiktok.com and /video/
-        const urlA = anchors.find(a => /tiktok\.com/i.test(a.getAttribute("href") || "") && /\/video\/\d+/.test(a.getAttribute("href") || ""));
+        const urlA = anchors.find(a => {
+          const h = (a.getAttribute("href") || "").trim();
+          return /tiktok\.com/i.test(h) && /\/video\/\d+/.test(h);
+        });
         const url = (urlA ? (urlA.getAttribute("href") || "") : "").trim();
 
-        // cover: anchor after the text that starts with "🖼️ Cover:"; easiest: any anchor that has tiktokcdn and image
-        const coverA = anchors.find(a => /tiktokcdn/i.test(a.getAttribute("href") || ""));
+        const coverA = anchors.find(a => /tiktokcdn/i.test((a.getAttribute("href") || "").trim()));
         const cover_url = (coverA ? (coverA.getAttribute("href") || "") : "").trim();
 
-        const strongs = Array.from(li.querySelectorAll("strong"));
-        // username: first strong that starts with @
-        const userStrong = strongs.find(s => /^@/.test((s.textContent || "").trim()));
-        const username = (userStrong ? (userStrong.textContent || "").trim().replace(/^@/,"") : "").trim();
-
-        // views/likes: based on surrounding text
-        let views = 0, likes = 0;
-
-        // We can read the li text and try to match numbers after labels
-        const raw = li.innerText || li.textContent || "";
-        // Match digits in the closest strongs order (views then likes) if the template is stable:
-        // username strong, views strong, likes strong
-        // But you have cases where url/cover empty and views/likes empty. So we still validate.
-        const viewStrong = strongs.find(s => {
-          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
-          return /Reproducciones/i.test(prev);
-        });
-        const likeStrong = strongs.find(s => {
-          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
-          return /\bLikes\b/i.test(prev);
-        });
-
-        if(viewStrong) views = safeNum(viewStrong.textContent);
-        else {
-          const m = raw.match(/Reproducciones:\s*([0-9][0-9.,]*)/i);
-          if(m) views = safeNum(m[1]);
-        }
-
-        if(likeStrong) likes = safeNum(likeStrong.textContent);
-        else {
-          const m = raw.match(/Likes:\s*([0-9][0-9.,]*)/i);
-          if(m) likes = safeNum(m[1]);
-        }
+        const strongs = Array.from(li.querySelectorAll("strong")).map(s => (s.textContent || "").trim());
+        const username = (strongs[0] || "").replace(/^@/,"").trim();
+        const views = safeNum(strongs[1]);
+        const likes = safeNum(strongs[2]);
 
         const video_id = getVideoIdFromUrl(url);
 
-        // Validate: must at least have username or url or cover; but for ranking we need url + video_id ideally
-        if(!video_id && (url || cover_url || username)){
-          errors.push(`missing_video_id_item_${i+1}`);
-        }
-
-        // Skip totally empty garbage items (you have those placeholders)
         const isEmpty = !url && !cover_url && !username && views===0 && likes===0;
         if(isEmpty) continue;
 
-        out.push({
-          url,
-          cover_url,
-          username,
-          video_id,
-          views,
-          likes
-        });
+        if((url && !video_id) || (!url && (likes>0 || views>0))){
+          errors.push(`item_${i+1}_missing_or_bad_url_or_id`);
+        }
+
+        out.push({ url, cover_url, username, video_id, views, likes });
       }
       return out;
     }
 
     // =========================
-    // Dedupe by video_id: keep highest views; tie highest likes; tie first
+    // Dedupe by video_id
     // =========================
     function dedupeByVideoId(items){
       const map = new Map();
       for(const it of items){
         const key = it.video_id || "";
         if(!key){
-          // keep items without id but do not dedupe them; still include (rank will put them low)
-          const pseudo = `__noid__${Math.random().toString(16).slice(2)}`;
-          map.set(pseudo, it);
+          map.set(`__noid__${Math.random().toString(16).slice(2)}`, it);
           continue;
         }
         if(!map.has(key)){
           map.set(key, it);
         } else {
           const cur = map.get(key);
-          const a = it, b = cur;
-          if((a.views > b.views) || (a.views === b.views && a.likes > b.likes)){
+          if((it.views > cur.views) || (it.views === cur.views && it.likes > cur.likes)){
             map.set(key, it);
           }
         }
@@ -470,37 +403,36 @@
 
     function sortTopLikes(items){
       return [...items].sort((a,b)=>{
-        const sa = safeNum(a.likes), sb = safeNum(b.likes);
-        if(sb !== sa) return sb - sa;
+        const la = safeNum(a.likes), lb = safeNum(b.likes);
+        if(lb !== la) return lb - la;
         const va = safeNum(a.views), vb = safeNum(b.views);
         if(vb !== va) return vb - va;
-        const ia = String(a.video_id || ""), ib = String(b.video_id || "");
-        return ia.localeCompare(ib);
+        return String(a.video_id||"").localeCompare(String(b.video_id||""));
       });
     }
 
     function sortTopRate(items){
       return [...items].sort((a,b)=>{
-        const ra = Number(a.like_rate) || 0;
-        const rb = Number(b.like_rate) || 0;
+        const ra = Number(a.like_rate)||0;
+        const rb = Number(b.like_rate)||0;
         if(rb !== ra) return rb - ra;
         const va = safeNum(a.views), vb = safeNum(b.views);
         if(vb !== va) return vb - va;
         const la = safeNum(a.likes), lb = safeNum(b.likes);
         if(lb !== la) return lb - la;
-        const ia = String(a.video_id || ""), ib = String(b.video_id || "");
-        return ia.localeCompare(ib);
+        return String(a.video_id||"").localeCompare(String(b.video_id||""));
       });
     }
 
     function aggregateCreators(items, topLikesList){
-      const topLikesSetByUrl = new Set(topLikesList.map(v => v.url).filter(Boolean));
+      const topLikesSet = new Set(topLikesList.map(v => v.url).filter(Boolean));
       const topLikesOrder = topLikesList.map(v => v.url).filter(Boolean);
 
       const map = new Map();
       for(const it of items){
-        const u = String(it.username || "").trim();
+        const u = String(it.username||"").trim();
         if(!u) continue;
+
         if(!map.has(u)){
           map.set(u, {
             username: u,
@@ -508,55 +440,33 @@
             sum_views: 0,
             sum_likes: 0,
             sum_like_rate: 0,
-            avg_like_rate: 0,
-            avg_like_rate_pct: 0,
-            top_count_likes: 0,
-            top_video_urls_likes: []
+            top_count_likes: 0
           });
         }
         const c = map.get(u);
         c.videos_total_en_dataset += 1;
         c.sum_views += safeNum(it.views);
         c.sum_likes += safeNum(it.likes);
-        c.sum_like_rate += Number(it.like_rate) || 0;
-
-        if(topLikesSetByUrl.has(it.url)){
-          c.top_count_likes += 1;
-        }
+        c.sum_like_rate += Number(it.like_rate)||0;
+        if(topLikesSet.has(it.url)) c.top_count_likes += 1;
       }
 
-      // Build ordered URLs per creator based on topLikes ordering
-      for(const u of map.keys()){
-        const c = map.get(u);
-        const urls = [];
-        for(const url of topLikesOrder){
-          const match = items.find(v => v.username === u && v.url === url);
-          if(match) urls.push(url);
-        }
-        c.top_video_urls_likes = urls;
-        c.avg_like_rate = c.videos_total_en_dataset > 0 ? (c.sum_like_rate / c.videos_total_en_dataset) : 0;
-        c.avg_like_rate_pct = Math.round(c.avg_like_rate * 100000) / 1000;
-      }
-
-      const arr = Array.from(map.values()).sort((a,b)=>{
+      const arr = Array.from(map.values()).map(c => {
+        const avg = c.videos_total_en_dataset ? (c.sum_like_rate / c.videos_total_en_dataset) : 0;
+        return {
+          ...c,
+          avg_like_rate: avg,
+          avg_like_rate_pct: Math.round(avg * 100000) / 1000,
+          top_video_urls_likes: topLikesOrder.filter(url => items.some(v => v.username === c.username && v.url === url))
+        };
+      }).sort((a,b)=>{
         if(b.top_count_likes !== a.top_count_likes) return b.top_count_likes - a.top_count_likes;
         if(b.sum_likes !== a.sum_likes) return b.sum_likes - a.sum_likes;
         if(b.avg_like_rate !== a.avg_like_rate) return b.avg_like_rate - a.avg_like_rate;
         return a.username.localeCompare(b.username);
       });
 
-      // add rank
-      return arr.slice(0, 10).map((c, i)=>({
-        rank: i+1,
-        username: c.username,
-        videos_total_en_dataset: c.videos_total_en_dataset,
-        top_count_likes: c.top_count_likes,
-        sum_views: c.sum_views,
-        sum_likes: c.sum_likes,
-        avg_like_rate: c.avg_like_rate,
-        avg_like_rate_pct: c.avg_like_rate_pct,
-        top_video_urls_likes: c.top_video_urls_likes
-      }));
+      return arr.slice(0, 10).map((c,i)=>({ ...c, rank:i+1 }));
     }
 
     // =========================
@@ -577,7 +487,7 @@
         <div class="badge">${escapeHtml(String(rank))}</div>
         ${cover ? `<div class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"></div>` : ``}
         <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${fmtInt(likes)} likes</div>
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${escapeHtml(fmtInt(likes))} likes</div>
           <div class="rows">
             <div class="row">
               <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
@@ -633,61 +543,86 @@
     }
 
     // =========================
-    // Main pipeline
+    // Load JSON from reports/AAAA-MM-DD.json
+    // Supports:
+    // 1) {text:"..."}  (tu caso)
+    // 2) [{json:"{...}"}] (wrapper Make viejo)
     // =========================
-    async function getBundlePayload(){
-      // Option A: injected directly into BUNDLE_PAYLOAD var (recommended)
-      if (BUNDLE_PAYLOAD) return BUNDLE_PAYLOAD;
-
-      // Option B: fetch local JSON file (if you want)
-      // return await (await fetch("bundle.json", {cache:"no-store"})).json();
-
-      throw new Error("No hay payload. Inyecta el bundle en BUNDLE_PAYLOAD o usa fetch.");
+    function unwrapMake(payload){
+      if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
+        if (typeof payload[0].json === "string") {
+          try { return JSON.parse(payload[0].json); } catch(e) { return null; }
+        }
+      }
+      return payload;
     }
 
+    function getReportDateFromUrl(){
+      const u = new URL(window.location.href);
+      const ymd = u.searchParams.get("d");
+      return (ymd && /^\d{4}-\d{2}-\d{2}$/.test(ymd)) ? ymd : null;
+    }
+
+    async function fetchReport(ymd){
+      const path = `reports/${ymd}.json`;
+      setText("src", path);
+      const res = await fetch(path, { cache: "no-store" });
+      if(!res.ok) throw new Error(`no se pudo leer ${path} (HTTP ${res.status})`);
+      return await res.json();
+    }
+
+    async function getBundlePayload(){
+      if (BUNDLE_PAYLOAD) return BUNDLE_PAYLOAD;
+
+      const forced = getReportDateFromUrl();
+      if(forced) return await fetchReport(forced);
+
+      const today = toYMD(new Date());
+      return await fetchReport(today);
+    }
+
+    // =========================
+    // Main
+    // =========================
     async function run(){
       const errors = [];
-      setText("dateLabel", toYMD(new Date()));
+      const today = toYMD(new Date());
+      setText("dateLabel", today);
+
       const minViews = MIN_VIEWS_FOR_RATE_DEFAULT;
       setText("minViewsLabel", `umbral: ${fmtInt(minViews)} views`);
 
       try{
         const rawPayload = await getBundlePayload();
         const obj = unwrapMake(rawPayload);
-        if(!obj || typeof obj !== "object"){ throw new Error("Payload inválido"); }
+        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
 
         const htmlText = String(obj.text || "");
-        if(!htmlText){ throw new Error("Falta obj.text con los <li>"); }
+        if(!htmlText) throw new Error("falta obj.text con los <li>");
 
         let items = parseItemsFromText(htmlText, errors);
 
-        // Enrich metrics
         items = items.map(it => {
           const { like_rate, like_rate_pct } = computeLikeRate(it);
           return { ...it, like_rate, like_rate_pct };
         });
 
-        // Dedupe
         const before = items.length;
         items = dedupeByVideoId(items);
         const after = items.length;
 
-        // Rankings
         const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
 
         const filtered = items.filter(v => safeNum(v.views) >= minViews);
         const topRateFiltered = sortTopRate(filtered).slice(0, MAX_TOP);
 
-        // Creators
         const creators = aggregateCreators(items, topLikes);
 
-        // KPIs
         setText("kpiItems", String(after));
         setText("kpiTopLikes", String(topLikes.length));
         setText("kpiTopRate", String(topRateFiltered.length));
         setText("statusLine", `items: ${before} | dedup: ${after} | errors: ${errors.length}`);
 
-        // Render
         renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
         renderList("listTopRate", "emptyTopRate", topRateFiltered, makeVideoItem);
         renderList("listCreators", "emptyCreators", creators, (c)=>makeCreatorItem(c));
