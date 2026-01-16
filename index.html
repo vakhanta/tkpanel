@@ -12,7 +12,6 @@
 
   <style>
     :root{
-      /* Memphis / TikTok-ish */
       --bg0: #070812;
       --bg1: #0b1022;
 
@@ -24,11 +23,11 @@
       --muted: rgba(255,255,255,.70);
       --muted2: rgba(255,255,255,.55);
 
-      --c1: #39d9ff;   /* celeste vibrante */
-      --c2: #a855ff;   /* púrpura */
-      --c3: #ff3bd4;   /* magenta */
-      --c4: #19f3a8;   /* verde menta */
-      --c5: #ffd24a;   /* amarillo */
+      --c1: #39d9ff;
+      --c2: #a855ff;
+      --c3: #ff3bd4;
+      --c4: #19f3a8;
+      --c5: #ffd24a;
 
       --radius: 18px;
       --shadow: 0 14px 44px rgba(0,0,0,.55);
@@ -169,7 +168,6 @@
       position: relative;
       overflow: hidden;
     }
-    /* Memphis confetti */
     .card:before{
       content:"";
       position:absolute; inset:-1px;
@@ -252,6 +250,7 @@
       position: relative;
       z-index: 1;
     }
+
     .item{
       padding: 12px 12px;
       border-radius: 14px;
@@ -261,6 +260,7 @@
       gap: 10px;
       align-items:flex-start;
     }
+
     .badge{
       min-width: 28px; height: 28px; border-radius: 10px;
       display:flex; align-items:center; justify-content:center;
@@ -271,6 +271,23 @@
       font-size: 12px;
       box-shadow: 0 12px 28px rgba(0,0,0,.30);
       flex: 0 0 auto;
+    }
+
+    .thumb{
+      width: 96px;
+      height: 136px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      flex: 0 0 auto;
+      box-shadow: 0 12px 28px rgba(0,0,0,.30);
+    }
+    .thumb img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
     }
 
     .text{
@@ -296,10 +313,8 @@
     }
     .kv b{ color: rgba(255,255,255,.92); font-weight: 950; }
     .kv span{ color: rgba(255,255,255,.72); font-weight: 800; display:inline-flex; align-items:center; gap:6px; }
-
     .kv .material-symbols-rounded{ font-size: 16px; opacity: .95; }
 
-    /* Better "Open video" button */
     .btnLink{
       display:inline-flex;
       align-items:center;
@@ -325,24 +340,6 @@
     }
     .btnLink:active{ transform: translateY(1px); }
     .btnLink .material-symbols-rounded{ font-size: 18px; }
-
-    /* ✅ EMBED BOX (TOP LIKES ONLY) */
-    .embedBox{
-      margin-top: 12px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.18);
-    }
-    .embedBox iframe{
-      width: 100%;
-      height: 560px;
-      border: 0;
-      display: block;
-    }
-    @media (max-width: 860px){
-      .embedBox iframe{ height: 520px; }
-    }
 
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -438,7 +435,7 @@
         <div class="cardhead">
           <div>
             <h2>Top videos por likes</h2>
-            <div class="hint">ranking de videos por cantidad de likes (con embed)</div>
+            <div class="hint">ranking de videos por cantidad de likes</div>
           </div>
         </div>
         <ul class="list" id="listTopLikes"></ul>
@@ -506,14 +503,6 @@
         .replaceAll("'","&#039;");
     }
 
-    // ✅ Extrae ID de video desde URL: .../video/123...
-    function getTikTokVideoId(url){
-      const s = String(url || "");
-      const m = s.match(/\/video\/(\d+)/);
-      return m ? m[1] : "";
-    }
-
-    // Soporta wrapper Make: [{ "json": "{...}" }]
     function unwrapMakePayload(payload){
       if(Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object"){
         if(typeof payload[0].json === "string"){
@@ -537,21 +526,30 @@
       return `${Math.round(x)}%`;
     }
 
-    function makeVideoItem(v, idx, withEmbed){
+    function makeVideoItem(v, idx){
+      const rank = Number(v?.rank) || (idx + 1);
+
       const url = v?.url || "";
       const user = v?.username || "";
       const views = v?.views ?? 0;
       const likes = v?.likes ?? 0;
       const lrPct = v?.like_rate_pct ?? 0;
-
-      const vid = withEmbed ? getTikTokVideoId(url) : "";
+      const cover = v?.cover_url || "";
 
       const li = document.createElement("li");
       li.className = "item";
       li.innerHTML = `
-        <div class="badge">${idx+1}</div>
+        <div class="badge">${escapeHtml(String(rank))}</div>
+
+        ${cover ? `
+          <div class="thumb">
+            <img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer">
+          </div>
+        ` : ``}
+
         <div class="text">
           <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)} — ${fmtInt(likes)} likes</div>
+
           <div class="rows">
             <div class="row">
               <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
@@ -563,28 +561,19 @@
           ${url ? `<a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
             <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
           </a>` : ``}
-
-          ${withEmbed && vid ? `
-            <div class="embedBox">
-              <iframe
-                src="https://www.tiktok.com/embed/v2/${vid}"
-                allow="encrypted-media; picture-in-picture"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-              ></iframe>
-            </div>
-          ` : ``}
         </div>
       `;
       return li;
     }
 
     function makeCreatorItem(c, idx){
+      const rank = Number(c?.rank) || (idx + 1);
       const user = c?.username || "";
+
       const li = document.createElement("li");
       li.className = "item";
       li.innerHTML = `
-        <div class="badge">${idx+1}</div>
+        <div class="badge">${escapeHtml(String(rank))}</div>
         <div class="text">
           <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)}</div>
           <div class="rows">
@@ -601,11 +590,11 @@
       return li;
     }
 
-    function renderListVideos(listId, emptyId, arr, withEmbed){
+    function renderListVideos(listId, emptyId, arr){
       const ul = document.getElementById(listId);
       ul.innerHTML = "";
       if(Array.isArray(arr) && arr.length){
-        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i, !!withEmbed)));
+        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i)));
         show(document.getElementById(emptyId), false);
       } else {
         show(document.getElementById(emptyId), true);
@@ -637,9 +626,8 @@
       setText("kpiTopRate", String(topRate.length || 0));
       setText("kpiCreators", String(creators.length || 0));
 
-      // ✅ SOLO TOP LIKES lleva EMBED
-      renderListVideos("listTopLikes", "emptyTopLikes", topLikes, true);
-      renderListVideos("listTopRate", "emptyTopRate", topRate, false);
+      renderListVideos("listTopLikes", "emptyTopLikes", topLikes);
+      renderListVideos("listTopRate", "emptyTopRate", topRate);
       renderListCreators("listCreators", "emptyCreators", creators);
 
       setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
