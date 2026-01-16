@@ -12,165 +12,94 @@
 
   <style>
     :root{
-      --bg0: #070812;
-      --bg1: #0b1022;
-
-      --panel: rgba(255,255,255,.08);
-      --panel2: rgba(0,0,0,.18);
-      --border: rgba(255,255,255,.16);
-
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
-
-      --c1: #39d9ff;
-      --c2: #a855ff;
-      --c3: #ff3bd4;
-      --c4: #19f3a8;
-      --c5: #ffd24a;
-
-      --radius: 18px;
-      --shadow: 0 14px 44px rgba(0,0,0,.55);
-      --blur: 14px;
-
-      --max: 1100px;
+      --bg0:#070812; --bg1:#0b1022;
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --border:rgba(255,255,255,.16);
+      --radius:18px;
+      --shadow:0 14px 44px rgba(0,0,0,.55);
+      --blur:14px;
+      --max:1100px;
     }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
       background:
         radial-gradient(1200px 680px at 10% 0%, rgba(57,217,255,.22), transparent 58%),
         radial-gradient(900px 600px at 90% 0%, rgba(168,85,255,.18), transparent 60%),
         radial-gradient(900px 700px at 40% 105%, rgba(255,59,212,.16), transparent 60%),
         radial-gradient(700px 500px at 80% 90%, rgba(25,243,168,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x: hidden;
+      overflow-x:hidden;
     }
-
-    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 46px; }
-
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 12px; margin-bottom: 18px;
-    }
-
-    .brand{ display:flex; align-items:center; gap: 12px; min-width: 0; }
-
+    .wrap{max-width:var(--max);margin:0 auto;padding:28px 18px 46px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .logo{
-      width: 42px; height: 42px; border-radius: 14px;
+      width:42px;height:42px;border-radius:14px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.26), transparent 42%),
         linear-gradient(135deg, rgba(57,217,255,.95), rgba(168,85,255,.85));
-      box-shadow: 0 18px 48px rgba(0,0,0,.60);
-      display:flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(255,255,255,.20);
-      position: relative;
-      overflow: hidden;
+      box-shadow:0 18px 48px rgba(0,0,0,.60);
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.20);
+      position:relative;overflow:hidden;
     }
     .logo:after{
-      content:"";
-      position:absolute; inset:-55%;
+      content:"";position:absolute;inset:-55%;
       background:
         radial-gradient(circle at 25% 25%, rgba(255,59,212,.28), transparent 42%),
         radial-gradient(circle at 70% 70%, rgba(25,243,168,.18), transparent 46%);
-      transform: rotate(18deg);
-      filter: blur(1px);
-      opacity: .9;
+      transform:rotate(18deg);filter:blur(1px);opacity:.9;
     }
-    .logo .material-symbols-rounded{ font-size: 22px; color: rgba(0,0,0,.92); z-index:1; }
-
-    .titleblock{ min-width: 0; }
-    h1{
-      font-size: 18px;
-      margin: 0 0 2px;
-      letter-spacing: -0.02em;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .subtitle{
-      font-size: 12.5px;
-      color: var(--muted);
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
+    .logo .material-symbols-rounded{font-size:22px;color:rgba(0,0,0,.92);z-index:1}
+    .titleblock{min-width:0}
+    h1{font-size:18px;margin:0 0 2px;letter-spacing:-.02em;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .subtitle{font-size:12.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
     .pill{
-      display:inline-flex; align-items:center; gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(var(--blur));
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(var(--blur));
     }
-    .pill .material-symbols-rounded{ font-size: 16px; color: rgba(255,255,255,.70); }
-
-    .actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-
+    .pill .material-symbols-rounded{font-size:16px;color:rgba(255,255,255,.70)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     button{
-      cursor:pointer;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
-      backdrop-filter: blur(var(--blur));
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      cursor:pointer;border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);color:var(--text);
+      padding:10px 12px;border-radius:14px;font-weight:800;letter-spacing:-.01em;
+      display:inline-flex;align-items:center;gap:8px;
+      transition:transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      backdrop-filter:blur(var(--blur));
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
     }
-    button:hover{
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.22);
-      box-shadow: 0 14px 40px rgba(0,0,0,.45);
-    }
-    button:active{ transform: translateY(1px); }
-
+    button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+    button:active{transform:translateY(1px)}
     .primary{
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
         linear-gradient(135deg, rgba(57,217,255,.95), rgba(255,59,212,.75));
-      border-color: rgba(255,255,255,.22);
-      color: rgba(0,0,0,.92);
+      border-color:rgba(255,255,255,.22);
+      color:rgba(0,0,0,.92);
     }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      margin-top: 14px;
-    }
-
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px}
     .card{
-      grid-column: span 12;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(var(--blur));
-      position: relative;
-      overflow: hidden;
+      grid-column:span 12;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(var(--blur));
+      position:relative;overflow:hidden;
     }
     .card:before{
-      content:"";
-      position:absolute; inset:-1px;
+      content:"";position:absolute;inset:-1px;
       background:
         radial-gradient(circle at 12% 20%, rgba(57,217,255,.12), transparent 26%),
         radial-gradient(circle at 85% 30%, rgba(168,85,255,.10), transparent 30%),
@@ -179,194 +108,77 @@
         radial-gradient(circle at 10% 70%, rgba(255,210,74,.07), transparent 28%);
       pointer-events:none;
     }
-
-    .cardhead{
-      display:flex; align-items:flex-start; justify-content:space-between;
-      gap: 12px; margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
-    }
-    .cardhead h2{
-      font-size: 13px;
-      margin: 0;
-      color: rgba(255,255,255,.90);
-      font-weight: 900;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-    }
-    .hint{ color: var(--muted2); font-size: 12px; margin-top: 2px; }
-
-    .kpis{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      position: relative;
-      z-index: 1;
-    }
+    .cardhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;position:relative;z-index:1}
+    .cardhead h2{font-size:13px;margin:0;color:rgba(255,255,255,.90);font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+    .hint{color:var(--muted2);font-size:12px;margin-top:2px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:12px;color:rgba(255,255,255,.74)}
+    .kpis{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;position:relative;z-index:1}
     .kpi{
-      grid-column: span 12;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.18);
-      display:flex;
-      gap: 12px;
-      align-items:center;
+      grid-column:span 12;padding:14px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.18);
+      display:flex;gap:12px;align-items:center;
     }
     .kpi .ic{
-      width: 40px; height: 40px; border-radius: 14px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(57,217,255,.16);
-      border: 1px solid rgba(57,217,255,.26);
-      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+      width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+      background:rgba(57,217,255,.16);border:1px solid rgba(57,217,255,.26);
+      box-shadow:0 12px 32px rgba(0,0,0,.35);
     }
-    .kpi .ic.purple{ background: rgba(168,85,255,.16); border-color: rgba(168,85,255,.26); }
-    .kpi .ic.pink{ background: rgba(255,59,212,.14); border-color: rgba(255,59,212,.24); }
-    .kpi .ic .material-symbols-rounded{ color: rgba(255,255,255,.92); }
-    .kpi .label{ color: var(--muted); font-size: 12.5px; font-weight: 800; }
-    .kpi .val{ font-size: 20px; font-weight: 950; letter-spacing: -0.03em; margin-top: 2px; }
-
-    .split{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .col6{ grid-column: span 12; }
-    @media (min-width: 860px){
-      .kpi{ grid-column: span 4; }
-      .col6{ grid-column: span 6; }
-    }
-
-    .list{
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
+    .kpi .ic.purple{background:rgba(168,85,255,.16);border-color:rgba(168,85,255,.26)}
+    .kpi .ic.pink{background:rgba(255,59,212,.14);border-color:rgba(255,59,212,.24)}
+    .kpi .ic .material-symbols-rounded{color:rgba(255,255,255,.92)}
+    .kpi .label{color:var(--muted);font-size:12.5px;font-weight:800}
+    .kpi .val{font-size:20px;font-weight:950;letter-spacing:-.03em;margin-top:2px}
+    .col6{grid-column:span 12}
+    @media (min-width:860px){.kpi{grid-column:span 4}.col6{grid-column:span 6}}
+    .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
     .item{
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.18);
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
+      padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.18);display:flex;gap:10px;align-items:flex-start;
     }
-
     .badge{
-      min-width: 28px; height: 28px; border-radius: 10px;
-      display:flex; align-items:center; justify-content:center;
-      font-weight: 950;
-      color: rgba(0,0,0,.92);
-      background: linear-gradient(135deg, rgba(57,217,255,.98), rgba(255,59,212,.78));
-      border: 1px solid rgba(255,255,255,.22);
-      font-size: 12px;
-      box-shadow: 0 12px 28px rgba(0,0,0,.30);
-      flex: 0 0 auto;
+      min-width:28px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+      font-weight:950;color:rgba(0,0,0,.92);
+      background:linear-gradient(135deg, rgba(57,217,255,.98), rgba(255,59,212,.78));
+      border:1px solid rgba(255,255,255,.22);font-size:12px;
+      box-shadow:0 12px 28px rgba(0,0,0,.30);flex:0 0 auto;
     }
-
     .thumb{
-      width: 96px;
-      height: 136px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.22);
-      flex: 0 0 auto;
-      box-shadow: 0 12px 28px rgba(0,0,0,.30);
+      width:96px;height:136px;border-radius:16px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.22);
+      flex:0 0 auto;box-shadow:0 12px 28px rgba(0,0,0,.30);
     }
-    .thumb img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display:block;
-    }
-
-    .text{
-      font-size: 13.5px;
-      color: rgba(255,255,255,.90);
-      line-height: 1.35;
-      white-space: normal;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-
-    .rows{ display:flex; flex-direction:column; gap: 8px; margin-top: 8px; }
-    .row{ display:flex; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,.82); font-size: 12.5px; }
-
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .text{font-size:13.5px;color:rgba(255,255,255,.90);line-height:1.35;overflow-wrap:anywhere;word-break:break-word;flex:1 1 auto;min-width:0}
+    .rows{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;color:rgba(255,255,255,.82);font-size:12.5px}
     .kv{
-      display:inline-flex; gap: 6px; align-items:center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
+      display:inline-flex;gap:6px;align-items:center;padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
     }
-    .kv b{ color: rgba(255,255,255,.92); font-weight: 950; }
-    .kv span{ color: rgba(255,255,255,.72); font-weight: 800; display:inline-flex; align-items:center; gap:6px; }
-    .kv .material-symbols-rounded{ font-size: 16px; opacity: .95; }
-
+    .kv b{color:rgba(255,255,255,.92);font-weight:950}
+    .kv span{color:rgba(255,255,255,.72);font-weight:800;display:inline-flex;align-items:center;gap:6px}
+    .kv .material-symbols-rounded{font-size:16px;opacity:.95}
     .btnLink{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      margin-top: 10px;
-      padding: 9px 12px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 950;
-      letter-spacing: -0.01em;
-      color: rgba(0,0,0,.92);
+      display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:9px 12px;border-radius:12px;
+      text-decoration:none;font-weight:950;letter-spacing:-.01em;color:rgba(0,0,0,.92);
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
         linear-gradient(135deg, rgba(57,217,255,.96), rgba(168,85,255,.86));
-      border: 1px solid rgba(255,255,255,.20);
-      box-shadow: 0 14px 36px rgba(0,0,0,.45);
-      transition: transform .08s ease, filter .2s ease, box-shadow .2s ease;
-      width: fit-content;
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow:0 14px 36px rgba(0,0,0,.45);
+      transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
+      width:fit-content;
     }
-    .btnLink:hover{
-      filter: brightness(1.04);
-      box-shadow: 0 18px 44px rgba(0,0,0,.55);
-    }
-    .btnLink:active{ transform: translateY(1px); }
-    .btnLink .material-symbols-rounded{ font-size: 18px; }
-
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 12px;
-      color: rgba(255,255,255,.74);
-    }
-
+    .btnLink:hover{filter:brightness(1.04);box-shadow:0 18px 44px rgba(0,0,0,.55)}
+    .btnLink:active{transform:translateY(1px)}
+    .btnLink .material-symbols-rounded{font-size:18px}
     .empty{
-      border: 1px dashed rgba(255,255,255,.20);
-      background: rgba(0,0,0,.16);
-      padding: 14px;
-      border-radius: 16px;
-      color: var(--muted);
-      line-height: 1.35;
-      font-size: 13px;
-      position: relative;
-      z-index: 1;
+      border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
+      padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
     }
-
     .footer{
-      margin-top: 16px;
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
-      display:flex;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      margin-top:16px;color:rgba(255,255,255,.55);font-size:12px;
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     }
   </style>
 </head>
@@ -379,17 +191,14 @@
         <div class="titleblock">
           <h1>TikTok Performance Panel</h1>
           <div class="subtitle">
-            <span class="pill"><span class="material-symbols-rounded">public</span><span id="src">—</span></span>
+            <span class="pill"><span class="material-symbols-rounded">public</span><span id="src">bundle</span></span>
             <span class="pill"><span class="material-symbols-rounded">event</span><span id="dateLabel">—</span></span>
-            <span class="pill"><span class="material-symbols-rounded">sync</span><span id="lastFetch">—</span></span>
+            <span class="pill"><span class="material-symbols-rounded">tune</span><span id="minViewsLabel">—</span></span>
           </div>
         </div>
       </div>
 
       <div class="actions">
-        <button id="btnPrev"><span class="material-symbols-rounded">chevron_left</span>día anterior</button>
-        <button id="btnNext"><span class="material-symbols-rounded">chevron_right</span>día siguiente</button>
-        <button class="primary" id="btnToday"><span class="material-symbols-rounded">today</span>hoy</button>
         <button id="btnReload"><span class="material-symbols-rounded">refresh</span>recargar</button>
       </div>
     </div>
@@ -399,33 +208,33 @@
         <div class="cardhead">
           <div>
             <h2>Resumen</h2>
-            <div class="hint">Resumen de tendencias diarias.</div>
+            <div class="hint">Rankings calculados localmente desde el bundle.</div>
           </div>
-          <div class="mono" id="filePath">—</div>
+          <div class="mono" id="statusLine">—</div>
         </div>
 
         <div class="kpis">
           <div class="kpi">
             <div class="ic"><span class="material-symbols-rounded">video_library</span></div>
             <div>
-              <div class="label">Top videos (likes)</div>
+              <div class="label">Items válidos</div>
+              <div class="val" id="kpiItems">—</div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <div class="ic purple"><span class="material-symbols-rounded">favorite</span></div>
+            <div>
+              <div class="label">Top likes (max 10)</div>
               <div class="val" id="kpiTopLikes">—</div>
             </div>
           </div>
 
           <div class="kpi">
-            <div class="ic purple"><span class="material-symbols-rounded">percent</span></div>
+            <div class="ic pink"><span class="material-symbols-rounded">percent</span></div>
             <div>
-              <div class="label">Top videos (like rate)</div>
+              <div class="label">Top like rate filtrado</div>
               <div class="val" id="kpiTopRate">—</div>
-            </div>
-          </div>
-
-          <div class="kpi">
-            <div class="ic pink"><span class="material-symbols-rounded">group</span></div>
-            <div>
-              <div class="label">Creadores rankeados</div>
-              <div class="val" id="kpiCreators">—</div>
             </div>
           </div>
         </div>
@@ -435,64 +244,66 @@
         <div class="cardhead">
           <div>
             <h2>Top videos por likes</h2>
-            <div class="hint">ranking de videos por cantidad de likes</div>
+            <div class="hint">Orden: likes desc, views desc, video_id asc.</div>
           </div>
         </div>
         <ul class="list" id="listTopLikes"></ul>
-        <div id="emptyTopLikes" class="empty" style="display:none;">No hay items en top_videos_by_likes.</div>
+        <div id="emptyTopLikes" class="empty" style="display:none;">No hay items válidos.</div>
       </div>
 
       <div class="card col6">
         <div class="cardhead">
           <div>
             <h2>Top videos por like rate</h2>
-            <div class="hint">ranking por ratio de likes</div>
+            <div class="hint">Filtrado por views >= umbral.</div>
           </div>
         </div>
         <ul class="list" id="listTopRate"></ul>
-        <div id="emptyTopRate" class="empty" style="display:none;">No hay items en top_videos_by_like_rate_filtered.</div>
+        <div id="emptyTopRate" class="empty" style="display:none;">No hay items que pasen el umbral.</div>
       </div>
 
       <div class="card">
         <div class="cardhead">
           <div>
             <h2>Ranking de creadores</h2>
-            <div class="hint">Ranking de creadores TOP</div>
+            <div class="hint">Orden: top_count_likes desc, sum_likes desc, avg_like_rate desc.</div>
           </div>
         </div>
         <ul class="list" id="listCreators"></ul>
-        <div id="emptyCreators" class="empty" style="display:none;">No hay items en creators_ranking.</div>
+        <div id="emptyCreators" class="empty" style="display:none;">No hay creadores.</div>
       </div>
     </div>
 
     <div class="footer">
-      <div>tiktok performance tracker — automatizado por quintabot</div>
-      <div><span class="mono" id="statusLine">—</span></div>
+      <div>tiktok performance tracker — sin gpt, todo local</div>
+      <div><span class="mono" id="errorsLine">—</span></div>
     </div>
   </div>
 
   <script>
-    const REPORTS_DIR = "reports";
-    const MAX_FALLBACK_DAYS = 14;
+    // =========================
+    // CONFIG
+    // =========================
+    const MIN_VIEWS_FOR_RATE_DEFAULT = 10000;
+    const MAX_TOP = 10;
 
+    // =========================
+    // YOUR BUNDLE GOES HERE
+    // (Make can write the whole payload into this variable as JSON)
+    // =========================
+    // In producción: reemplaza BUNDLE_PAYLOAD por el JSON que te entrega Make.
+    // Debe ser un array con { json: "{...}" } y dentro ese string tener { text: "<li>...</li>..." }
+    // eslint-disable-next-line no-unused-vars
+    const BUNDLE_PAYLOAD = null;
+
+    // =========================
+    // Helpers
+    // =========================
     const pad2 = (n) => String(n).padStart(2, "0");
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-    const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
 
-    function formatNiceDate(ymd){
-      const [Y,M,D] = ymd.split("-").map(Number);
-      const d = new Date(Y, M-1, D);
-      return d.toLocaleDateString("es-CO", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
-    }
     function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
     function show(el, yes){ el.style.display = yes ? "" : "none"; }
-    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
-
-    async function fetchJson(url){
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-      return await res.json();
-    }
 
     function escapeHtml(str){
       return String(str)
@@ -503,53 +314,270 @@
         .replaceAll("'","&#039;");
     }
 
-    function unwrapMakePayload(payload){
-      if(Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object"){
-        if(typeof payload[0].json === "string"){
-          try { return JSON.parse(payload[0].json); } catch(e){ return null; }
-        }
-        if(typeof payload[0].result === "string"){
-          try { return JSON.parse(payload[0].result); } catch(e){ return null; }
-        }
-      }
-      return payload;
-    }
-
     function fmtInt(n){
       const x = Number(n);
       if(!Number.isFinite(x)) return "0";
       return x.toLocaleString("es-CO");
     }
+
     function fmtPctNoDecimals(n){
       const x = Number(n);
       if(!Number.isFinite(x)) return "0%";
       return `${Math.round(x)}%`;
     }
 
-    function makeVideoItem(v, idx){
-      const rank = Number(v?.rank) || (idx + 1);
+    function safeNum(x){
+      const n = Number(String(x ?? "").replace(/[^\d.-]/g, ""));
+      return Number.isFinite(n) ? n : 0;
+    }
 
-      const url = v?.url || "";
-      const user = v?.username || "";
-      const views = v?.views ?? 0;
-      const likes = v?.likes ?? 0;
-      const lrPct = v?.like_rate_pct ?? 0;
-      const cover = v?.cover_url || "";
+    function getVideoIdFromUrl(url){
+      const s = String(url || "");
+      const m = s.match(/\/video\/(\d+)/);
+      return m ? m[1] : "";
+    }
+
+    // =========================
+    // Unwrap Make payload: [{ json: "{...}" }]
+    // =========================
+    function unwrapMake(payload){
+      // payload may already be the unwrapped object, or array wrapper
+      if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
+        if (typeof payload[0].json === "string") {
+          try { return JSON.parse(payload[0].json); } catch(e) { return null; }
+        }
+      }
+      return payload;
+    }
+
+    // =========================
+    // Parse the "text" field: it contains many <li> blocks
+    // We extract:
+    // - url: first <a href="..."> (with tiktok link)
+    // - cover_url: anchor that contains "Cover:" then href
+    // - username: text inside <strong>@...</strong>
+    // - views: value in Reproducciones <strong>...</strong>
+    // - likes: value in Likes <strong>...</strong>
+    // =========================
+    function parseItemsFromText(htmlText, errors){
+      const out = [];
+      const tmp = document.createElement("div");
+      tmp.innerHTML = String(htmlText || "");
+
+      const lis = Array.from(tmp.querySelectorAll("li"));
+      for (let i=0; i<lis.length; i++){
+        const li = lis[i];
+
+        const anchors = Array.from(li.querySelectorAll("a"));
+        // url: first anchor with tiktok.com and /video/
+        const urlA = anchors.find(a => /tiktok\.com/i.test(a.getAttribute("href") || "") && /\/video\/\d+/.test(a.getAttribute("href") || ""));
+        const url = (urlA ? (urlA.getAttribute("href") || "") : "").trim();
+
+        // cover: anchor after the text that starts with "🖼️ Cover:"; easiest: any anchor that has tiktokcdn and image
+        const coverA = anchors.find(a => /tiktokcdn/i.test(a.getAttribute("href") || ""));
+        const cover_url = (coverA ? (coverA.getAttribute("href") || "") : "").trim();
+
+        const strongs = Array.from(li.querySelectorAll("strong"));
+        // username: first strong that starts with @
+        const userStrong = strongs.find(s => /^@/.test((s.textContent || "").trim()));
+        const username = (userStrong ? (userStrong.textContent || "").trim().replace(/^@/,"") : "").trim();
+
+        // views/likes: based on surrounding text
+        let views = 0, likes = 0;
+
+        // We can read the li text and try to match numbers after labels
+        const raw = li.innerText || li.textContent || "";
+        // Match digits in the closest strongs order (views then likes) if the template is stable:
+        // username strong, views strong, likes strong
+        // But you have cases where url/cover empty and views/likes empty. So we still validate.
+        const viewStrong = strongs.find(s => {
+          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
+          return /Reproducciones/i.test(prev);
+        });
+        const likeStrong = strongs.find(s => {
+          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
+          return /\bLikes\b/i.test(prev);
+        });
+
+        if(viewStrong) views = safeNum(viewStrong.textContent);
+        else {
+          const m = raw.match(/Reproducciones:\s*([0-9][0-9.,]*)/i);
+          if(m) views = safeNum(m[1]);
+        }
+
+        if(likeStrong) likes = safeNum(likeStrong.textContent);
+        else {
+          const m = raw.match(/Likes:\s*([0-9][0-9.,]*)/i);
+          if(m) likes = safeNum(m[1]);
+        }
+
+        const video_id = getVideoIdFromUrl(url);
+
+        // Validate: must at least have username or url or cover; but for ranking we need url + video_id ideally
+        if(!video_id && (url || cover_url || username)){
+          errors.push(`missing_video_id_item_${i+1}`);
+        }
+
+        // Skip totally empty garbage items (you have those placeholders)
+        const isEmpty = !url && !cover_url && !username && views===0 && likes===0;
+        if(isEmpty) continue;
+
+        out.push({
+          url,
+          cover_url,
+          username,
+          video_id,
+          views,
+          likes
+        });
+      }
+      return out;
+    }
+
+    // =========================
+    // Dedupe by video_id: keep highest views; tie highest likes; tie first
+    // =========================
+    function dedupeByVideoId(items){
+      const map = new Map();
+      for(const it of items){
+        const key = it.video_id || "";
+        if(!key){
+          // keep items without id but do not dedupe them; still include (rank will put them low)
+          const pseudo = `__noid__${Math.random().toString(16).slice(2)}`;
+          map.set(pseudo, it);
+          continue;
+        }
+        if(!map.has(key)){
+          map.set(key, it);
+        } else {
+          const cur = map.get(key);
+          const a = it, b = cur;
+          if((a.views > b.views) || (a.views === b.views && a.likes > b.likes)){
+            map.set(key, it);
+          }
+        }
+      }
+      return Array.from(map.values());
+    }
+
+    function computeLikeRate(it){
+      const v = safeNum(it.views);
+      const l = safeNum(it.likes);
+      const like_rate = v > 0 ? (l / v) : 0;
+      const like_rate_pct = Math.round(like_rate * 100000) / 1000; // 3 decimals
+      return { like_rate, like_rate_pct };
+    }
+
+    function sortTopLikes(items){
+      return [...items].sort((a,b)=>{
+        const sa = safeNum(a.likes), sb = safeNum(b.likes);
+        if(sb !== sa) return sb - sa;
+        const va = safeNum(a.views), vb = safeNum(b.views);
+        if(vb !== va) return vb - va;
+        const ia = String(a.video_id || ""), ib = String(b.video_id || "");
+        return ia.localeCompare(ib);
+      });
+    }
+
+    function sortTopRate(items){
+      return [...items].sort((a,b)=>{
+        const ra = Number(a.like_rate) || 0;
+        const rb = Number(b.like_rate) || 0;
+        if(rb !== ra) return rb - ra;
+        const va = safeNum(a.views), vb = safeNum(b.views);
+        if(vb !== va) return vb - va;
+        const la = safeNum(a.likes), lb = safeNum(b.likes);
+        if(lb !== la) return lb - la;
+        const ia = String(a.video_id || ""), ib = String(b.video_id || "");
+        return ia.localeCompare(ib);
+      });
+    }
+
+    function aggregateCreators(items, topLikesList){
+      const topLikesSetByUrl = new Set(topLikesList.map(v => v.url).filter(Boolean));
+      const topLikesOrder = topLikesList.map(v => v.url).filter(Boolean);
+
+      const map = new Map();
+      for(const it of items){
+        const u = String(it.username || "").trim();
+        if(!u) continue;
+        if(!map.has(u)){
+          map.set(u, {
+            username: u,
+            videos_total_en_dataset: 0,
+            sum_views: 0,
+            sum_likes: 0,
+            sum_like_rate: 0,
+            avg_like_rate: 0,
+            avg_like_rate_pct: 0,
+            top_count_likes: 0,
+            top_video_urls_likes: []
+          });
+        }
+        const c = map.get(u);
+        c.videos_total_en_dataset += 1;
+        c.sum_views += safeNum(it.views);
+        c.sum_likes += safeNum(it.likes);
+        c.sum_like_rate += Number(it.like_rate) || 0;
+
+        if(topLikesSetByUrl.has(it.url)){
+          c.top_count_likes += 1;
+        }
+      }
+
+      // Build ordered URLs per creator based on topLikes ordering
+      for(const u of map.keys()){
+        const c = map.get(u);
+        const urls = [];
+        for(const url of topLikesOrder){
+          const match = items.find(v => v.username === u && v.url === url);
+          if(match) urls.push(url);
+        }
+        c.top_video_urls_likes = urls;
+        c.avg_like_rate = c.videos_total_en_dataset > 0 ? (c.sum_like_rate / c.videos_total_en_dataset) : 0;
+        c.avg_like_rate_pct = Math.round(c.avg_like_rate * 100000) / 1000;
+      }
+
+      const arr = Array.from(map.values()).sort((a,b)=>{
+        if(b.top_count_likes !== a.top_count_likes) return b.top_count_likes - a.top_count_likes;
+        if(b.sum_likes !== a.sum_likes) return b.sum_likes - a.sum_likes;
+        if(b.avg_like_rate !== a.avg_like_rate) return b.avg_like_rate - a.avg_like_rate;
+        return a.username.localeCompare(b.username);
+      });
+
+      // add rank
+      return arr.slice(0, 10).map((c, i)=>({
+        rank: i+1,
+        username: c.username,
+        videos_total_en_dataset: c.videos_total_en_dataset,
+        top_count_likes: c.top_count_likes,
+        sum_views: c.sum_views,
+        sum_likes: c.sum_likes,
+        avg_like_rate: c.avg_like_rate,
+        avg_like_rate_pct: c.avg_like_rate_pct,
+        top_video_urls_likes: c.top_video_urls_likes
+      }));
+    }
+
+    // =========================
+    // Rendering
+    // =========================
+    function makeVideoItem(v, idx){
+      const rank = idx + 1;
+      const url = v.url || "";
+      const user = v.username || "";
+      const views = v.views ?? 0;
+      const likes = v.likes ?? 0;
+      const lrPct = v.like_rate_pct ?? 0;
+      const cover = v.cover_url || "";
 
       const li = document.createElement("li");
       li.className = "item";
       li.innerHTML = `
         <div class="badge">${escapeHtml(String(rank))}</div>
-
-        ${cover ? `
-          <div class="thumb">
-            <img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer">
-          </div>
-        ` : ``}
-
+        ${cover ? `<div class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"></div>` : ``}
         <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)} — ${fmtInt(likes)} likes</div>
-
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${fmtInt(likes)} likes</div>
           <div class="rows">
             <div class="row">
               <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
@@ -557,7 +585,6 @@
               <span class="kv"><span><span class="material-symbols-rounded">percent</span>like rate</span> <b>${escapeHtml(fmtPctNoDecimals(lrPct))}</b></span>
             </div>
           </div>
-
           ${url ? `<a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
             <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
           </a>` : ``}
@@ -566,124 +593,121 @@
       return li;
     }
 
-    function makeCreatorItem(c, idx){
-      const rank = Number(c?.rank) || (idx + 1);
-      const user = c?.username || "";
-
+    function makeCreatorItem(c){
       const li = document.createElement("li");
       li.className = "item";
       li.innerHTML = `
-        <div class="badge">${escapeHtml(String(rank))}</div>
+        <div class="badge">${escapeHtml(String(c.rank || 0))}</div>
         <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)}</div>
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(c.username || "—")}</div>
           <div class="rows">
             <div class="row">
-              <span class="kv"><span><span class="material-symbols-rounded">video_library</span>videos</span> <b>${escapeHtml(String(c?.videos_total_en_dataset ?? 0))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">emoji_events</span>top</span> <b>${escapeHtml(String(c?.top_count_likes ?? 0))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">favorite</span>sum likes</span> <b>${escapeHtml(fmtInt(c?.sum_likes ?? 0))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>sum views</span> <b>${escapeHtml(fmtInt(c?.sum_views ?? 0))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">percent</span>avg rate</span> <b>${escapeHtml(fmtPctNoDecimals(c?.avg_like_rate_pct ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">video_library</span>videos</span> <b>${escapeHtml(String(c.videos_total_en_dataset ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">emoji_events</span>top</span> <b>${escapeHtml(String(c.top_count_likes ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">favorite</span>sum likes</span> <b>${escapeHtml(fmtInt(c.sum_likes ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>sum views</span> <b>${escapeHtml(fmtInt(c.sum_views ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">percent</span>avg rate</span> <b>${escapeHtml(fmtPctNoDecimals(c.avg_like_rate_pct ?? 0))}</b></span>
             </div>
           </div>
+          ${Array.isArray(c.top_video_urls_likes) && c.top_video_urls_likes.length ? `
+            <div class="rows">
+              <div class="row">
+                <span class="kv"><span><span class="material-symbols-rounded">link</span>top urls</span> <b>${escapeHtml(String(c.top_video_urls_likes.length))}</b></span>
+              </div>
+            </div>
+          ` : ``}
         </div>
       `;
       return li;
     }
 
-    function renderListVideos(listId, emptyId, arr){
+    function renderList(listId, emptyId, arr, itemFactory){
       const ul = document.getElementById(listId);
       ul.innerHTML = "";
       if(Array.isArray(arr) && arr.length){
-        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i)));
+        arr.forEach((x, i)=> ul.appendChild(itemFactory(x, i)));
         show(document.getElementById(emptyId), false);
-      } else {
+      }else{
         show(document.getElementById(emptyId), true);
       }
     }
 
-    function renderListCreators(listId, emptyId, arr){
-      const ul = document.getElementById(listId);
-      ul.innerHTML = "";
-      if(Array.isArray(arr) && arr.length){
-        arr.forEach((c, i) => ul.appendChild(makeCreatorItem(c, i)));
-        show(document.getElementById(emptyId), false);
-      } else {
-        show(document.getElementById(emptyId), true);
-      }
+    // =========================
+    // Main pipeline
+    // =========================
+    async function getBundlePayload(){
+      // Option A: injected directly into BUNDLE_PAYLOAD var (recommended)
+      if (BUNDLE_PAYLOAD) return BUNDLE_PAYLOAD;
+
+      // Option B: fetch local JSON file (if you want)
+      // return await (await fetch("bundle.json", {cache:"no-store"})).json();
+
+      throw new Error("No hay payload. Inyecta el bundle en BUNDLE_PAYLOAD o usa fetch.");
     }
 
-    function renderAll(data, ymd, resolvedUrl){
-      setText("src", data?.meta?.fuente ?? "—");
-      setText("dateLabel", ymd ? formatNiceDate(ymd) : "—");
-      setText("lastFetch", new Date().toLocaleString("es-CO"));
-      setText("filePath", resolvedUrl ?? "—");
+    async function run(){
+      const errors = [];
+      setText("dateLabel", toYMD(new Date()));
+      const minViews = MIN_VIEWS_FOR_RATE_DEFAULT;
+      setText("minViewsLabel", `umbral: ${fmtInt(minViews)} views`);
 
-      const topLikes = Array.isArray(data?.data?.top_videos_by_likes) ? data.data.top_videos_by_likes : [];
-      const topRate  = Array.isArray(data?.data?.top_videos_by_like_rate_filtered) ? data.data.top_videos_by_like_rate_filtered : [];
-      const creators = Array.isArray(data?.data?.creators_ranking) ? data.data.creators_ranking : [];
-
-      setText("kpiTopLikes", String(topLikes.length || 0));
-      setText("kpiTopRate", String(topRate.length || 0));
-      setText("kpiCreators", String(creators.length || 0));
-
-      renderListVideos("listTopLikes", "emptyTopLikes", topLikes);
-      renderListVideos("listTopRate", "emptyTopRate", topRate);
-      renderListCreators("listCreators", "emptyCreators", creators);
-
-      setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
-    }
-
-    let selectedDate = new Date();
-
-    async function loadDate(d){
-      const ymd = toYMD(d);
-      const url = fileUrl(ymd);
-      setText("statusLine", `cargando: ${ymd}...`);
       try{
-        const raw = await fetchJson(url);
-        const data = unwrapMakePayload(raw);
-        if(!data) throw new Error("JSON inválido");
-        renderAll(data, ymd, url);
-        selectedDate = d;
-        return true;
+        const rawPayload = await getBundlePayload();
+        const obj = unwrapMake(rawPayload);
+        if(!obj || typeof obj !== "object"){ throw new Error("Payload inválido"); }
+
+        const htmlText = String(obj.text || "");
+        if(!htmlText){ throw new Error("Falta obj.text con los <li>"); }
+
+        let items = parseItemsFromText(htmlText, errors);
+
+        // Enrich metrics
+        items = items.map(it => {
+          const { like_rate, like_rate_pct } = computeLikeRate(it);
+          return { ...it, like_rate, like_rate_pct };
+        });
+
+        // Dedupe
+        const before = items.length;
+        items = dedupeByVideoId(items);
+        const after = items.length;
+
+        // Rankings
+        const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+
+        const filtered = items.filter(v => safeNum(v.views) >= minViews);
+        const topRateFiltered = sortTopRate(filtered).slice(0, MAX_TOP);
+
+        // Creators
+        const creators = aggregateCreators(items, topLikes);
+
+        // KPIs
+        setText("kpiItems", String(after));
+        setText("kpiTopLikes", String(topLikes.length));
+        setText("kpiTopRate", String(topRateFiltered.length));
+        setText("statusLine", `items: ${before} | dedup: ${after} | errors: ${errors.length}`);
+
+        // Render
+        renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
+        renderList("listTopRate", "emptyTopRate", topRateFiltered, makeVideoItem);
+        renderList("listCreators", "emptyCreators", creators, (c)=>makeCreatorItem(c));
+
+        setText("errorsLine", errors.length ? `errores: ${errors.slice(0,6).join(" | ")}${errors.length>6 ? " | ..." : ""}` : "sin errores");
       } catch(e){
-        return false;
+        setText("statusLine", `error: ${e.message || e}`);
+        setText("errorsLine", "—");
+        setText("kpiItems", "0"); setText("kpiTopLikes", "0"); setText("kpiTopRate", "0");
+        document.getElementById("listTopLikes").innerHTML = "";
+        document.getElementById("listTopRate").innerHTML = "";
+        document.getElementById("listCreators").innerHTML = "";
+        show(document.getElementById("emptyTopLikes"), true);
+        show(document.getElementById("emptyTopRate"), true);
+        show(document.getElementById("emptyCreators"), true);
       }
     }
 
-    async function loadWithFallback(startDate){
-      for(let i=0; i<=MAX_FALLBACK_DAYS; i++){
-        const d = addDays(startDate, -i);
-        const ok = await loadDate(d);
-        if(ok) return;
-      }
-
-      setText("src", "—");
-      setText("dateLabel", "—");
-      setText("filePath", "—");
-
-      setText("kpiTopLikes", "0");
-      setText("kpiTopRate", "0");
-      setText("kpiCreators", "0");
-
-      document.getElementById("listTopLikes").innerHTML = "";
-      document.getElementById("listTopRate").innerHTML = "";
-      document.getElementById("listCreators").innerHTML = "";
-
-      show(document.getElementById("emptyTopLikes"), true);
-      show(document.getElementById("emptyTopRate"), true);
-      show(document.getElementById("emptyCreators"), true);
-
-      setText("statusLine", "sin datos (no se encontraron archivos recientes)");
-    }
-
-    document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
-    document.getElementById("btnReload").addEventListener("click", () => loadWithFallback(selectedDate));
-    document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
-    document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
-
-    loadWithFallback(new Date());
-    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
+    document.getElementById("btnReload").addEventListener("click", run);
+    run();
   </script>
 </body>
 </html>
