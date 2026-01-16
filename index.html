@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -48,10 +47,8 @@
       overflow-x:hidden;
     }
 
-    /* Subtle memphis shapes */
     .memphis{
-      position:fixed;
-      inset:0;
+      position:fixed; inset:0;
       pointer-events:none;
       opacity:0.55;
       z-index:0;
@@ -79,7 +76,6 @@
       transform: rotate(6deg);
     }
 
-    a{ color: inherit; text-decoration:none; }
     .container{
       position:relative;
       z-index:1;
@@ -99,6 +95,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+      flex-wrap: wrap;
     }
 
     .brand{
@@ -146,6 +143,7 @@
       justify-content:flex-end;
       width: 100%;
     }
+
     .chip{
       display:flex;
       align-items:center;
@@ -159,6 +157,7 @@
       white-space: nowrap;
     }
     .chip b{ color: var(--text); font-weight: 600; }
+
     .pill{
       padding: 8px 10px;
       border-radius: 999px;
@@ -166,6 +165,30 @@
       background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .btn{
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s ease, border .15s ease, background .15s ease;
+      display:flex; align-items:center; gap:8px;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.20); background: rgba(255,255,255,0.06); }
+    .btn:active{ transform: translateY(0px); }
+
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(57,214,255,0.16), rgba(168,85,247,0.10));
+      border-color: rgba(255,255,255,0.14);
     }
 
     .input, select{
@@ -178,30 +201,12 @@
       font-size: 13px;
       outline:none;
       transition: border .15s ease, background .15s ease;
-      min-width: 210px;
+      min-width: 200px;
     }
     .input:focus, select:focus{
       border-color: rgba(57,214,255,0.45);
       background: rgba(255,255,255,0.06);
     }
-    select{ min-width: 210px; }
-
-    .btn{
-      height: 38px;
-      padding: 0 12px;
-      border-radius: 12px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(57,214,255,0.16), rgba(168,85,247,0.10));
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform .12s ease, border .15s ease, background .15s ease;
-      display:flex; align-items:center; gap:8px;
-      user-select:none;
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.20); }
-    .btn:active{ transform: translateY(0px); }
 
     .grid{
       margin-top: 16px;
@@ -273,12 +278,6 @@
       font-family: var(--mono);
     }
 
-    .split{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-
     .list{
       display:flex;
       flex-direction:column;
@@ -305,11 +304,8 @@
       border: 1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.06);
       color: var(--text);
+      flex: 0 0 auto;
     }
-    .badge.sky{ border-color: rgba(57,214,255,0.35); box-shadow: 0 0 0 4px rgba(57,214,255,0.08) inset; }
-    .badge.purple{ border-color: rgba(168,85,247,0.35); box-shadow: 0 0 0 4px rgba(168,85,247,0.08) inset; }
-    .badge.pink{ border-color: rgba(255,62,165,0.35); box-shadow: 0 0 0 4px rgba(255,62,165,0.08) inset; }
-    .badge.lime{ border-color: rgba(158,255,122,0.35); box-shadow: 0 0 0 4px rgba(158,255,122,0.08) inset; }
 
     .itemMain{ flex:1; min-width:0; }
     .itemTop{
@@ -317,6 +313,7 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      flex-wrap: wrap;
     }
     .itemTitle{
       font-size: 13px;
@@ -324,6 +321,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 620px;
     }
     .itemTitle a{
       color: var(--text);
@@ -352,56 +350,7 @@
       font-family: var(--mono);
       font-size: 11px;
       color: rgba(255,255,255,0.72);
-    }
-    .dot{
-      width:7px; height:7px; border-radius: 99px;
-      background: rgba(255,255,255,0.22);
-    }
-    .dot.sky{ background: rgba(57,214,255,0.85); }
-    .dot.purple{ background: rgba(168,85,247,0.85); }
-    .dot.pink{ background: rgba(255,62,165,0.85); }
-    .dot.lime{ background: rgba(158,255,122,0.85); }
-    .dot.amber{ background: rgba(255,200,87,0.85); }
-
-    .table{
-      width:100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-    }
-    .table th{
-      text-align:left;
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 600;
-      padding: 0 10px 6px;
-      letter-spacing: 0.25px;
-    }
-    .table td{
-      padding: 12px 10px;
-      font-size: 12px;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-    }
-    .table tr td:first-child{
-      border-left: 1px solid rgba(255,255,255,0.10);
-      border-top-left-radius: 14px;
-      border-bottom-left-radius: 14px;
-    }
-    .table tr td:last-child{
-      border-right: 1px solid rgba(255,255,255,0.10);
-      border-top-right-radius: 14px;
-      border-bottom-right-radius: 14px;
-    }
-
-    .muted{ color: var(--muted); }
-    .mono{ font-family: var(--mono); }
-    .right{ text-align:right; }
-    .nowrap{ white-space:nowrap; }
-
-    .stack{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
+      white-space: nowrap;
     }
 
     .notice{
@@ -412,6 +361,7 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.45;
+      white-space: pre-wrap;
     }
     .notice b{ color: var(--text); font-weight: 700; }
 
@@ -420,28 +370,6 @@
       color: var(--muted2);
       font-size: 12px;
       text-align:center;
-    }
-
-    .seg{
-      display:flex; gap:8px; flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .seg button{
-      height: 34px;
-      padding: 0 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.03);
-      color: rgba(255,255,255,0.72);
-      font-size: 12px;
-      cursor:pointer;
-      transition: border .15s ease, background .15s ease, transform .12s ease;
-    }
-    .seg button:hover{ border-color: rgba(255,255,255,0.18); transform: translateY(-1px); }
-    .seg button.active{
-      border-color: rgba(57,214,255,0.35);
-      background: rgba(57,214,255,0.10);
-      color: var(--text);
     }
 
     @media (max-width: 980px){
@@ -454,8 +382,7 @@
     @media (max-width: 540px){
       .topbar{ padding: 14px 14px; }
       .kpis{ grid-template-columns: 1fr; }
-      .split{ grid-template-columns: 1fr; }
-      .itemTop{ flex-direction:column; align-items:flex-start; }
+      .itemTitle{ max-width: 100%; }
     }
   </style>
 </head>
@@ -480,214 +407,254 @@
       </div>
 
       <div class="controls">
-        <div class="chip"><span class="dot sky"></span><span>Fecha:</span> <b id="metaDate">—</b></div>
-        <div class="chip"><span class="dot purple"></span><span>Items:</span> <b id="metaCount">0</b></div>
+        <span class="pill" id="srcPill">fuente: —</span>
+        <span class="pill" id="datePill">día: —</span>
+        <span class="pill" id="fetchPill">sync: —</span>
+
+        <button class="btn" id="btnPrev" type="button">día anterior</button>
+        <button class="btn" id="btnNext" type="button">día siguiente</button>
+        <button class="btn primary" id="btnToday" type="button">hoy</button>
+        <button class="btn" id="btnReload" type="button">recargar</button>
+
+        <div class="chip">items: <b id="metaCount">0</b></div>
+        <div class="chip">umbral: <b id="thr">—</b></div>
+
         <input id="q" class="input" placeholder="Buscar por @usuario o video_id…" />
         <select id="creatorFilter">
           <option value="">Todos los creadores</option>
         </select>
-        <select id="sortBy">
-          <option value="likes_desc">Orden: Likes ↓</option>
-          <option value="views_desc">Orden: Views ↓</option>
-          <option value="like_rate_desc">Orden: Like rate ↓</option>
-          <option value="rank_input_asc">Orden: Rank input ↑</option>
-        </select>
-        <button class="btn" id="reloadBtn" type="button">Recargar JSON</button>
       </div>
     </div>
 
     <div class="grid">
-      <!-- Left column -->
-      <div class="stack">
-        <div class="card">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Overview</div>
-              <div class="cardSub" id="overviewText">KPIs del dataset + highlights de interacción.</div>
-              <div class="seg" id="viewTabs">
-                <button class="active" data-tab="topLikes">Top por likes</button>
-                <button data-tab="topRate">Top por like rate</button>
-                <button data-tab="allVideos">Todos los videos</button>
-                <button data-tab="creators">Creadores</button>
-                <button data-tab="outliers">Outliers</button>
-              </div>
-            </div>
-            <div class="pill mono" id="thresholdPill">umbral: —</div>
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Resumen</div>
+            <div class="cardSub" id="overviewText">KPIs del día + highlights.</div>
           </div>
-          <div class="cardBody">
-            <div class="kpis" id="kpis"></div>
-          </div>
+          <div class="pill" id="filePill">—</div>
         </div>
-
-        <div class="card" id="tab_topLikes">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Ranking de videos (Likes / Interacción)</div>
-              <div class="cardSub">Los que “mandaron la parada” hoy por likes.</div>
-            </div>
-            <div class="pill mono" id="topLikesHint">top: —</div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="topLikesList"></div>
-          </div>
+        <div class="cardBody">
+          <div class="kpis" id="kpis"></div>
         </div>
-
-        <div class="card" id="tab_topRate" style="display:none;">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Ranking de videos (Like rate)</div>
-              <div class="cardSub">Eficiencia de likes sobre views (filtrado por umbral).</div>
-            </div>
-            <div class="pill mono" id="topRateHint">candidatos: —</div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="topRateList"></div>
-          </div>
-        </div>
-
-        <div class="card" id="tab_allVideos" style="display:none;">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Todos los videos</div>
-              <div class="cardSub">Dataset completo con búsqueda, filtro y orden.</div>
-            </div>
-            <div class="pill mono" id="allCountPill">mostrando: —</div>
-          </div>
-          <div class="cardBody">
-            <table class="table" id="videosTable">
-              <thead>
-                <tr>
-                  <th class="nowrap">#</th>
-                  <th>Video</th>
-                  <th class="right nowrap">Views</th>
-                  <th class="right nowrap">Likes</th>
-                  <th class="right nowrap">Like rate</th>
-                </tr>
-              </thead>
-              <tbody id="videosTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="card" id="tab_creators" style="display:none;">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Ranking de creadores</div>
-              <div class="cardSub">Quién domina el día por volumen en top + acumulados.</div>
-            </div>
-            <div class="pill mono" id="creatorCountPill">—</div>
-          </div>
-          <div class="cardBody">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="nowrap">Rank</th>
-                  <th>Creador</th>
-                  <th class="right nowrap">Top count</th>
-                  <th class="right nowrap">Likes</th>
-                  <th class="right nowrap">Views</th>
-                  <th class="right nowrap">Avg rate</th>
-                </tr>
-              </thead>
-              <tbody id="creatorsTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="card" id="tab_outliers" style="display:none;">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Outliers</div>
-              <div class="cardSub">Picos raros por views o por tasa de likes.</div>
-            </div>
-            <div class="pill mono" id="outlierPill">—</div>
-          </div>
-          <div class="cardBody">
-            <div class="split">
-              <div>
-                <div class="notice" style="margin-bottom:10px;"><b>Por views</b> (top alto)</div>
-                <div class="list" id="outViews"></div>
-              </div>
-              <div>
-                <div class="notice" style="margin-bottom:10px;"><b>Por like rate</b> (top alto)</div>
-                <div class="list" id="outRate"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Right column -->
-      <div class="stack">
-        <div class="card">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Resumen</div>
-              <div class="cardSub">Texto ejecutivo del análisis.</div>
-            </div>
-            <div class="pill mono">v2 (determinístico)</div>
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Top videos</div>
+            <div class="cardSub">Lista del día</div>
           </div>
-          <div class="cardBody">
-            <div class="notice" id="resumenBox">—</div>
-            <div style="height:12px;"></div>
-            <div class="notice">
-              <b>Insights</b>
-              <div id="insightsBox" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
-            </div>
-          </div>
+          <div class="pill" id="topHint">—</div>
         </div>
-
-        <div class="card">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Acciones recomendadas</div>
-              <div class="cardSub">Qué haría hoy con esta data.</div>
-            </div>
-            <div class="pill mono" id="actionsPill">—</div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="actionsList"></div>
-          </div>
+        <div class="cardBody">
+          <div class="list" id="topList"></div>
+          <div class="notice" id="topEmpty" style="display:none;">No hay videos para este día (o el archivo no existe).</div>
         </div>
-
-        <div class="card">
-          <div class="cardHeader">
-            <div>
-              <div class="cardTitle">Notas de parseo</div>
-              <div class="cardSub">Transparencia del pipeline.</div>
-            </div>
-            <div class="pill mono" id="sourcePill">fuente: —</div>
-          </div>
-          <div class="cardBody">
-            <div class="list" id="notesList"></div>
-          </div>
-        </div>
-
-        <div class="footer">Trendfinder TikTok · dashboard responsive · rankings en JS</div>
       </div>
+
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Top categorías</div>
+            <div class="cardSub">tags/fetiches dominantes</div>
+          </div>
+          <div class="pill" id="fetHint">—</div>
+        </div>
+        <div class="cardBody">
+          <div class="list" id="fetList"></div>
+          <div class="notice" id="fetEmpty" style="display:none;">No hay tags para este día.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Analítica</div>
+            <div class="cardSub">Resumen editorial + correlaciones.</div>
+          </div>
+          <div class="pill" id="anaHint">—</div>
+        </div>
+        <div class="cardBody">
+          <div class="notice" id="trendText">—</div>
+          <div style="height:10px;"></div>
+          <div class="notice" id="corrText">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Ideas y títulos</div>
+            <div class="cardSub">Inspiración a partir de la tendencia</div>
+          </div>
+          <div class="pill" id="ideaHint">—</div>
+        </div>
+        <div class="cardBody">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div>
+              <div class="cardSub" style="margin:0 0 8px;">Ideas</div>
+              <div class="list" id="ideasList"></div>
+              <div class="notice" id="ideasEmpty" style="display:none;">Sin ideas para este día.</div>
+            </div>
+            <div>
+              <div class="cardSub" style="margin:0 0 8px;">Títulos</div>
+              <div class="list" id="titlesList"></div>
+              <div class="notice" id="titlesEmpty" style="display:none;">Sin títulos para este día.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHeader">
+          <div>
+            <div class="cardTitle">Notas</div>
+            <div class="cardSub">Transparencia de carga</div>
+          </div>
+          <div class="pill" id="statusLine">—</div>
+        </div>
+        <div class="cardBody">
+          <div class="notice" id="notesText">—</div>
+        </div>
+      </div>
+
+      <div class="footer">Trendfinder TikTok · navegación por días · fallback inteligente</div>
     </div>
   </div>
 
   <script>
     // =========================
-    // 1) PEGA AQUI EL JSON REAL
-    //    Formatos soportados:
-    //    A) [{result:"{...}"}]
-    //    B) {result:"{...}"}
-    //    C) {meta, parametros, data:{videos:[...]}}
+    // CONFIG
     // =========================
-    window.__TREND_DATA__ = [
-      {
-        "result": "{\"meta\":{\"fecha_procesamiento\":\"\",\"fuente\":\"\",\"total_items_input\":18,\"total_items_dedup\":18,\"notas_parseo\":[]},\"parametros\":{\"umbral_views_like_rate\":10000,\"definicion_score_interaccion\":\"score_interaccion = likes\"},\"data\":{\"videos\":[]}}"
-      }
-    ];
+    const REPORTS_DIR = "reports";
+    const MAX_FALLBACK_DAYS = 14;
+
+    const pad2 = (n) => String(n).padStart(2, "0");
+    const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+    const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
+    const fileUrl = (ymd) => `${REPORTS_DIR}/${ymd}.json`;
+
+    function formatNiceDate(ymd){
+      const [Y,M,D] = ymd.split("-").map(Number);
+      const d = new Date(Y, M-1, D);
+      return d.toLocaleDateString("es-CO", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+    }
+    function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
+    function show(el, yes){ el.style.display = yes ? "" : "none"; }
+
+    async function fetchJson(url){
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      return await res.json();
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
 
     // =========================
-    // Helpers
+    // SPLIT ROBUSTO (anti-amontonado)
     // =========================
-    function safeNum(n){ return Number.isFinite(+n) ? +n : 0; }
-    function safeStr(s){ return (typeof s === "string") ? s : ""; }
+    function splitNumberedList(str){
+      const s = String(str || "").replace(/\s+/g, " ").trim();
+      if(!s) return [];
+      const re = /\b(\d{1,3})\.\s+/g;
+      const hits = [...s.matchAll(re)];
+      if(hits.length < 2) return [];
+      const idxs = hits.map(h => h.index);
+      idxs.push(s.length);
+      const out = [];
+      for(let i=0; i<idxs.length-1; i++){
+        let chunk = s.slice(idxs[i], idxs[i+1]).trim();
+        chunk = chunk.replace(/,\s*$/, "").trim();
+        if(chunk) out.push(chunk);
+      }
+      return out;
+    }
+
+    function splitByCommaSentences(str){
+      const s = String(str || "").trim();
+      if(!s) return [];
+      if(!s.includes(",")) return [s];
+
+      const parts = s.split(/,\s+(?=[A-ZÁÉÍÓÚÜÑ0-9¿¡])/g).map(x => x.trim()).filter(Boolean);
+      if(parts.length <= 1) return [s];
+      return parts;
+    }
+
+    function ensureArray(value){
+      if(Array.isArray(value)){
+        if(value.length === 1 && typeof value[0] === "string"){
+          const raw = value[0];
+          const numbered = splitNumberedList(raw);
+          if(numbered.length) return numbered;
+
+          const byLines = raw.split("\n").map(x=>x.trim()).filter(Boolean);
+          if(byLines.length > 1) return byLines;
+
+          return splitByCommaSentences(raw);
+        }
+        return value.filter(Boolean);
+      }
+
+      if(typeof value === "string"){
+        const numbered = splitNumberedList(value);
+        if(numbered.length) return numbered;
+
+        const byLines = value.split("\n").map(x=>x.trim()).filter(Boolean);
+        if(byLines.length > 1) return byLines;
+
+        return splitByCommaSentences(value);
+      }
+
+      return [];
+    }
+
+    function normalizeFetiches(value){
+      if(Array.isArray(value)){
+        if(value.length === 1 && typeof value[0] === "string"){
+          return value[0].split(",").map(s => s.replace(/\u00A0/g," ").trim()).filter(Boolean);
+        }
+        return value.filter(Boolean);
+      }
+      if(typeof value === "string"){
+        return value.split(",").map(s => s.replace(/\u00A0/g," ").trim()).filter(Boolean);
+      }
+      return [];
+    }
+
+    // =========================
+    // UNWRAP Make + parse result/json
+    // =========================
+    function unwrapMakePayload(payload){
+      // Caso: [{ "json": "{...}" }]
+      if(Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object"){
+        if(typeof payload[0].json === "string"){
+          try { return JSON.parse(payload[0].json); } catch(e){ return null; }
+        }
+        // Caso: [{result:"{...}"}]
+        if(typeof payload[0].result === "string"){
+          try { return JSON.parse(payload[0].result); } catch(e){ return null; }
+        }
+      }
+      // Caso: {result:"{...}"}
+      if(payload && typeof payload === "object" && typeof payload.result === "string"){
+        try { return JSON.parse(payload.result); } catch(e){ return null; }
+      }
+      return payload;
+    }
+
+    // =========================
+    // FORMATTERS
+    // =========================
+    const safeNum = (n) => Number.isFinite(+n) ? +n : 0;
 
     function fmtK(n){
       n = safeNum(n);
@@ -698,66 +665,14 @@
       return String(Math.round(n));
     }
 
-    // pct is in "percent points" (e.g., 11.116 => "11.116%")
     function fmtPct(p){
       p = safeNum(p);
       return (Math.round(p*1000)/1000).toFixed(3).replace(/\.000$/,"") + "%";
     }
 
-    function parseIncoming(raw){
-      try{
-        if (Array.isArray(raw) && raw.length){
-          const first = raw[0] || {};
-          if (typeof first.result === "string" && first.result.trim().startsWith("{")){
-            return JSON.parse(first.result);
-          }
-          if (first.meta && first.data) return first;
-        }
-        if (raw && typeof raw === "object"){
-          if (typeof raw.result === "string" && raw.result.trim().startsWith("{")){
-            return JSON.parse(raw.result);
-          }
-          if (raw.meta && raw.data) return raw;
-        }
-      }catch(e){}
-      return {
-        meta: { fecha_procesamiento:"", fuente:"", total_items:0, notas_parseo:[] },
-        parametros: { definicion_score_interaccion:"score_interaccion = likes", umbral_views_like_rate:0, MIN_VIEWS_FOR_RATE:0 },
-        data: { videos:[] }
-      };
-    }
-
-    function uniq(arr){
-      const s = new Set();
-      const out = [];
-      for (const x of arr){
-        const k = String(x);
-        if (!s.has(k)){ s.add(k); out.push(x); }
-      }
-      return out;
-    }
-
-    function colorBadge(i){
-      const classes = ["sky","purple","pink","lime"];
-      return classes[i % classes.length];
-    }
-
-    function el(tag, attrs={}, children=[]){
-      const node = document.createElement(tag);
-      for (const [k,v] of Object.entries(attrs)){
-        if (k === "class") node.className = v;
-        else if (k === "html") node.innerHTML = v;
-        else node.setAttribute(k, v);
-      }
-      for (const c of children){
-        if (typeof c === "string") node.appendChild(document.createTextNode(c));
-        else if (c) node.appendChild(c);
-      }
-      return node;
-    }
-
-    function clamp(n, a, b){ n = safeNum(n); return Math.max(a, Math.min(b, n)); }
-
+    // =========================
+    // DERIVADOS (mis cálculos) PERO alimentados por el JSON diario
+    // =========================
     function getThreshold(json){
       const p = json.parametros || {};
       const a = safeNum(p.umbral_views_like_rate);
@@ -767,33 +682,28 @@
 
     function normalizeVideos(json){
       const raw = (json.data && Array.isArray(json.data.videos)) ? json.data.videos : [];
-      // Dedup por url (estable)
       const seen = new Set();
       const out = [];
       for (const v of raw){
-        const url = safeStr(v.url);
-        const key = url || (safeStr(v.username) + "|" + safeStr(v.video_id));
-        if (!key) continue;
-        if (seen.has(key)) continue;
+        const url = (v.url || "").trim();
+        const key = url || ((v.username||"") + "|" + (v.video_id||""));
+        if(!key) continue;
+        if(seen.has(key)) continue;
         seen.add(key);
 
         const views = safeNum(v.views);
         const likes = safeNum(v.likes);
-
-        const like_rate = (views > 0) ? (likes / views) : 0;
-        const like_rate_pct = like_rate * 100;
+        const like_rate = views > 0 ? (likes/views) : 0;
 
         out.push({
           rank_input: safeNum(v.rank_input),
           url,
-          username: safeStr(v.username),
-          video_id: safeStr(v.video_id),
-          region: safeStr(v.region),
+          username: (v.username||"").trim(),
+          video_id: (v.video_id||"").trim(),
           views,
           likes,
-          score_interaccion: likes, // tu definición actual
           like_rate,
-          like_rate_pct
+          like_rate_pct: like_rate*100
         });
       }
       return out;
@@ -820,516 +730,267 @@
         (a,b)=> b.likes - a.likes,
         (a,b)=> b.views - a.views,
         (a,b)=> b.like_rate - a.like_rate
-      ).slice(0, 10).map((v,i)=> ({...v, rank:i+1}));
+      ).slice(0, 10);
 
       const cand = videos.filter(v=> v.views >= thr);
-      const topByRateFiltered = sortByMany(
+      const topByRate = sortByMany(
         (cand.length ? cand : videos),
         (a,b)=> b.like_rate - a.like_rate,
         (a,b)=> b.likes - a.likes,
         (a,b)=> b.views - a.views
-      ).slice(0, 10).map((v,i)=> ({...v, rank:i+1}));
+      ).slice(0, 10);
 
-      const topByRateUnfiltered = sortByMany(
-        videos,
-        (a,b)=> b.like_rate - a.like_rate,
-        (a,b)=> b.likes - a.likes,
-        (a,b)=> b.views - a.views
-      ).slice(0, 10).map((v,i)=> ({...v, rank:i+1}));
-
-      // Creators aggregation
-      const byCreator = new Map();
-      for (const v of videos){
-        if (!v.username) continue;
-        if (!byCreator.has(v.username)){
-          byCreator.set(v.username, {
-            username: v.username,
-            videos_total_en_dataset: 0,
-            sum_views: 0,
-            sum_likes: 0,
-            avg_like_rate: 0,
-            avg_like_rate_pct: 0,
-            top_count_likes: 0,
-            top_video_urls_likes: []
-          });
-        }
-        const c = byCreator.get(v.username);
-        c.videos_total_en_dataset += 1;
-        c.sum_views += v.views;
-        c.sum_likes += v.likes;
-      }
-
-      // top_count_likes basado en topByLikes
-      const topUrlsByCreator = new Map();
-      for (const v of topByLikes){
-        topUrlsByCreator.set(v.username, (topUrlsByCreator.get(v.username) || []).concat([v.url]));
-      }
-      for (const [u, urls] of topUrlsByCreator.entries()){
-        const c = byCreator.get(u);
-        if (!c) continue;
-        c.top_count_likes = urls.length;
-        c.top_video_urls_likes = urls.slice(0, 5);
-      }
-
-      for (const c of byCreator.values()){
-        // promedio de like_rate por video (no ponderado)
-        const userVideos = videos.filter(v=> v.username === c.username);
-        const avg = userVideos.length ? (userVideos.reduce((a,v)=> a+v.like_rate, 0) / userVideos.length) : 0;
-        c.avg_like_rate = avg;
-        c.avg_like_rate_pct = avg * 100;
-      }
-
-      const creators = sortByMany(
-        Array.from(byCreator.values()),
-        (a,b)=> b.top_count_likes - a.top_count_likes,
-        (a,b)=> b.sum_likes - a.sum_likes,
-        (a,b)=> b.avg_like_rate - a.avg_like_rate
-      ).map((c,i)=> ({...c, rank:i+1}));
-
-      // Outliers (simple y útil)
-      const outViews = sortByMany(videos, (a,b)=> b.views - a.views).slice(0, 5).map((v,i)=> ({
-        ...v,
-        explicacion: "pico de views (top " + (i+1) + ")"
-      }));
-      const outRate = sortByMany(videos, (a,b)=> b.like_rate - a.like_rate).slice(0, 5).map((v,i)=> ({
-        ...v,
-        explicacion: "pico de like rate (top " + (i+1) + ")"
-      }));
-
-      // Resumen + insights + acciones (sin GPT)
       const totalViews = videos.reduce((a,v)=> a+v.views, 0);
       const totalLikes = videos.reduce((a,v)=> a+v.likes, 0);
-      const avgRate = videos.length ? (videos.reduce((a,v)=> a+v.like_rate, 0) / videos.length) : 0;
+      const avgRate = videos.length ? videos.reduce((a,v)=> a+v.like_rate, 0) / videos.length : 0;
 
-      const bestLikes = topByLikes[0] || null;
-      const bestRate = topByRateFiltered[0] || null;
-      const topCreator = creators[0] || null;
-
-      const resumen =
-        videos.length
-          ? `Dataset: ${videos.length} videos · ${fmtK(totalViews)} views · ${fmtK(totalLikes)} likes · avg rate ${fmtPct(avgRate*100)}. Top likes: @${bestLikes?.username || "—"} (${fmtK(bestLikes?.likes || 0)}). Top rate (umbral ${thr}): @${bestRate?.username || "—"} (${fmtPct(bestRate?.like_rate_pct || 0)}). Dominio creator: @${topCreator?.username || "—"} (top_count ${safeNum(topCreator?.top_count_likes || 0)}).`
-          : "Sin datos para renderizar.";
-
-      const insights = [];
-      if (bestLikes) insights.push(`top likes: @${bestLikes.username} · ${fmtK(bestLikes.likes)} likes · ${fmtK(bestLikes.views)} views`);
-      if (bestRate) insights.push(`top eficiencia: @${bestRate.username} · rate ${fmtPct(bestRate.like_rate_pct)} con ${fmtK(bestRate.views)} views`);
-      if (topCreator) insights.push(`creador dominante: @${topCreator.username} · top_count ${topCreator.top_count_likes} · likes ${fmtK(topCreator.sum_likes)}`);
-      if (thr > 0) insights.push(`umbral like rate aplicado: ${thr} views (evita micro-virales falsos)`);
-
-      const acciones = [];
-      if (bestLikes) acciones.push({prioridad:"alta", accion:"clonar el patrón del top por likes", por_que:`replicar estructura/tema de @${bestLikes.username} (el video con más likes suele marcar la narrativa del día).`});
-      if (bestRate) acciones.push({prioridad:"alta", accion:"extraer hooks del top por like rate", por_que:`rate ${fmtPct(bestRate.like_rate_pct)} sugiere hook fuerte; úsalo para 3 variaciones.`});
-      if (topCreator) acciones.push({prioridad:"media", accion:"mapear creator dominante a ángulos reutilizables", por_que:`@${topCreator.username} domina por volumen/consistencia; arma lista de 5 ideas espejo.`});
-      acciones.push({prioridad:"media", accion:"revisar outliers", por_que:"los picos de views y rate suelen indicar formatos explotables o ruido (micro-muestras)."});
-      acciones.push({prioridad:"baja", accion:"limpiar dataset si hay duplicados", por_que:"si el top se repite con la misma URL, tu input está duplicando items y sesga rankings."});
-
-      // notas (solo si hay señales)
-      const notas = [];
-      if (!Array.isArray(json.data?.videos)) notas.push("data.videos no es array; revisa el parseo del JSON.");
-      if (videos.length === 0) notas.push("dataset vacío; revisa el módulo que alimenta el HTML.");
-      if (thr === 0) notas.push("umbral 0; define umbral_views_like_rate o MIN_VIEWS_FOR_RATE para filtrar like_rate.");
-
-      // reconstruye meta
       const meta = json.meta || {};
-      const fecha = safeStr(meta.fecha_procesamiento) || safeStr(meta.fecha_reporte) || "";
-      const fuente = safeStr(meta.fuente) || "";
-      const total_items = safeNum(meta.total_items) || safeNum(meta.total_items_dedup) || videos.length;
-
       return {
+        ...json,
         meta: {
-          fecha_procesamiento: fecha,
-          fuente,
-          total_items,
-          notas_parseo: (Array.isArray(meta.notas_parseo) ? meta.notas_parseo : []).concat(notas)
+          ...meta,
+          total_items: safeNum(meta.total_items) || safeNum(meta.total_items_dedup) || videos.length
         },
-        parametros: {
-          umbral_views_like_rate: thr,
-          definicion_score_interaccion: "score_interaccion = likes"
-        },
-        data: {
-          videos,
-          top_videos_by_likes: topByLikes,
-          top_videos_by_like_rate: topByRateFiltered,
-          top_videos_by_like_rate_unfiltered: topByRateUnfiltered,
-          creators
-        },
-        outliers: {
-          por_views: outViews,
-          por_like_rate: outRate
-        },
-        resumen,
-        insights,
-        acciones_recomendadas: acciones
+        _derived: {
+          videos, topByLikes, topByRate, thr, totalViews, totalLikes, avgRate
+        }
       };
     }
 
     // =========================
-    // Rendering
+    // RENDER UI
     // =========================
-    const state = {
-      json: buildDerived(parseIncoming(window.__TREND_DATA__)),
-      tab: "topLikes",
-      q: "",
-      creator: "",
-      sortBy: "likes_desc"
-    };
-
-    function computeKPIs(json){
-      const videos = (json.data && Array.isArray(json.data.videos)) ? json.data.videos : [];
-      const totalViews = videos.reduce((a,v)=> a + safeNum(v.views), 0);
-      const totalLikes = videos.reduce((a,v)=> a + safeNum(v.likes), 0);
-      const avgRate = videos.length ? (videos.reduce((a,v)=> a + safeNum(v.like_rate), 0) / videos.length) : 0;
-
-      const bestLikes = (json.data?.top_videos_by_likes && json.data.top_videos_by_likes[0]) || {};
-      const bestRate = (json.data?.top_videos_by_like_rate && json.data.top_videos_by_like_rate[0]) || {};
-      const topCreator = (json.data?.creators && json.data.creators[0]) || {};
-
-      return {
-        totalVideos: videos.length,
-        totalViews,
-        totalLikes,
-        avgRate,
-        bestLikes,
-        bestRate,
-        topCreator
-      };
+    function kpiCard(label, value, hint){
+      return `
+        <div class="kpi">
+          <div class="label">${escapeHtml(label)}</div>
+          <div class="value">${escapeHtml(String(value))}</div>
+          <div class="hint">${escapeHtml(String(hint || ""))}</div>
+        </div>
+      `;
     }
 
-    function setMeta(json){
-      document.getElementById("metaDate").textContent = safeStr(json.meta?.fecha_procesamiento) || "—";
-      document.getElementById("metaCount").textContent = String(safeNum(json.meta?.total_items) || (json.data?.videos?.length || 0));
-      document.getElementById("thresholdPill").textContent = "umbral: " + String(getThreshold(json));
-      document.getElementById("sourcePill").textContent = "fuente: " + (safeStr(json.meta?.fuente) || "—");
-    }
-
-    function renderKPIs(json){
-      const k = computeKPIs(json);
-      const kpis = [
-        { label: "Total videos", value: k.totalVideos, hint: "dataset" , tone:"sky"},
-        { label: "Views totales", value: fmtK(k.totalViews), hint: "suma" , tone:"purple"},
-        { label: "Likes totales", value: fmtK(k.totalLikes), hint: "suma" , tone:"pink"},
-        { label: "Avg like rate", value: fmtPct(k.avgRate*100), hint: "promedio" , tone:"lime"},
-      ];
-
-      const root = document.getElementById("kpis");
-      root.innerHTML = "";
-      kpis.forEach((x)=>{
-        const node = el("div", {class:"kpi"}, [
-          el("div", {class:"label"}, [x.label]),
-          el("div", {class:"value"}, [String(x.value)]),
-          el("div", {class:"hint"}, [x.hint])
-        ]);
-        node.style.borderColor =
-          x.tone === "sky" ? "rgba(57,214,255,0.22)" :
-          x.tone === "purple" ? "rgba(168,85,247,0.22)" :
-          x.tone === "pink" ? "rgba(255,62,165,0.22)" :
-          "rgba(158,255,122,0.22)";
-        root.appendChild(node);
-      });
-
-      const subtitle = document.getElementById("subtitle");
-      const topCreator = safeStr(k.topCreator.username);
-      if (topCreator){
-        subtitle.textContent = "Dominio del día: @" + topCreator + " · top_count: " + String(safeNum(k.topCreator.top_count_likes));
-      } else {
-        subtitle.textContent = "Panel de rendimiento y rankings diarios";
-      }
-    }
-
-    function videoCard(rank, v, badgeTone){
-      const url = safeStr(v.url);
-      const username = safeStr(v.username);
-      const vid = safeStr(v.video_id);
-      const views = safeNum(v.views);
-      const likes = safeNum(v.likes);
-      const lr = safeNum(v.like_rate);
-      const lrp = safeNum(v.like_rate_pct);
-
-      const title = "@" + username + " · " + vid;
-      return el("div", {class:"item"}, [
-        el("div", {class:"badge " + badgeTone}, [String(rank)]),
-        el("div", {class:"itemMain"}, [
-          el("div", {class:"itemTop"}, [
-            el("div", {class:"itemTitle"}, [
-              el("a", {href: url || "#", target:"_blank", rel:"noopener noreferrer"}, [title])
-            ]),
-            el("div", {class:"pill mono"}, ["rate: " + fmtPct(lrp)])
-          ]),
-          el("div", {class:"itemMeta"}, [
-            el("span", {class:"metaTag"}, [el("span",{class:"dot sky"}), "views ", fmtK(views)]),
-            el("span", {class:"metaTag"}, [el("span",{class:"dot pink"}), "likes ", fmtK(likes)]),
-            el("span", {class:"metaTag"}, [el("span",{class:"dot purple"}), "lr ", (Math.round(lr*1e6)/1e6).toFixed(6).replace(/0+$/,"").replace(/\.$/,"")])
-          ]),
-          safeStr(v.explicacion) ? el("div", {class:"cardSub", style:"margin-top:8px;"}, [safeStr(v.explicacion)]) : null
-        ])
-      ]);
-    }
-
-    function renderTopLists(json){
-      const topLikes = (json.data?.top_videos_by_likes && Array.isArray(json.data.top_videos_by_likes)) ? json.data.top_videos_by_likes : [];
-      const topRate = (json.data?.top_videos_by_like_rate && Array.isArray(json.data.top_videos_by_like_rate)) ? json.data.top_videos_by_like_rate : [];
-
-      const likesRoot = document.getElementById("topLikesList");
-      likesRoot.innerHTML = "";
-      topLikes.forEach((v, i)=>{
-        likesRoot.appendChild(videoCard(safeNum(v.rank) || (i+1), v, colorBadge(i)));
-      });
-      document.getElementById("topLikesHint").textContent = "top: " + String(topLikes.length || 0);
-
-      const rateRoot = document.getElementById("topRateList");
-      rateRoot.innerHTML = "";
-      topRate.forEach((v, i)=>{
-        rateRoot.appendChild(videoCard(safeNum(v.rank) || (i+1), v, colorBadge(i)));
-      });
-      document.getElementById("topRateHint").textContent = "candidatos: " + String(topRate.length || 0);
-    }
-
-    function renderCreators(json){
-      const creators = (json.data?.creators && Array.isArray(json.data.creators)) ? json.data.creators : [];
-      const tbody = document.getElementById("creatorsTbody");
-      tbody.innerHTML = "";
-
-      creators.forEach((c, idx)=>{
-        const tr = document.createElement("tr");
-        const rank = safeNum(c.rank) || (idx+1);
-        const username = safeStr(c.username);
-        const topCount = safeNum(c.top_count_likes);
-        const likes = safeNum(c.sum_likes);
-        const views = safeNum(c.sum_views);
-        const avgRatePct = safeNum(c.avg_like_rate_pct);
-
-        tr.innerHTML = `
-          <td class="mono nowrap">${rank}</td>
-          <td class="mono">@${username}</td>
-          <td class="right mono">${topCount}</td>
-          <td class="right mono">${fmtK(likes)}</td>
-          <td class="right mono">${fmtK(views)}</td>
-          <td class="right mono">${fmtPct(avgRatePct)}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      document.getElementById("creatorCountPill").textContent = "creadores: " + String(creators.length || 0);
-
-      // populate filter
-      const videos = (json.data?.videos && Array.isArray(json.data.videos)) ? json.data.videos : [];
-      const options = uniq(videos.map(v=> safeStr(v.username)).filter(Boolean)).sort((a,b)=> a.localeCompare(b));
-      const select = document.getElementById("creatorFilter");
-      const current = select.value;
-      select.innerHTML = `<option value="">Todos los creadores</option>` + options.map(u=> `<option value="${u}">@${u}</option>`).join("");
-      select.value = current;
-    }
-
-    function applyFilters(videos){
-      let out = videos.slice();
-
-      const q = state.q.trim().toLowerCase();
-      if (q){
-        out = out.filter(v=>{
-          const u = safeStr(v.username).toLowerCase();
-          const id = safeStr(v.video_id).toLowerCase();
-          return u.includes(q) || id.includes(q);
-        });
-      }
-
-      if (state.creator){
-        out = out.filter(v=> safeStr(v.username) === state.creator);
-      }
-
-      const s = state.sortBy;
-      const sorters = {
-        likes_desc: (a,b)=> b.likes-a.likes || b.views-a.views,
-        views_desc: (a,b)=> b.views-a.views || b.likes-a.likes,
-        like_rate_desc: (a,b)=> b.like_rate-a.like_rate || b.likes-a.likes,
-        rank_input_asc: (a,b)=> a.rank_input-b.rank_input
-      };
-      out.sort(sorters[s] || sorters.likes_desc);
-      return out;
-    }
-
-    function renderVideosTable(json){
-      const videos = (json.data?.videos && Array.isArray(json.data.videos)) ? json.data.videos : [];
-      const filtered = applyFilters(videos);
-
-      const tbody = document.getElementById("videosTbody");
-      tbody.innerHTML = "";
-
-      filtered.forEach((v, idx)=>{
-        const tr = document.createElement("tr");
-        const url = safeStr(v.url);
-        const username = safeStr(v.username);
-        const vid = safeStr(v.video_id);
-
-        tr.innerHTML = `
-          <td class="mono nowrap">${idx+1}</td>
-          <td>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <a href="${url || "#"}" target="_blank" rel="noopener noreferrer" style="font-weight:700; color:rgba(255,255,255,0.92); text-decoration:none;">
-                @${username} · ${vid}
-              </a>
-              <div class="muted mono" style="font-size:11px; opacity:0.85;">${url ? url : ""}</div>
+    function videoItem(i, t){
+      // t puede ser string (top_videos) o video object derivado
+      if(typeof t === "string"){
+        return `
+          <div class="item">
+            <div class="badge">${i+1}</div>
+            <div class="itemMain">
+              <div class="itemTop">
+                <div class="itemTitle">${escapeHtml(t)}</div>
+              </div>
             </div>
-          </td>
-          <td class="right mono nowrap">${fmtK(safeNum(v.views))}</td>
-          <td class="right mono nowrap">${fmtK(safeNum(v.likes))}</td>
-          <td class="right mono nowrap">${fmtPct(safeNum(v.like_rate_pct))}</td>
+          </div>
         `;
-        tbody.appendChild(tr);
-      });
-
-      document.getElementById("allCountPill").textContent = "mostrando: " + filtered.length + " / " + videos.length;
-    }
-
-    function renderOutliers(json){
-      const ov = (json.outliers?.por_views && Array.isArray(json.outliers.por_views)) ? json.outliers.por_views : [];
-      const or = (json.outliers?.por_like_rate && Array.isArray(json.outliers.por_like_rate)) ? json.outliers.por_like_rate : [];
-
-      const outViews = document.getElementById("outViews");
-      const outRate = document.getElementById("outRate");
-      outViews.innerHTML = "";
-      outRate.innerHTML = "";
-
-      ov.forEach((x,i)=>{
-        outViews.appendChild(videoCard(i+1, x, colorBadge(i)));
-      });
-
-      or.forEach((x,i)=>{
-        outRate.appendChild(videoCard(i+1, x, colorBadge(i)));
-      });
-
-      document.getElementById("outlierPill").textContent = "views: " + ov.length + " · rate: " + or.length;
-    }
-
-    function renderNotes(json){
-      const notes = (json.meta?.notas_parseo && Array.isArray(json.meta.notas_parseo)) ? json.meta.notas_parseo : [];
-      const root = document.getElementById("notesList");
-      root.innerHTML = "";
-      if (!notes.length){
-        root.appendChild(el("div",{class:"notice"},["—"]));
-        return;
       }
-      notes.forEach((t,i)=>{
-        root.appendChild(el("div",{class:"item"},[
-          el("div",{class:"badge "+colorBadge(i)},["!"]),
-          el("div",{class:"itemMain"},[
-            el("div",{class:"cardSub", style:"margin:0; color:rgba(255,255,255,0.78);"},[safeStr(t)])
-          ])
-        ]));
-      });
+
+      const username = t.username || "—";
+      const vid = t.video_id || "—";
+      const title = `@${username} · ${vid}`;
+      const url = t.url || "#";
+
+      return `
+        <div class="item">
+          <div class="badge">${i+1}</div>
+          <div class="itemMain">
+            <div class="itemTop">
+              <div class="itemTitle"><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a></div>
+              <div class="pill" style="padding:6px 10px; font-family: var(--mono);">rate: ${escapeHtml(fmtPct(t.like_rate_pct))}</div>
+            </div>
+            <div class="itemMeta">
+              <span class="metaTag">views ${escapeHtml(fmtK(t.views))}</span>
+              <span class="metaTag">likes ${escapeHtml(fmtK(t.likes))}</span>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
-    function renderSummary(json){
-      document.getElementById("resumenBox").textContent = safeStr(json.resumen) || "—";
+    function chipItem(i, t){
+      return `
+        <div class="item">
+          <div class="badge">${i+1}</div>
+          <div class="itemMain">
+            <div class="itemTop">
+              <div class="itemTitle">${escapeHtml(t)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
 
-      const insights = (json.insights && Array.isArray(json.insights)) ? json.insights : [];
-      const box = document.getElementById("insightsBox");
-      box.innerHTML = "";
-      if (!insights.length){
-        box.appendChild(el("div",{class:"muted"},["—"]));
+    function render(data, ymd, resolvedUrl){
+      // meta pills (misma lógica del panel por días)
+      setText("srcPill", "fuente: " + (data?.meta?.fuente ?? "—"));
+      setText("datePill", "día: " + (ymd ? formatNiceDate(ymd) : "—"));
+      setText("fetchPill", "sync: " + new Date().toLocaleString("es-CO"));
+      setText("filePill", resolvedUrl ?? "—");
+
+      const derived = buildDerived(data);
+      const thr = derived?._derived?.thr ?? 0;
+      const videos = derived?._derived?.videos ?? [];
+
+      setText("metaCount", String(derived?.meta?.total_items ?? videos.length ?? 0));
+      setText("thr", String(thr || 0));
+
+      // Tu payload del día (por si existe)
+      const top_videos_raw = ensureArray(data?.top_videos);
+      const fet_raw = normalizeFetiches(data?.top_fetiches);
+      const ideas = ensureArray(data?.ideas_contenido);
+      const titles = ensureArray(data?.titulos_propuestos);
+
+      // IMPORTANTE: si top_videos viene vacío, usamos derivados por likes
+      const topVideos =
+        top_videos_raw.length
+          ? top_videos_raw
+          : (derived?._derived?.topByLikes ?? []);
+
+      // KPIs
+      const totalViews = derived?._derived?.totalViews ?? 0;
+      const totalLikes = derived?._derived?.totalLikes ?? 0;
+      const avgRate = derived?._derived?.avgRate ?? 0;
+
+      const kpisHtml = [
+        kpiCard("Videos", videos.length, "dataset"),
+        kpiCard("Views", fmtK(totalViews), "suma"),
+        kpiCard("Likes", fmtK(totalLikes), "suma"),
+        kpiCard("Avg rate", fmtPct(avgRate*100), "promedio"),
+      ].join("");
+
+      document.getElementById("kpis").innerHTML = kpisHtml;
+
+      // Top videos
+      const topRoot = document.getElementById("topList");
+      topRoot.innerHTML = "";
+      if(topVideos.length){
+        topRoot.innerHTML = topVideos.map((t,i)=> videoItem(i,t)).join("");
+        show(document.getElementById("topEmpty"), false);
       } else {
-        insights.forEach((t,i)=>{
-          box.appendChild(el("div",{class:"metaTag"},[
-            el("span",{class:"dot "+colorBadge(i)}),
-            safeStr(t)
-          ]));
-        });
+        show(document.getElementById("topEmpty"), true);
       }
+      setText("topHint", "top: " + String(topVideos.length || 0));
 
-      const acts = (json.acciones_recomendadas && Array.isArray(json.acciones_recomendadas)) ? json.acciones_recomendadas : [];
-      document.getElementById("actionsPill").textContent = "items: " + String(acts.length || 0);
-
-      const list = document.getElementById("actionsList");
-      list.innerHTML = "";
-      if (!acts.length){
-        list.appendChild(el("div",{class:"notice"},["—"]));
+      // Fetiches
+      const fetRoot = document.getElementById("fetList");
+      fetRoot.innerHTML = "";
+      if(fet_raw.length){
+        fetRoot.innerHTML = fet_raw.map((t,i)=> chipItem(i,t)).join("");
+        show(document.getElementById("fetEmpty"), false);
       } else {
-        acts.forEach((a,i)=>{
-          const pri = safeStr(a.prioridad) || "media";
-          const priDot = pri === "alta" ? "pink" : (pri === "baja" ? "lime" : "purple");
-          list.appendChild(el("div",{class:"item"},[
-            el("div",{class:"badge "+priDot},[(i+1).toString()]),
-            el("div",{class:"itemMain"},[
-              el("div",{class:"itemTop"},[
-                el("div",{class:"itemTitle"},[safeStr(a.accion) || "Acción"]),
-                el("div",{class:"pill mono"},["prioridad: " + pri])
-              ]),
-              el("div",{class:"cardSub", style:"margin-top:8px;"},[safeStr(a.por_que) || ""])
-            ])
-          ]));
-        });
+        show(document.getElementById("fetEmpty"), true);
       }
-    }
+      setText("fetHint", "items: " + String(fet_raw.length || 0));
 
-    function switchTab(tab){
-      state.tab = tab;
-      const map = {
-        topLikes: "tab_topLikes",
-        topRate: "tab_topRate",
-        allVideos: "tab_allVideos",
-        creators: "tab_creators",
-        outliers: "tab_outliers"
-      };
+      // Analítica / correlaciones
+      setText("trendText", data?.analisis_tendencias ?? "—");
+      setText("corrText", data?.correlaciones ?? "—");
+      setText("anaHint", "ok");
 
-      Object.values(map).forEach(id=>{
-        const elx = document.getElementById(id);
-        if (elx) elx.style.display = "none";
-      });
-      const activeId = map[tab];
-      const active = document.getElementById(activeId);
-      if (active) active.style.display = "";
+      // Ideas
+      const ideasRoot = document.getElementById("ideasList");
+      ideasRoot.innerHTML = "";
+      if(ideas.length){
+        ideasRoot.innerHTML = ideas.map((t,i)=> chipItem(i,t)).join("");
+        show(document.getElementById("ideasEmpty"), false);
+      } else {
+        show(document.getElementById("ideasEmpty"), true);
+      }
 
-      document.querySelectorAll("#viewTabs button").forEach(b=>{
-        b.classList.toggle("active", b.dataset.tab === tab);
-      });
-    }
+      // Titles
+      const titlesRoot = document.getElementById("titlesList");
+      titlesRoot.innerHTML = "";
+      if(titles.length){
+        titlesRoot.innerHTML = titles.map((t,i)=> chipItem(i,t)).join("");
+        show(document.getElementById("titlesEmpty"), false);
+      } else {
+        show(document.getElementById("titlesEmpty"), true);
+      }
 
-    function renderAll(){
-      const json = state.json;
+      setText("ideaHint", `ideas: ${ideas.length || 0} · títulos: ${titles.length || 0}`);
 
-      setMeta(json);
-      renderKPIs(json);
-      renderTopLists(json);
-      renderCreators(json);
-      renderVideosTable(json);
-      renderOutliers(json);
-      renderNotes(json);
-      renderSummary(json);
-
-      switchTab(state.tab);
+      // Notas
+      const notas = (Array.isArray(data?.meta?.notas_parseo) ? data.meta.notas_parseo : []);
+      setText("notesText", notas.length ? notas.join("\n") : "—");
+      setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
+      document.getElementById("subtitle").textContent = "Panel diario con navegación por fechas (fallback activo)";
     }
 
     // =========================
-    // Events
+    // LOAD WITH DAY NAV + FALLBACK
     // =========================
+    let selectedDate = new Date();
+
+    async function loadDate(d){
+      const ymd = toYMD(d);
+      const url = fileUrl(ymd);
+      setText("statusLine", `cargando: ${ymd}...`);
+      try{
+        const raw = await fetchJson(url);
+        const data = unwrapMakePayload(raw);
+        if(!data) throw new Error("JSON inválido");
+        render(data, ymd, url);
+        selectedDate = d;
+        return true;
+      } catch(e){
+        return false;
+      }
+    }
+
+    async function loadWithFallback(startDate){
+      for(let i=0; i<=MAX_FALLBACK_DAYS; i++){
+        const d = addDays(startDate, -i);
+        const ok = await loadDate(d);
+        if(ok) return;
+      }
+      // vaciar UI si no hay nada
+      setText("srcPill", "fuente: —");
+      setText("datePill", "día: —");
+      setText("fetchPill", "sync: —");
+      setText("filePill", "—");
+      setText("metaCount", "0");
+      setText("thr", "—");
+
+      document.getElementById("kpis").innerHTML = "";
+      document.getElementById("topList").innerHTML = "";
+      document.getElementById("fetList").innerHTML = "";
+      document.getElementById("ideasList").innerHTML = "";
+      document.getElementById("titlesList").innerHTML = "";
+
+      show(document.getElementById("topEmpty"), true);
+      show(document.getElementById("fetEmpty"), true);
+      show(document.getElementById("ideasEmpty"), true);
+      show(document.getElementById("titlesEmpty"), true);
+
+      setText("trendText", "No se encontró ningún reporte en los últimos días. Verifica que existan archivos en /reports.");
+      setText("corrText", "—");
+
+      setText("statusLine", "sin datos (no se encontraron archivos recientes)");
+      setText("notesText", "—");
+    }
+
+    // =========================
+    // EVENTS
+    // =========================
+    document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
+    document.getElementById("btnReload").addEventListener("click", () => loadWithFallback(selectedDate));
+    document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
+    document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
+
+    // filtros
     document.getElementById("q").addEventListener("input", (e)=>{
-      state.q = e.target.value || "";
-      renderVideosTable(state.json);
+      const q = (e.target.value || "").trim().toLowerCase();
+      const topRoot = document.getElementById("topList");
+      const items = Array.from(topRoot.querySelectorAll(".item"));
+      items.forEach(it=>{
+        const txt = it.innerText.toLowerCase();
+        it.style.display = txt.includes(q) ? "" : "none";
+      });
     });
 
-    document.getElementById("creatorFilter").addEventListener("change", (e)=>{
-      state.creator = e.target.value || "";
-      renderVideosTable(state.json);
-    });
-
-    document.getElementById("sortBy").addEventListener("change", (e)=>{
-      state.sortBy = e.target.value || "likes_desc";
-      renderVideosTable(state.json);
-    });
-
-    document.getElementById("viewTabs").addEventListener("click", (e)=>{
-      const btn = e.target.closest("button");
-      if (!btn) return;
-      switchTab(btn.dataset.tab);
-    });
-
-    document.getElementById("reloadBtn").addEventListener("click", ()=>{
-      const parsed = parseIncoming(window.__TREND_DATA__);
-      state.json = buildDerived(parsed);
-      renderAll();
-    });
-
-    // First render
-    renderAll();
+    // auto-load + refresh
+    loadWithFallback(new Date());
+    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
   </script>
 </body>
 </html>
