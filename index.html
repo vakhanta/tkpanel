@@ -80,6 +80,13 @@
     }
     button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);box-shadow:0 14px 40px rgba(0,0,0,.45)}
     button:active{transform:translateY(1px)}
+    .primary{
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
+        linear-gradient(135deg, rgba(57,217,255,.95), rgba(255,59,212,.75));
+      border-color:rgba(255,255,255,.22);
+      color:rgba(0,0,0,.92);
+    }
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px}
     .card{
       grid-column:span 12;
@@ -192,6 +199,9 @@
       </div>
 
       <div class="actions">
+        <button id="btnPrev"><span class="material-symbols-rounded">chevron_left</span>día anterior</button>
+        <button id="btnNext"><span class="material-symbols-rounded">chevron_right</span>día siguiente</button>
+        <button class="primary" id="btnToday"><span class="material-symbols-rounded">today</span>hoy</button>
         <button id="btnReload"><span class="material-symbols-rounded">refresh</span>recargar</button>
       </div>
     </div>
@@ -280,8 +290,11 @@
     const MIN_VIEWS_FOR_RATE_DEFAULT = 10000;
     const MAX_TOP = 10;
 
+    // ====== NAV (copiada de tu lógica Pornhub) ======
+    const REPORTS_DIR = "reports";
+    const MAX_FALLBACK_DAYS = 14;
+
     // Si quieres inyectar directo (opcional), pon aquí el objeto {text:"..."}
-    // const BUNDLE_PAYLOAD = {"text":"<li>...</li>"};
     const BUNDLE_PAYLOAD = null;
 
     // =========================
@@ -289,6 +302,7 @@
     // =========================
     const pad2 = (n) => String(n).padStart(2, "0");
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+    const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
 
     function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
     function show(el, yes){ el.style.display = yes ? "" : "none"; }
@@ -328,9 +342,7 @@
     }
 
     // =========================
-    // Parse the "text" field (HTML string with many <li>)
-    // Robust: username/views/likes by order of <strong> nodes:
-    //   0: @user, 1: views, 2: likes
+    // Parse the "text" field: it contains many <li> blocks
     // =========================
     function parseItemsFromText(htmlText, errors){
       const out = [];
@@ -382,7 +394,7 @@
           continue;
         }
         if(!map.has(key)){
-          map.set(key, it);
+          map.set(keykey = key, it);
         } else {
           const cur = map.get(key);
           if((it.views > cur.views) || (it.views === cur.views && it.likes > cur.likes)){
@@ -545,8 +557,8 @@
     // =========================
     // Load JSON from reports/AAAA-MM-DD.json
     // Supports:
-    // 1) {text:"..."}  (tu caso)
-    // 2) [{json:"{...}"}] (wrapper Make viejo)
+    // 1) {text:"..."}
+    // 2) [{json:"{...}"}]
     // =========================
     function unwrapMake(payload){
       if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
@@ -557,46 +569,31 @@
       return payload;
     }
 
-    function getReportDateFromUrl(){
-      const u = new URL(window.location.href);
-      const ymd = u.searchParams.get("d");
-      return (ymd && /^\d{4}-\d{2}-\d{2}$/.test(ymd)) ? ymd : null;
-    }
+    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
 
-    async function fetchReport(ymd){
-      const path = `reports/${ymd}.json`;
-      setText("src", path);
-      const res = await fetch(path, { cache: "no-store" });
-      if(!res.ok) throw new Error(`no se pudo leer ${path} (HTTP ${res.status})`);
+    async function fetchJson(url){
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return await res.json();
     }
 
-    async function getBundlePayload(){
-      if (BUNDLE_PAYLOAD) return BUNDLE_PAYLOAD;
+    // ====== NAV state ======
+    let selectedDate = new Date();
 
-      const forced = getReportDateFromUrl();
-      if(forced) return await fetchReport(forced);
-
-      const today = toYMD(new Date());
-      return await fetchReport(today);
-    }
-
-    // =========================
-    // Main
-    // =========================
-    async function run(){
+    async function loadDate(d){
       const errors = [];
-      const today = toYMD(new Date());
-      setText("dateLabel", today);
+      const ymd = toYMD(d);
+      const url = fileUrl(ymd);
 
-      const minViews = MIN_VIEWS_FOR_RATE_DEFAULT;
-      setText("minViewsLabel", `umbral: ${fmtInt(minViews)} views`);
+      setText("src", url);
+      setText("dateLabel", ymd);
+      setText("minViewsLabel", `umbral: ${fmtInt(MIN_VIEWS_FOR_RATE_DEFAULT)} views`);
+      setText("statusLine", `cargando: ${ymd}...`);
 
       try{
-        const rawPayload = await getBundlePayload();
-        const obj = unwrapMake(rawPayload);
+        const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
+        const obj = unwrapMake(raw);
         if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
-
         const htmlText = String(obj.text || "");
         if(!htmlText) throw new Error("falta obj.text con los <li>");
 
@@ -612,10 +609,8 @@
         const after = items.length;
 
         const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-
-        const filtered = items.filter(v => safeNum(v.views) >= minViews);
+        const filtered = items.filter(v => safeNum(v.views) >= MIN_VIEWS_FOR_RATE_DEFAULT);
         const topRateFiltered = sortTopRate(filtered).slice(0, MAX_TOP);
-
         const creators = aggregateCreators(items, topLikes);
 
         setText("kpiItems", String(after));
@@ -628,21 +623,44 @@
         renderList("listCreators", "emptyCreators", creators, (c)=>makeCreatorItem(c));
 
         setText("errorsLine", errors.length ? `errores: ${errors.slice(0,6).join(" | ")}${errors.length>6 ? " | ..." : ""}` : "sin errores");
+
+        selectedDate = d;
+        return true;
       } catch(e){
-        setText("statusLine", `error: ${e.message || e}`);
-        setText("errorsLine", "—");
-        setText("kpiItems", "0"); setText("kpiTopLikes", "0"); setText("kpiTopRate", "0");
-        document.getElementById("listTopLikes").innerHTML = "";
-        document.getElementById("listTopRate").innerHTML = "";
-        document.getElementById("listCreators").innerHTML = "";
-        show(document.getElementById("emptyTopLikes"), true);
-        show(document.getElementById("emptyTopRate"), true);
-        show(document.getElementById("emptyCreators"), true);
+        // No tocamos el render general (lo deja en empty), solo reportamos fallo
+        setText("statusLine", `no existe o falló: ${ymd} (${e.message || e})`);
+        return false;
       }
     }
 
-    document.getElementById("btnReload").addEventListener("click", run);
-    run();
+    async function loadWithFallback(startDate){
+      for(let i=0; i<=MAX_FALLBACK_DAYS; i++){
+        const d = addDays(startDate, -i);
+        const ok = await loadDate(d);
+        if(ok) return;
+      }
+
+      // fallback final: limpia como ya lo hacías cuando falla
+      setText("statusLine", "sin datos (no se encontraron archivos recientes)");
+      setText("errorsLine", "—");
+      setText("kpiItems", "0"); setText("kpiTopLikes", "0"); setText("kpiTopRate", "0");
+      document.getElementById("listTopLikes").innerHTML = "";
+      document.getElementById("listTopRate").innerHTML = "";
+      document.getElementById("listCreators").innerHTML = "";
+      show(document.getElementById("emptyTopLikes"), true);
+      show(document.getElementById("emptyTopRate"), true);
+      show(document.getElementById("emptyCreators"), true);
+    }
+
+    // ====== NAV buttons ======
+    document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
+    document.getElementById("btnReload").addEventListener("click", () => loadWithFallback(selectedDate));
+    document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
+    document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
+
+    // Start + auto refresh
+    loadWithFallback(new Date());
+    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
   </script>
 </body>
 </html>
