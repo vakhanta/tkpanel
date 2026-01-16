@@ -8,23 +8,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,600,0,0" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,700,0,0" rel="stylesheet" />
 
   <style>
     :root{
-      --bg: #070707;
-      --panel: rgba(255,255,255,.06);
-      --border: rgba(255,255,255,.12);
+      /* Memphis / TikTok-ish */
+      --bg0: #070812;
+      --bg1: #0b1022;
+
+      --panel: rgba(255,255,255,.08);
+      --panel2: rgba(0,0,0,.18);
+      --border: rgba(255,255,255,.16);
+
       --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.68);
+      --muted: rgba(255,255,255,.70);
       --muted2: rgba(255,255,255,.55);
 
-      --accent: #ff9000;
-      --accent2: #ffb300;
+      --c1: #39d9ff;   /* celeste vibrante */
+      --c2: #a855ff;   /* púrpura */
+      --c3: #ff3bd4;   /* magenta */
+      --c4: #19f3a8;   /* verde menta */
+      --c5: #ffd24a;   /* amarillo */
 
       --radius: 18px;
-      --shadow: 0 12px 36px rgba(0,0,0,.45);
-      --blur: 12px;
+      --shadow: 0 14px 44px rgba(0,0,0,.55);
+      --blur: 14px;
 
       --max: 1100px;
     }
@@ -36,10 +44,11 @@
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(1200px 680px at 15% 0%, rgba(255,144,0,.20), transparent 58%),
-        radial-gradient(900px 600px at 85% 0%, rgba(255,179,0,.12), transparent 60%),
-        radial-gradient(900px 700px at 50% 100%, rgba(255,144,0,.10), transparent 60%),
-        var(--bg);
+        radial-gradient(1200px 680px at 10% 0%, rgba(57,217,255,.22), transparent 58%),
+        radial-gradient(900px 600px at 90% 0%, rgba(168,85,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 40% 105%, rgba(255,59,212,.16), transparent 60%),
+        radial-gradient(700px 500px at 80% 90%, rgba(25,243,168,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x: hidden;
     }
 
@@ -54,18 +63,24 @@
 
     .logo{
       width: 42px; height: 42px; border-radius: 14px;
-      background: linear-gradient(135deg, rgba(255,144,0,.95), rgba(255,179,0,.70));
-      box-shadow: 0 14px 36px rgba(0,0,0,.55);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.26), transparent 42%),
+        linear-gradient(135deg, rgba(57,217,255,.95), rgba(168,85,255,.85));
+      box-shadow: 0 18px 48px rgba(0,0,0,.60);
       display:flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.20);
       position: relative;
       overflow: hidden;
     }
     .logo:after{
       content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 40%);
-      transform: rotate(20deg);
+      position:absolute; inset:-55%;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,59,212,.28), transparent 42%),
+        radial-gradient(circle at 70% 70%, rgba(25,243,168,.18), transparent 46%);
+      transform: rotate(18deg);
+      filter: blur(1px);
+      opacity: .9;
     }
     .logo .material-symbols-rounded{ font-size: 22px; color: rgba(0,0,0,.92); z-index:1; }
 
@@ -74,7 +89,7 @@
       font-size: 18px;
       margin: 0 0 2px;
       letter-spacing: -0.02em;
-      font-weight: 800;
+      font-weight: 900;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -92,11 +107,11 @@
       display:inline-flex; align-items:center; gap: 6px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
       backdrop-filter: blur(var(--blur));
     }
-    .pill .material-symbols-rounded{ font-size: 16px; color: rgba(255,255,255,.68); }
+    .pill .material-symbols-rounded{ font-size: 16px; color: rgba(255,255,255,.70); }
 
     .actions{
       display:flex;
@@ -107,27 +122,33 @@
 
     button{
       cursor:pointer;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.06);
       color: var(--text);
       padding: 10px 12px;
       border-radius: 14px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.01em;
       display:inline-flex;
       align-items:center;
       gap: 8px;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
       backdrop-filter: blur(var(--blur));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    button:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.16); }
+    button:hover{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    }
     button:active{ transform: translateY(1px); }
 
     .primary{
-      background: linear-gradient(135deg, rgba(255,144,0,.95), rgba(255,179,0,.65));
-      border-color: rgba(255,255,255,.18);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
+        linear-gradient(135deg, rgba(57,217,255,.95), rgba(255,59,212,.75));
+      border-color: rgba(255,255,255,.22);
       color: rgba(0,0,0,.92);
-      box-shadow: 0 18px 50px rgba(0,0,0,.42);
     }
 
     .grid{
@@ -139,24 +160,40 @@
 
     .card{
       grid-column: span 12;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.16);
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(var(--blur));
+      position: relative;
+      overflow: hidden;
+    }
+    /* Memphis confetti */
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(57,217,255,.12), transparent 26%),
+        radial-gradient(circle at 85% 30%, rgba(168,85,255,.10), transparent 30%),
+        radial-gradient(circle at 70% 85%, rgba(255,59,212,.10), transparent 30%),
+        radial-gradient(circle at 30% 85%, rgba(25,243,168,.08), transparent 30%),
+        radial-gradient(circle at 10% 70%, rgba(255,210,74,.07), transparent 28%);
+      pointer-events:none;
     }
 
     .cardhead{
       display:flex; align-items:flex-start; justify-content:space-between;
       gap: 12px; margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
     .cardhead h2{
       font-size: 13px;
       margin: 0;
-      color: rgba(255,255,255,.86);
-      font-weight: 800;
-      letter-spacing: .08em;
+      color: rgba(255,255,255,.90);
+      font-weight: 900;
+      letter-spacing: .09em;
       text-transform: uppercase;
     }
     .hint{ color: var(--muted2); font-size: 12px; margin-top: 2px; }
@@ -165,12 +202,14 @@
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 14px;
+      position: relative;
+      z-index: 1;
     }
     .kpi{
       grid-column: span 12;
       padding: 14px;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.18);
       display:flex;
       gap: 12px;
@@ -179,18 +218,22 @@
     .kpi .ic{
       width: 40px; height: 40px; border-radius: 14px;
       display:flex; align-items:center; justify-content:center;
-      background: rgba(255,144,0,.18);
-      border: 1px solid rgba(255,144,0,.28);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      background: rgba(57,217,255,.16);
+      border: 1px solid rgba(57,217,255,.26);
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
     }
+    .kpi .ic.purple{ background: rgba(168,85,255,.16); border-color: rgba(168,85,255,.26); }
+    .kpi .ic.pink{ background: rgba(255,59,212,.14); border-color: rgba(255,59,212,.24); }
     .kpi .ic .material-symbols-rounded{ color: rgba(255,255,255,.92); }
-    .kpi .label{ color: var(--muted); font-size: 12.5px; font-weight: 700; }
-    .kpi .val{ font-size: 20px; font-weight: 900; letter-spacing: -0.03em; margin-top: 2px; }
+    .kpi .label{ color: var(--muted); font-size: 12.5px; font-weight: 800; }
+    .kpi .val{ font-size: 20px; font-weight: 950; letter-spacing: -0.03em; margin-top: 2px; }
 
     .split{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 14px;
+      position: relative;
+      z-index: 1;
     }
 
     .col6{ grid-column: span 12; }
@@ -206,11 +249,13 @@
       display:flex;
       flex-direction:column;
       gap: 10px;
+      position: relative;
+      z-index: 1;
     }
     .item{
       padding: 12px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.18);
       display:flex;
       gap: 10px;
@@ -219,18 +264,18 @@
     .badge{
       min-width: 28px; height: 28px; border-radius: 10px;
       display:flex; align-items:center; justify-content:center;
-      font-weight: 900;
+      font-weight: 950;
       color: rgba(0,0,0,.92);
-      background: rgba(255,144,0,.95);
-      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(57,217,255,.98), rgba(255,59,212,.78));
+      border: 1px solid rgba(255,255,255,.22);
       font-size: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.30);
+      box-shadow: 0 12px 28px rgba(0,0,0,.30);
       flex: 0 0 auto;
     }
 
     .text{
       font-size: 13.5px;
-      color: rgba(255,255,255,.88);
+      color: rgba(255,255,255,.90);
       line-height: 1.35;
       white-space: normal;
       overflow-wrap: anywhere;
@@ -239,24 +284,47 @@
       min-width: 0;
     }
 
-    .rows{ display:flex; flex-direction:column; gap: 8px; margin-top: 6px; }
-    .row{ display:flex; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,.80); font-size: 12.5px; }
-    .kv{
-      display:inline-flex; gap: 6px; align-items: baseline;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.16);
-    }
-    .kv b{ color: rgba(255,255,255,.92); font-weight: 900; }
-    .kv span{ color: rgba(255,255,255,.70); }
+    .rows{ display:flex; flex-direction:column; gap: 8px; margin-top: 8px; }
+    .row{ display:flex; gap: 10px; flex-wrap: wrap; color: rgba(255,255,255,.82); font-size: 12.5px; }
 
-    a.link{
-      color: rgba(255,179,0,.92);
-      text-decoration: none;
-      font-weight: 800;
+    .kv{
+      display:inline-flex; gap: 6px; align-items:center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
     }
-    a.link:hover{ text-decoration: underline; }
+    .kv b{ color: rgba(255,255,255,.92); font-weight: 950; }
+    .kv span{ color: rgba(255,255,255,.72); font-weight: 800; display:inline-flex; align-items:center; gap:6px; }
+
+    .kv .material-symbols-rounded{ font-size: 16px; opacity: .95; }
+
+    /* Better "Open video" button */
+    .btnLink{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 950;
+      letter-spacing: -0.01em;
+      color: rgba(0,0,0,.92);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
+        linear-gradient(135deg, rgba(57,217,255,.96), rgba(168,85,255,.86));
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 14px 36px rgba(0,0,0,.45);
+      transition: transform .08s ease, filter .2s ease, box-shadow .2s ease;
+      width: fit-content;
+    }
+    .btnLink:hover{
+      filter: brightness(1.04);
+      box-shadow: 0 18px 44px rgba(0,0,0,.55);
+    }
+    .btnLink:active{ transform: translateY(1px); }
+    .btnLink .material-symbols-rounded{ font-size: 18px; }
 
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -265,13 +333,15 @@
     }
 
     .empty{
-      border: 1px dashed rgba(255,255,255,.18);
+      border: 1px dashed rgba(255,255,255,.20);
       background: rgba(0,0,0,.16);
       padding: 14px;
       border-radius: 16px;
       color: var(--muted);
       line-height: 1.35;
       font-size: 13px;
+      position: relative;
+      z-index: 1;
     }
 
     .footer{
@@ -290,7 +360,7 @@
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <div class="logo"><span class="material-symbols-rounded">insights</span></div>
+        <div class="logo"><span class="material-symbols-rounded">sensors</span></div>
         <div class="titleblock">
           <h1>TikTok Performance Panel</h1>
           <div class="subtitle">
@@ -314,14 +384,14 @@
         <div class="cardhead">
           <div>
             <h2>Resumen</h2>
-            <div class="hint">panel diario basado en /reports/YYYY-MM-DD.json</div>
+            <div class="hint">carga /reports/YYYY-MM-DD.json</div>
           </div>
           <div class="mono" id="filePath">—</div>
         </div>
 
         <div class="kpis">
           <div class="kpi">
-            <div class="ic"><span class="material-symbols-rounded">list_alt</span></div>
+            <div class="ic"><span class="material-symbols-rounded">video_library</span></div>
             <div>
               <div class="label">Top videos (likes)</div>
               <div class="val" id="kpiTopLikes">—</div>
@@ -329,9 +399,7 @@
           </div>
 
           <div class="kpi">
-            <div class="ic" style="background: rgba(255,179,0,.15); border-color: rgba(255,179,0,.28);">
-              <span class="material-symbols-rounded">percent</span>
-            </div>
+            <div class="ic purple"><span class="material-symbols-rounded">percent</span></div>
             <div>
               <div class="label">Top videos (like rate)</div>
               <div class="val" id="kpiTopRate">—</div>
@@ -339,18 +407,12 @@
           </div>
 
           <div class="kpi">
-            <div class="ic" style="background: rgba(255,144,0,.12); border-color: rgba(255,144,0,.22);">
-              <span class="material-symbols-rounded">group</span>
-            </div>
+            <div class="ic pink"><span class="material-symbols-rounded">group</span></div>
             <div>
               <div class="label">Creadores rankeados</div>
               <div class="val" id="kpiCreators">—</div>
             </div>
           </div>
-        </div>
-
-        <div class="rows" style="margin-top: 12px;">
-          <div class="row" id="paramRow"></div>
         </div>
       </div>
 
@@ -369,14 +431,14 @@
         <div class="cardhead">
           <div>
             <h2>Top videos por like rate</h2>
-            <div class="hint">data.top_videos_by_like_rate_filtered (si existe)</div>
+            <div class="hint">data.top_videos_by_like_rate_filtered</div>
           </div>
         </div>
         <ul class="list" id="listTopRate"></ul>
         <div id="emptyTopRate" class="empty" style="display:none;">No hay items en top_videos_by_like_rate_filtered.</div>
       </div>
 
-      <div class="card col6">
+      <div class="card">
         <div class="cardhead">
           <div>
             <h2>Ranking de creadores</h2>
@@ -385,53 +447,6 @@
         </div>
         <ul class="list" id="listCreators"></ul>
         <div id="emptyCreators" class="empty" style="display:none;">No hay items en creators_ranking.</div>
-      </div>
-
-      <div class="card col6">
-        <div class="cardhead">
-          <div>
-            <h2>Outliers</h2>
-            <div class="hint">outliers.by_views + outliers.by_like_rate_filtered</div>
-          </div>
-        </div>
-        <div class="split">
-          <div class="col6">
-            <div class="hint" style="margin: 0 0 10px;">Por views</div>
-            <ul class="list" id="listOutViews"></ul>
-            <div id="emptyOutViews" class="empty" style="display:none;">Sin outliers por views.</div>
-          </div>
-          <div class="col6">
-            <div class="hint" style="margin: 0 0 10px;">Por like rate</div>
-            <ul class="list" id="listOutRate"></ul>
-            <div id="emptyOutRate" class="empty" style="display:none;">Sin outliers por like rate.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="cardhead">
-          <div>
-            <h2>Resumen, insights y acciones</h2>
-            <div class="hint">texto y lista desde el JSON</div>
-          </div>
-        </div>
-
-        <div class="split">
-          <div class="col6">
-            <div class="hint" style="margin: 0 0 10px;">Resumen</div>
-            <div class="text" id="resumenText">—</div>
-          </div>
-
-          <div class="col6">
-            <div class="hint" style="margin: 0 0 10px;">Insights</div>
-            <ul class="list" id="listInsights"></ul>
-            <div id="emptyInsights" class="empty" style="display:none;">Sin insights.</div>
-          </div>
-        </div>
-
-        <div class="hint" style="margin: 14px 0 10px;">Acciones recomendadas</div>
-        <ul class="list" id="listAcciones"></ul>
-        <div id="emptyAcciones" class="empty" style="display:none;">Sin acciones recomendadas.</div>
       </div>
     </div>
 
@@ -491,131 +506,81 @@
       if(!Number.isFinite(x)) return "0";
       return x.toLocaleString("es-CO");
     }
-    function fmtPct(n){
+    function fmtPctNoDecimals(n){
       const x = Number(n);
-      if(!Number.isFinite(x)) return "0.000%";
-      return `${x.toFixed(3)}%`;
+      if(!Number.isFinite(x)) return "0%";
+      return `${Math.round(x)}%`;
     }
 
-    function renderParamChips(data){
-      const row = document.getElementById("paramRow");
-      row.innerHTML = "";
-      const minViews = data?.parametros?.MIN_VIEWS_FOR_RATE;
-      const defScore = data?.parametros?.definicion_score_interaccion;
-
-      const items = [
-        { k: "min views rate", v: (minViews ?? "—") },
-        { k: "score", v: (defScore ?? "—") },
-        { k: "total items", v: (data?.meta?.total_items ?? "—") },
-      ];
-
-      items.forEach(it => {
-        const el = document.createElement("div");
-        el.className = "kv";
-        el.innerHTML = `<span>${escapeHtml(it.k)}:</span> <b>${escapeHtml(String(it.v))}</b>`;
-        row.appendChild(el);
-      });
-    }
-
-    function makeVideoItem(v, idx, mode){
+    function makeVideoItem(v, idx){
       const url = v?.url || "";
       const user = v?.username || "";
       const views = v?.views ?? 0;
       const likes = v?.likes ?? 0;
       const lrPct = v?.like_rate_pct ?? 0;
 
-      const title = mode === "creator"
-        ? `${user}`
-        : `${user} — ${fmtInt(likes)} likes`;
-
-      const sub = mode === "creator"
-        ? [
-            { k: "videos", v: v?.videos_total_en_dataset ?? 0 },
-            { k: "top_count", v: v?.top_count_likes ?? 0 },
-            { k: "sum_likes", v: fmtInt(v?.sum_likes ?? 0) },
-            { k: "sum_views", v: fmtInt(v?.sum_views ?? 0) },
-            { k: "avg_like_rate", v: fmtPct(v?.avg_like_rate_pct ?? 0) },
-          ]
-        : [
-            { k: "views", v: fmtInt(views) },
-            { k: "likes", v: fmtInt(likes) },
-            { k: "like_rate", v: fmtPct(lrPct) },
-            { k: "id", v: v?.video_id || "" },
-          ];
-
-      const linkLine = url ? `<div class="mono" style="margin-top:8px;"><a class="link" href="${escapeHtml(url)}" target="_blank" rel="noopener">abrir video</a></div>` : "";
-
       const li = document.createElement("li");
       li.className = "item";
       li.innerHTML = `
         <div class="badge">${idx+1}</div>
         <div class="text">
-          <div style="font-weight:900; letter-spacing:-0.01em;">${escapeHtml(title)}</div>
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)} — ${fmtInt(likes)} likes</div>
           <div class="rows">
             <div class="row">
-              ${sub.map(x => `<span class="kv"><span>${escapeHtml(x.k)}:</span> <b>${escapeHtml(String(x.v))}</b></span>`).join("")}
+              <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">favorite</span>likes</span> <b>${escapeHtml(fmtInt(likes))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">percent</span>like rate</span> <b>${escapeHtml(fmtPctNoDecimals(lrPct))}</b></span>
             </div>
           </div>
-          ${linkLine}
+          ${url ? `<a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
+            <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
+          </a>` : ``}
         </div>
       `;
       return li;
     }
 
-    function renderList(listId, emptyId, arr, mode){
+    function makeCreatorItem(c, idx){
+      const user = c?.username || "";
+      const li = document.createElement("li");
+      li.className = "item";
+      li.innerHTML = `
+        <div class="badge">${idx+1}</div>
+        <div class="text">
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)}</div>
+          <div class="rows">
+            <div class="row">
+              <span class="kv"><span><span class="material-symbols-rounded">video_library</span>videos</span> <b>${escapeHtml(String(c?.videos_total_en_dataset ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">emoji_events</span>top</span> <b>${escapeHtml(String(c?.top_count_likes ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">favorite</span>sum likes</span> <b>${escapeHtml(fmtInt(c?.sum_likes ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>sum views</span> <b>${escapeHtml(fmtInt(c?.sum_views ?? 0))}</b></span>
+              <span class="kv"><span><span class="material-symbols-rounded">percent</span>avg rate</span> <b>${escapeHtml(fmtPctNoDecimals(c?.avg_like_rate_pct ?? 0))}</b></span>
+            </div>
+          </div>
+        </div>
+      `;
+      return li;
+    }
+
+    function renderListVideos(listId, emptyId, arr){
       const ul = document.getElementById(listId);
       ul.innerHTML = "";
       if(Array.isArray(arr) && arr.length){
-        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i, mode)));
+        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i)));
         show(document.getElementById(emptyId), false);
       } else {
         show(document.getElementById(emptyId), true);
       }
     }
 
-    function renderInsights(arr){
-      const ul = document.getElementById("listInsights");
+    function renderListCreators(listId, emptyId, arr){
+      const ul = document.getElementById(listId);
       ul.innerHTML = "";
       if(Array.isArray(arr) && arr.length){
-        arr.forEach((t, i) => {
-          const li = document.createElement("li");
-          li.className = "item";
-          li.innerHTML = `<div class="badge">${i+1}</div><div class="text">${escapeHtml(String(t))}</div>`;
-          ul.appendChild(li);
-        });
-        show(document.getElementById("emptyInsights"), false);
+        arr.forEach((c, i) => ul.appendChild(makeCreatorItem(c, i)));
+        show(document.getElementById(emptyId), false);
       } else {
-        show(document.getElementById("emptyInsights"), true);
-      }
-    }
-
-    function renderAcciones(arr){
-      const ul = document.getElementById("listAcciones");
-      ul.innerHTML = "";
-      if(Array.isArray(arr) && arr.length){
-        arr.forEach((a, i) => {
-          const acc = a?.accion ?? "";
-          const porq = a?.por_que ?? ""; // si no existe, no lo inventamos
-          const prio = a?.prioridad ?? "";
-          const li = document.createElement("li");
-          li.className = "item";
-          li.innerHTML = `
-            <div class="badge">${i+1}</div>
-            <div class="text">
-              <div style="font-weight:900;">${escapeHtml(acc || "acción")}</div>
-              <div class="rows">
-                <div class="row">
-                  ${prio ? `<span class="kv"><span>prioridad:</span> <b>${escapeHtml(String(prio))}</b></span>` : ""}
-                </div>
-              </div>
-              ${porq ? `<div style="margin-top:8px; color: rgba(255,255,255,.80);">${escapeHtml(String(porq))}</div>` : ""}
-            </div>
-          `;
-          ul.appendChild(li);
-        });
-        show(document.getElementById("emptyAcciones"), false);
-      } else {
-        show(document.getElementById("emptyAcciones"), true);
+        show(document.getElementById(emptyId), true);
       }
     }
 
@@ -633,21 +598,9 @@
       setText("kpiTopRate", String(topRate.length || 0));
       setText("kpiCreators", String(creators.length || 0));
 
-      renderParamChips(data);
-
-      renderList("listTopLikes", "emptyTopLikes", topLikes, "video");
-      renderList("listTopRate", "emptyTopRate", topRate, "video");
-      renderList("listCreators", "emptyCreators", creators, "creator");
-
-      const outViews = Array.isArray(data?.outliers?.by_views) ? data.outliers.by_views : [];
-      const outRate  = Array.isArray(data?.outliers?.by_like_rate_filtered) ? data.outliers.by_like_rate_filtered : [];
-
-      renderList("listOutViews", "emptyOutViews", outViews, "video");
-      renderList("listOutRate", "emptyOutRate", outRate, "video");
-
-      setText("resumenText", data?.resumen ?? "—");
-      renderInsights(data?.insights);
-      renderAcciones(data?.acciones_recomendadas);
+      renderListVideos("listTopLikes", "emptyTopLikes", topLikes);
+      renderListVideos("listTopRate", "emptyTopRate", topRate);
+      renderListCreators("listCreators", "emptyCreators", creators);
 
       setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
     }
@@ -685,23 +638,13 @@
       setText("kpiTopRate", "0");
       setText("kpiCreators", "0");
 
-      document.getElementById("paramRow").innerHTML = "";
       document.getElementById("listTopLikes").innerHTML = "";
       document.getElementById("listTopRate").innerHTML = "";
       document.getElementById("listCreators").innerHTML = "";
-      document.getElementById("listOutViews").innerHTML = "";
-      document.getElementById("listOutRate").innerHTML = "";
-      document.getElementById("listInsights").innerHTML = "";
-      document.getElementById("listAcciones").innerHTML = "";
 
-      setText("resumenText", "No se encontró ningún reporte reciente en /reports. Revisa que existan archivos YYYY-MM-DD.json.");
       show(document.getElementById("emptyTopLikes"), true);
       show(document.getElementById("emptyTopRate"), true);
       show(document.getElementById("emptyCreators"), true);
-      show(document.getElementById("emptyOutViews"), true);
-      show(document.getElementById("emptyOutRate"), true);
-      show(document.getElementById("emptyInsights"), true);
-      show(document.getElementById("emptyAcciones"), true);
 
       setText("statusLine", "sin datos (no se encontraron archivos recientes)");
     }
