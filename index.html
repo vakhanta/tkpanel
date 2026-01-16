@@ -10,11 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,700,0,0" rel="stylesheet" />
 
-  <!-- TikTok embed (solo 1 vez) -->
-  <script async src="https://www.tiktok.com/embed.js"></script>
-
   <style>
     :root{
+      /* Memphis / TikTok-ish */
       --bg0: #070812;
       --bg1: #0b1022;
 
@@ -26,11 +24,11 @@
       --muted: rgba(255,255,255,.70);
       --muted2: rgba(255,255,255,.55);
 
-      --c1: #39d9ff;
-      --c2: #a855ff;
-      --c3: #ff3bd4;
-      --c4: #19f3a8;
-      --c5: #ffd24a;
+      --c1: #39d9ff;   /* celeste vibrante */
+      --c2: #a855ff;   /* púrpura */
+      --c3: #ff3bd4;   /* magenta */
+      --c4: #19f3a8;   /* verde menta */
+      --c5: #ffd24a;   /* amarillo */
 
       --radius: 18px;
       --shadow: 0 14px 44px rgba(0,0,0,.55);
@@ -171,6 +169,7 @@
       position: relative;
       overflow: hidden;
     }
+    /* Memphis confetti */
     .card:before{
       content:"";
       position:absolute; inset:-1px;
@@ -228,6 +227,14 @@
     .kpi .ic .material-symbols-rounded{ color: rgba(255,255,255,.92); }
     .kpi .label{ color: var(--muted); font-size: 12.5px; font-weight: 800; }
     .kpi .val{ font-size: 20px; font-weight: 950; letter-spacing: -0.03em; margin-top: 2px; }
+
+    .split{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
 
     .col6{ grid-column: span 12; }
     @media (min-width: 860px){
@@ -289,8 +296,10 @@
     }
     .kv b{ color: rgba(255,255,255,.92); font-weight: 950; }
     .kv span{ color: rgba(255,255,255,.72); font-weight: 800; display:inline-flex; align-items:center; gap:6px; }
+
     .kv .material-symbols-rounded{ font-size: 16px; opacity: .95; }
 
+    /* Better "Open video" button */
     .btnLink{
       display:inline-flex;
       align-items:center;
@@ -317,7 +326,7 @@
     .btnLink:active{ transform: translateY(1px); }
     .btnLink .material-symbols-rounded{ font-size: 18px; }
 
-    /* contenedor embed para TOP LIKES */
+    /* ✅ EMBED BOX (TOP LIKES ONLY) */
     .embedBox{
       margin-top: 12px;
       border-radius: 16px;
@@ -325,8 +334,15 @@
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.18);
     }
-    .embedBox blockquote{ margin: 0 !important; }
-    .embedBox iframe{ width: 100% !important; max-width: 100% !important; }
+    .embedBox iframe{
+      width: 100%;
+      height: 560px;
+      border: 0;
+      display: block;
+    }
+    @media (max-width: 860px){
+      .embedBox iframe{ height: 520px; }
+    }
 
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -422,7 +438,7 @@
         <div class="cardhead">
           <div>
             <h2>Top videos por likes</h2>
-            <div class="hint">ranking de videos por cantidad de likes</div>
+            <div class="hint">ranking de videos por cantidad de likes (con embed)</div>
           </div>
         </div>
         <ul class="list" id="listTopLikes"></ul>
@@ -490,6 +506,14 @@
         .replaceAll("'","&#039;");
     }
 
+    // ✅ Extrae ID de video desde URL: .../video/123...
+    function getTikTokVideoId(url){
+      const s = String(url || "");
+      const m = s.match(/\/video\/(\d+)/);
+      return m ? m[1] : "";
+    }
+
+    // Soporta wrapper Make: [{ "json": "{...}" }]
     function unwrapMakePayload(payload){
       if(Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object"){
         if(typeof payload[0].json === "string"){
@@ -513,13 +537,14 @@
       return `${Math.round(x)}%`;
     }
 
-    // SOLO PARA TOP LIKES: incluye embed
-    function makeVideoItemTopLikes(v, idx){
+    function makeVideoItem(v, idx, withEmbed){
       const url = v?.url || "";
       const user = v?.username || "";
       const views = v?.views ?? 0;
       const likes = v?.likes ?? 0;
       const lrPct = v?.like_rate_pct ?? 0;
+
+      const vid = withEmbed ? getTikTokVideoId(url) : "";
 
       const li = document.createElement("li");
       li.className = "item";
@@ -535,46 +560,20 @@
             </div>
           </div>
 
-          ${url ? `
-            <a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
-              <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
-            </a>
-
-            <div class="embedBox">
-              <blockquote class="tiktok-embed" cite="${escapeHtml(url)}">
-                <section></section>
-              </blockquote>
-            </div>
-          ` : ``}
-        </div>
-      `;
-      return li;
-    }
-
-    // Para las otras listas: SIN embed (igual que antes)
-    function makeVideoItem(v, idx){
-      const url = v?.url || "";
-      const user = v?.username || "";
-      const views = v?.views ?? 0;
-      const likes = v?.likes ?? 0;
-      const lrPct = v?.like_rate_pct ?? 0;
-
-      const li = document.createElement("li");
-      li.className = "item";
-      li.innerHTML = `
-        <div class="badge">${idx+1}</div>
-        <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user)} — ${fmtInt(likes)} likes</div>
-          <div class="rows">
-            <div class="row">
-              <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">favorite</span>likes</span> <b>${escapeHtml(fmtInt(likes))}</b></span>
-              <span class="kv"><span><span class="material-symbols-rounded">percent</span>like rate</span> <b>${escapeHtml(fmtPctNoDecimals(lrPct))}</b></span>
-            </div>
-          </div>
           ${url ? `<a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
             <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
           </a>` : ``}
+
+          ${withEmbed && vid ? `
+            <div class="embedBox">
+              <iframe
+                src="https://www.tiktok.com/embed/v2/${vid}"
+                allow="encrypted-media; picture-in-picture"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+          ` : ``}
         </div>
       `;
       return li;
@@ -602,24 +601,11 @@
       return li;
     }
 
-    // render normal (sin embed)
-    function renderListVideos(listId, emptyId, arr){
+    function renderListVideos(listId, emptyId, arr, withEmbed){
       const ul = document.getElementById(listId);
       ul.innerHTML = "";
       if(Array.isArray(arr) && arr.length){
-        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i)));
-        show(document.getElementById(emptyId), false);
-      } else {
-        show(document.getElementById(emptyId), true);
-      }
-    }
-
-    // render TOP LIKES (con embed)
-    function renderListTopLikes(listId, emptyId, arr){
-      const ul = document.getElementById(listId);
-      ul.innerHTML = "";
-      if(Array.isArray(arr) && arr.length){
-        arr.forEach((v, i) => ul.appendChild(makeVideoItemTopLikes(v, i)));
+        arr.forEach((v, i) => ul.appendChild(makeVideoItem(v, i, !!withEmbed)));
         show(document.getElementById(emptyId), false);
       } else {
         show(document.getElementById(emptyId), true);
@@ -637,21 +623,6 @@
       }
     }
 
-    function rerenderTikTokEmbeds(){
-      // intenta función global (si existe)
-      if (typeof window.tiktokEmbed === "function") {
-        try { window.tiktokEmbed(); return; } catch(e){}
-      }
-      // fallback: reinyecta embed.js (por si no expone función en tu entorno)
-      const old = document.getElementById("tt_embed_js");
-      if(old) old.remove();
-      const s = document.createElement("script");
-      s.id = "tt_embed_js";
-      s.src = "https://www.tiktok.com/embed.js";
-      s.async = true;
-      document.body.appendChild(s);
-    }
-
     function renderAll(data, ymd, resolvedUrl){
       setText("src", data?.meta?.fuente ?? "—");
       setText("dateLabel", ymd ? formatNiceDate(ymd) : "—");
@@ -666,14 +637,12 @@
       setText("kpiTopRate", String(topRate.length || 0));
       setText("kpiCreators", String(creators.length || 0));
 
-      renderListTopLikes("listTopLikes", "emptyTopLikes", topLikes); // <-- con embed aquí
-      renderListVideos("listTopRate", "emptyTopRate", topRate);
+      // ✅ SOLO TOP LIKES lleva EMBED
+      renderListVideos("listTopLikes", "emptyTopLikes", topLikes, true);
+      renderListVideos("listTopRate", "emptyTopRate", topRate, false);
       renderListCreators("listCreators", "emptyCreators", creators);
 
       setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
-
-      // re-render embeds después de pintar el DOM
-      setTimeout(rerenderTikTokEmbeds, 80);
     }
 
     let selectedDate = new Date();
