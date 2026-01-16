@@ -124,11 +124,12 @@
       box-shadow:0 12px 32px rgba(0,0,0,.35);
     }
     .kpi .ic.purple{background:rgba(168,85,255,.16);border-color:rgba(168,85,255,.26)}
+    .kpi .ic.pink{background:rgba(255,59,212,.14);border-color:rgba(255,59,212,.24)}
     .kpi .ic .material-symbols-rounded{color:rgba(255,255,255,.92)}
     .kpi .label{color:var(--muted);font-size:12.5px;font-weight:800}
     .kpi .val{font-size:20px;font-weight:950;letter-spacing:-.03em;margin-top:2px}
     .col6{grid-column:span 12}
-    @media (min-width:860px){.kpi{grid-column:span 6}.col6{grid-column:span 12}}
+    @media (min-width:860px){.kpi{grid-column:span 4}.col6{grid-column:span 6}}
     .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
     .item{
       padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);
@@ -190,8 +191,9 @@
         <div class="titleblock">
           <h1>TikTok Performance Panel</h1>
           <div class="subtitle">
-            <span class="pill"><span class="material-symbols-rounded">folder</span><span id="src">reports/—.json</span></span>
+            <span class="pill"><span class="material-symbols-rounded">public</span><span id="src"></span></span>
             <span class="pill"><span class="material-symbols-rounded">event</span><span id="dateLabel">—</span></span>
+            <span class="pill"><span class="material-symbols-rounded">tune</span><span id="minViewsLabel"></span></span>
           </div>
         </div>
       </div>
@@ -209,9 +211,9 @@
         <div class="cardhead">
           <div>
             <h2>Resumen</h2>
-            <div class="hint">Ranking calculado localmente desde el bundle.</div>
+            <div class="hint">Rankings calculados localmente desde el bundle.</div>
           </div>
-          <div class="mono" id="statusLine">—</div>
+          <div class="mono" id="statusLine"></div>
         </div>
 
         <div class="kpis">
@@ -230,6 +232,14 @@
               <div class="val" id="kpiTopLikes">—</div>
             </div>
           </div>
+
+          <div class="kpi">
+            <div class="ic pink"><span class="material-symbols-rounded">percent</span></div>
+            <div>
+              <div class="label">Like rate</div>
+              <div class="val" id="kpiTopRate">—</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -246,8 +256,8 @@
     </div>
 
     <div class="footer">
-      <div>tiktok performance tracker — todo local</div>
-      <div><span class="mono" id="errorsLine">—</span></div>
+      <div>tiktok performance tracker — sin gpt, todo local</div>
+      <div><span class="mono" id="errorsLine"></span></div>
     </div>
   </div>
 
@@ -255,13 +265,11 @@
     // =========================
     // CONFIG
     // =========================
-    const MAX_TOP = 10;
-
-    // ====== NAV ======
     const REPORTS_DIR = "reports";
     const MAX_FALLBACK_DAYS = 14;
+    const MAX_TOP = 10;
 
-    // Inyección opcional: {text:"..."}
+    // eslint-disable-next-line no-unused-vars
     const BUNDLE_PAYLOAD = null;
 
     // =========================
@@ -271,8 +279,22 @@
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
     const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
 
-    function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
+    function setText(id, val){ const el = document.getElementById(id); if(el) el.textContent = (val ?? ""); }
     function show(el, yes){ el.style.display = yes ? "" : "none"; }
+    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
+
+    async function fetchJson(url){
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      return await res.json();
+    }
+
+    function clearNode(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = "";
+      // el.style.display = "none"; // si quieres ocultarlo completamente
+    }
 
     function escapeHtml(str){
       return String(str)
@@ -296,9 +318,7 @@
     }
 
     function safeNum(x){
-      const s = String(x ?? "").trim();
-      if(!s) return 0;
-      const n = Number(s.replace(/[^\d.-]/g, ""));
+      const n = Number(String(x ?? "").replace(/[^\d.-]/g, ""));
       return Number.isFinite(n) ? n : 0;
     }
 
@@ -309,10 +329,19 @@
     }
 
     // =========================
-    // Parse & sanitize
-    // Reglas anti-basura:
-    // - debe tener url + video_id + username
-    // - debe tener views>0 o likes>0 (evita itsmiawaifu 0/0)
+    // Unwrap Make payload: [{ json: "{...}" }]
+    // =========================
+    function unwrapMake(payload){
+      if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
+        if (typeof payload[0].json === "string") {
+          try { return JSON.parse(payload[0].json); } catch(e) { return null; }
+        }
+      }
+      return payload;
+    }
+
+    // =========================
+    // Parse the "text" field: it contains many <li> blocks
     // =========================
     function parseItemsFromText(htmlText, errors){
       const out = [];
@@ -322,54 +351,58 @@
       const lis = Array.from(tmp.querySelectorAll("li"));
       for (let i=0; i<lis.length; i++){
         const li = lis[i];
-
         const anchors = Array.from(li.querySelectorAll("a"));
-        const urlA = anchors.find(a => {
-          const h = (a.getAttribute("href") || "").trim();
-          return /tiktok\.com/i.test(h) && /\/video\/\d+/.test(h);
-        });
+
+        const urlA = anchors.find(a => /tiktok\.com/i.test(a.getAttribute("href") || "") && /\/video\/\d+/.test(a.getAttribute("href") || ""));
         const url = (urlA ? (urlA.getAttribute("href") || "") : "").trim();
 
-        const coverA = anchors.find(a => /tiktokcdn/i.test((a.getAttribute("href") || "").trim()));
+        const coverA = anchors.find(a => /tiktokcdn/i.test(a.getAttribute("href") || ""));
         const cover_url = (coverA ? (coverA.getAttribute("href") || "") : "").trim();
 
-        const strongs = Array.from(li.querySelectorAll("strong")).map(s => (s.textContent || "").trim());
-        const username = (strongs[0] || "").replace(/^@/,"").trim();
-        const views = safeNum(strongs[1]);
-        const likes = safeNum(strongs[2]);
+        const strongs = Array.from(li.querySelectorAll("strong"));
+        const userStrong = strongs.find(s => /^@/.test((s.textContent || "").trim()));
+        const username = (userStrong ? (userStrong.textContent || "").trim().replace(/^@/,"") : "").trim();
+
+        let views = 0, likes = 0;
+        const raw = li.innerText || li.textContent || "";
+
+        const viewStrong = strongs.find(s => {
+          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
+          return /Reproducciones/i.test(prev);
+        });
+        const likeStrong = strongs.find(s => {
+          const prev = (s.parentElement ? s.parentElement.textContent : s.textContent) || "";
+          return /\bLikes\b/i.test(prev);
+        });
+
+        if(viewStrong) views = safeNum(viewStrong.textContent);
+        else {
+          const m = raw.match(/Reproducciones:\s*([0-9][0-9.,]*)/i);
+          if(m) views = safeNum(m[1]);
+        }
+
+        if(likeStrong) likes = safeNum(likeStrong.textContent);
+        else {
+          const m = raw.match(/Likes:\s*([0-9][0-9.,]*)/i);
+          if(m) likes = safeNum(m[1]);
+        }
 
         const video_id = getVideoIdFromUrl(url);
 
-        // descarta basura (incluye caso 0/0)
-        if(!url || !video_id || !username) continue;
-        if(views <= 0 && likes <= 0) continue;
+        // Skip empty garbage items OR incomplete placeholders (prevents @itsmiawaifu bug)
+        const isBad = (!url || !cover_url || !video_id || !username);
+        const isEmpty = !url && !cover_url && !username && views===0 && likes===0;
+        if(isEmpty) continue;
 
-        // si algo raro, lo marcamos pero no rompemos
-        if(!cover_url) errors.push(`item_${i+1}_no_cover`);
+        // if it looks like a placeholder row (missing url/cover/views/likes), drop it
+        if(isBad && views===0 && likes===0){
+          errors.push(`dropped_incomplete_item_${i+1}`);
+          continue;
+        }
 
         out.push({ url, cover_url, username, video_id, views, likes });
       }
       return out;
-    }
-
-    // =========================
-    // Dedupe by video_id
-    // =========================
-    function dedupeByVideoId(items){
-      const map = new Map();
-      for(const it of items){
-        const key = it.video_id || "";
-        if(!key) continue;
-        if(!map.has(key)){
-          map.set(key, it); // (corregido)
-        } else {
-          const cur = map.get(key);
-          if((it.views > cur.views) || (it.views === cur.views && it.likes > cur.likes)){
-            map.set(key, it);
-          }
-        }
-      }
-      return Array.from(map.values());
     }
 
     function computeLikeRate(it){
@@ -382,11 +415,12 @@
 
     function sortTopLikes(items){
       return [...items].sort((a,b)=>{
-        const la = safeNum(a.likes), lb = safeNum(b.likes);
-        if(lb !== la) return lb - la;
+        const sa = safeNum(a.likes), sb = safeNum(b.likes);
+        if(sb !== sa) return sb - sa;
         const va = safeNum(a.views), vb = safeNum(b.views);
         if(vb !== va) return vb - va;
-        return String(a.video_id||"").localeCompare(String(b.video_id||""));
+        const ia = String(a.video_id || ""), ib = String(b.video_id || "");
+        return ia.localeCompare(ib);
       });
     }
 
@@ -408,7 +442,7 @@
         <div class="badge">${escapeHtml(String(rank))}</div>
         ${cover ? `<div class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"></div>` : ``}
         <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${escapeHtml(fmtInt(likes))} likes</div>
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${fmtInt(likes)} likes</div>
           <div class="rows">
             <div class="row">
               <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
@@ -416,9 +450,9 @@
               <span class="kv"><span><span class="material-symbols-rounded">percent</span>like rate</span> <b>${escapeHtml(fmtPctNoDecimals(lrPct))}</b></span>
             </div>
           </div>
-          <a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
+          ${url ? `<a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener">
             <span class="material-symbols-rounded">smart_display</span>abrir en tiktok
-          </a>
+          </a>` : ``}
         </div>
       `;
       return li;
@@ -436,47 +470,26 @@
     }
 
     // =========================
-    // Load JSON from reports/AAAA-MM-DD.json
-    // Supports:
-    // 1) {text:"..."}
-    // 2) [{json:"{...}"}]
+    // Main pipeline
     // =========================
-    function unwrapMake(payload){
-      if (Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object") {
-        if (typeof payload[0].json === "string") {
-          try { return JSON.parse(payload[0].json); } catch(e) { return null; }
-        }
-      }
-      return payload;
-    }
-
-    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
-
-    async function fetchJson(url){
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-      return await res.json();
-    }
-
-    // ====== NAV state ======
     let selectedDate = new Date();
 
     async function loadDate(d){
-      const errors = [];
       const ymd = toYMD(d);
       const url = fileUrl(ymd);
 
-      setText("src", url);
-      setText("dateLabel", ymd);
-      setText("statusLine", `cargando: ${ymd}...`);
-
       try{
-        const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
-        const obj = unwrapMake(raw);
-        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
-        const htmlText = String(obj.text || "");
-        if(!htmlText) throw new Error("falta obj.text con los <li>");
+        // OPTION A: Injected payload
+        // if (BUNDLE_PAYLOAD) { ... } // not used when navigating days
 
+        const raw = await fetchJson(url);
+        const obj = unwrapMake(raw);
+        if(!obj || typeof obj !== "object") throw new Error("Payload inválido");
+
+        const htmlText = String(obj.text || "");
+        if(!htmlText) throw new Error("Falta obj.text con los <li>");
+
+        const errors = [];
         let items = parseItemsFromText(htmlText, errors);
 
         items = items.map(it => {
@@ -484,23 +497,26 @@
           return { ...it, like_rate, like_rate_pct };
         });
 
-        const before = items.length;
-        items = dedupeByVideoId(items);
-        const after = items.length;
-
         const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
 
-        setText("kpiItems", String(after));
+        // KPIs
+        setText("dateLabel", ymd);
+        setText("kpiItems", String(items.length));
         setText("kpiTopLikes", String(topLikes.length));
-        setText("statusLine", `items: ${before} | dedup: ${after} | errors: ${errors.length}`);
+        setText("kpiTopRate", String(topLikes.length));
 
+        // Render
         renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-        setText("errorsLine", errors.length ? `errores: ${errors.slice(0,6).join(" | ")}${errors.length>6 ? " | ..." : ""}` : "sin errores");
+
+        // remove unwanted rendered elements
+        clearNode("src");        // reports/2026-01-16.json
+        clearNode("statusLine"); // items: ...
+        clearNode("errorsLine"); // sin errores
+        clearNode("minViewsLabel"); // umbral pill
 
         selectedDate = d;
         return true;
       } catch(e){
-        setText("statusLine", `no existe o falló: ${ymd} (${e.message || e})`);
         return false;
       }
     }
@@ -512,11 +528,19 @@
         if(ok) return;
       }
 
-      setText("statusLine", "sin datos (no se encontraron archivos recientes)");
-      setText("errorsLine", "—");
-      setText("kpiItems", "0"); setText("kpiTopLikes", "0");
+      // empty state
+      setText("dateLabel", "—");
+      setText("kpiItems", "0");
+      setText("kpiTopLikes", "0");
+      setText("kpiTopRate", "0");
+
       document.getElementById("listTopLikes").innerHTML = "";
       show(document.getElementById("emptyTopLikes"), true);
+
+      clearNode("src");
+      clearNode("statusLine");
+      clearNode("errorsLine");
+      clearNode("minViewsLabel");
     }
 
     document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
