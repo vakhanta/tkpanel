@@ -13,9 +13,7 @@
     :root{
       --bg: #070A12;
       --panel: rgba(255,255,255,0.06);
-      --panel2: rgba(255,255,255,0.04);
       --stroke: rgba(255,255,255,0.10);
-      --stroke2: rgba(255,255,255,0.16);
       --text: rgba(255,255,255,0.92);
       --muted: rgba(255,255,255,0.62);
       --muted2: rgba(255,255,255,0.44);
@@ -24,12 +22,9 @@
       --purple: #A855F7;
       --pink: #FF3EA5;
       --lime: #9EFF7A;
-      --amber: #FFC857;
 
       --shadow: 0 14px 50px rgba(0,0,0,0.55);
       --radius: 18px;
-      --radius2: 14px;
-
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
@@ -95,7 +90,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      flex-wrap: wrap;
+      flex-wrap:wrap;
     }
 
     .brand{
@@ -144,6 +139,16 @@
       width: 100%;
     }
 
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
     .chip{
       display:flex;
       align-items:center;
@@ -157,16 +162,6 @@
       white-space: nowrap;
     }
     .chip b{ color: var(--text); font-weight: 600; }
-
-    .pill{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-    }
 
     .btn{
       height: 38px;
@@ -185,7 +180,6 @@
     }
     .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.20); background: rgba(255,255,255,0.06); }
     .btn:active{ transform: translateY(0px); }
-
     .btn.primary{
       background: linear-gradient(180deg, rgba(57,214,255,0.16), rgba(168,85,247,0.10));
       border-color: rgba(255,255,255,0.14);
@@ -212,7 +206,7 @@
       margin-top: 16px;
       display:grid;
       gap:14px;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr;
     }
 
     .card{
@@ -283,7 +277,6 @@
       flex-direction:column;
       gap:10px;
     }
-
     .item{
       display:flex;
       gap:12px;
@@ -306,7 +299,6 @@
       color: var(--text);
       flex: 0 0 auto;
     }
-
     .itemMain{ flex:1; min-width:0; }
     .itemTop{
       display:flex;
@@ -321,7 +313,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 620px;
+      max-width: 820px;
     }
     .itemTitle a{
       color: var(--text);
@@ -363,19 +355,9 @@
       line-height: 1.45;
       white-space: pre-wrap;
     }
-    .notice b{ color: var(--text); font-weight: 700; }
-
-    .footer{
-      margin-top: 16px;
-      color: var(--muted2);
-      font-size: 12px;
-      text-align:center;
-    }
 
     @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
       .kpis{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .brand{ min-width: auto; }
       .controls{ justify-content:flex-start; }
       .input, select{ min-width: 180px; flex: 1; }
     }
@@ -402,12 +384,12 @@
         <div class="logo"></div>
         <div>
           <h1>Trendfinder TikTok</h1>
-          <p id="subtitle">Panel de rendimiento y rankings diarios</p>
+          <p id="subtitle">Renderiza /reports/YYYY-MM-DD.json (ej: 2026-01-16.json)</p>
         </div>
       </div>
 
       <div class="controls">
-        <span class="pill" id="srcPill">fuente: —</span>
+        <span class="pill" id="filePill">—</span>
         <span class="pill" id="datePill">día: —</span>
         <span class="pill" id="fetchPill">sync: —</span>
 
@@ -430,10 +412,10 @@
       <div class="card">
         <div class="cardHeader">
           <div>
-            <div class="cardTitle">Resumen</div>
-            <div class="cardSub" id="overviewText">KPIs del día + highlights.</div>
+            <div class="cardTitle">Resumen (KPIs)</div>
+            <div class="cardSub">Dataset del día (dedup) + métricas.</div>
           </div>
-          <div class="pill" id="filePill">—</div>
+          <div class="pill" id="srcPill">fuente: —</div>
         </div>
         <div class="cardBody">
           <div class="kpis" id="kpis"></div>
@@ -444,7 +426,7 @@
         <div class="cardHeader">
           <div>
             <div class="cardTitle">Top videos</div>
-            <div class="cardSub">Lista del día</div>
+            <div class="cardSub">Si el JSON trae top_videos se usa; si no, se deriva desde data.videos.</div>
           </div>
           <div class="pill" id="topHint">—</div>
         </div>
@@ -453,102 +435,40 @@
           <div class="notice" id="topEmpty" style="display:none;">No hay videos para este día (o el archivo no existe).</div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="cardHeader">
-          <div>
-            <div class="cardTitle">Top categorías</div>
-            <div class="cardSub">tags/fetiches dominantes</div>
-          </div>
-          <div class="pill" id="fetHint">—</div>
-        </div>
-        <div class="cardBody">
-          <div class="list" id="fetList"></div>
-          <div class="notice" id="fetEmpty" style="display:none;">No hay tags para este día.</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="cardHeader">
-          <div>
-            <div class="cardTitle">Analítica</div>
-            <div class="cardSub">Resumen editorial + correlaciones.</div>
-          </div>
-          <div class="pill" id="anaHint">—</div>
-        </div>
-        <div class="cardBody">
-          <div class="notice" id="trendText">—</div>
-          <div style="height:10px;"></div>
-          <div class="notice" id="corrText">—</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="cardHeader">
-          <div>
-            <div class="cardTitle">Ideas y títulos</div>
-            <div class="cardSub">Inspiración a partir de la tendencia</div>
-          </div>
-          <div class="pill" id="ideaHint">—</div>
-        </div>
-        <div class="cardBody">
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-            <div>
-              <div class="cardSub" style="margin:0 0 8px;">Ideas</div>
-              <div class="list" id="ideasList"></div>
-              <div class="notice" id="ideasEmpty" style="display:none;">Sin ideas para este día.</div>
-            </div>
-            <div>
-              <div class="cardSub" style="margin:0 0 8px;">Títulos</div>
-              <div class="list" id="titlesList"></div>
-              <div class="notice" id="titlesEmpty" style="display:none;">Sin títulos para este día.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="cardHeader">
-          <div>
-            <div class="cardTitle">Notas</div>
-            <div class="cardSub">Transparencia de carga</div>
-          </div>
-          <div class="pill" id="statusLine">—</div>
-        </div>
-        <div class="cardBody">
-          <div class="notice" id="notesText">—</div>
-        </div>
-      </div>
-
-      <div class="footer">Trendfinder TikTok · navegación por días · fallback inteligente</div>
     </div>
   </div>
 
   <script>
-    // =========================
-    // CONFIG
-    // =========================
+    /*
+      IMPORTANTE FELIPE:
+      - Este dashboard carga UN archivo por día desde la carpeta /reports.
+      - Formato exacto: reports/YYYY-MM-DD.json
+        Ejemplo: reports/2026-01-16.json
+      - Los botones prev/next/hoy cambian la fecha y por tanto el archivo a cargar.
+    */
+
     const REPORTS_DIR = "reports";
     const MAX_FALLBACK_DAYS = 14;
 
     const pad2 = (n) => String(n).padStart(2, "0");
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
     const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
-    const fileUrl = (ymd) => `${REPORTS_DIR}/${ymd}.json`;
+    const fileUrl = (ymd) => `${REPORTS_DIR}/${ymd}.json`; // <-- 2026-01-16.json
 
     function formatNiceDate(ymd){
       const [Y,M,D] = ymd.split("-").map(Number);
       const d = new Date(Y, M-1, D);
       return d.toLocaleDateString("es-CO", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
     }
-    function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
-    function show(el, yes){ el.style.display = yes ? "" : "none"; }
 
     async function fetchJson(url){
       const res = await fetch(url, { cache: "no-store" });
       if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return await res.json();
     }
+
+    function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
+    function show(el, yes){ el.style.display = yes ? "" : "none"; }
 
     function escapeHtml(str){
       return String(str)
@@ -559,101 +479,25 @@
         .replaceAll("'","&#039;");
     }
 
-    // =========================
-    // SPLIT ROBUSTO (anti-amontonado)
-    // =========================
-    function splitNumberedList(str){
-      const s = String(str || "").replace(/\s+/g, " ").trim();
-      if(!s) return [];
-      const re = /\b(\d{1,3})\.\s+/g;
-      const hits = [...s.matchAll(re)];
-      if(hits.length < 2) return [];
-      const idxs = hits.map(h => h.index);
-      idxs.push(s.length);
-      const out = [];
-      for(let i=0; i<idxs.length-1; i++){
-        let chunk = s.slice(idxs[i], idxs[i+1]).trim();
-        chunk = chunk.replace(/,\s*$/, "").trim();
-        if(chunk) out.push(chunk);
-      }
-      return out;
-    }
-
-    function splitByCommaSentences(str){
-      const s = String(str || "").trim();
-      if(!s) return [];
-      if(!s.includes(",")) return [s];
-
-      const parts = s.split(/,\s+(?=[A-ZÁÉÍÓÚÜÑ0-9¿¡])/g).map(x => x.trim()).filter(Boolean);
-      if(parts.length <= 1) return [s];
-      return parts;
-    }
-
-    function ensureArray(value){
-      if(Array.isArray(value)){
-        if(value.length === 1 && typeof value[0] === "string"){
-          const raw = value[0];
-          const numbered = splitNumberedList(raw);
-          if(numbered.length) return numbered;
-
-          const byLines = raw.split("\n").map(x=>x.trim()).filter(Boolean);
-          if(byLines.length > 1) return byLines;
-
-          return splitByCommaSentences(raw);
-        }
-        return value.filter(Boolean);
-      }
-
-      if(typeof value === "string"){
-        const numbered = splitNumberedList(value);
-        if(numbered.length) return numbered;
-
-        const byLines = value.split("\n").map(x=>x.trim()).filter(Boolean);
-        if(byLines.length > 1) return byLines;
-
-        return splitByCommaSentences(value);
-      }
-
-      return [];
-    }
-
-    function normalizeFetiches(value){
-      if(Array.isArray(value)){
-        if(value.length === 1 && typeof value[0] === "string"){
-          return value[0].split(",").map(s => s.replace(/\u00A0/g," ").trim()).filter(Boolean);
-        }
-        return value.filter(Boolean);
-      }
-      if(typeof value === "string"){
-        return value.split(",").map(s => s.replace(/\u00A0/g," ").trim()).filter(Boolean);
-      }
-      return [];
-    }
-
-    // =========================
-    // UNWRAP Make + parse result/json
-    // =========================
     function unwrapMakePayload(payload){
-      // Caso: [{ "json": "{...}" }]
+      // Soporta wrapper Make:
+      // - [{ "json": "{...}" }]
+      // - [{ "result": "{...}" }]
+      // - { "result": "{...}" }
       if(Array.isArray(payload) && payload.length && payload[0] && typeof payload[0] === "object"){
         if(typeof payload[0].json === "string"){
           try { return JSON.parse(payload[0].json); } catch(e){ return null; }
         }
-        // Caso: [{result:"{...}"}]
         if(typeof payload[0].result === "string"){
           try { return JSON.parse(payload[0].result); } catch(e){ return null; }
         }
       }
-      // Caso: {result:"{...}"}
       if(payload && typeof payload === "object" && typeof payload.result === "string"){
         try { return JSON.parse(payload.result); } catch(e){ return null; }
       }
       return payload;
     }
 
-    // =========================
-    // FORMATTERS
-    // =========================
     const safeNum = (n) => Number.isFinite(+n) ? +n : 0;
 
     function fmtK(n){
@@ -670,9 +514,6 @@
       return (Math.round(p*1000)/1000).toFixed(3).replace(/\.000$/,"") + "%";
     }
 
-    // =========================
-    // DERIVADOS (mis cálculos) PERO alimentados por el JSON diario
-    // =========================
     function getThreshold(json){
       const p = json.parametros || {};
       const a = safeNum(p.umbral_views_like_rate);
@@ -721,45 +562,13 @@
       return a;
     }
 
-    function buildDerived(json){
-      const thr = getThreshold(json);
-      const videos = normalizeVideos(json);
+    const UI_STATE = {
+      videosAll: [],
+      topAll: [],
+      selectedCreator: "",
+      query: ""
+    };
 
-      const topByLikes = sortByMany(
-        videos,
-        (a,b)=> b.likes - a.likes,
-        (a,b)=> b.views - a.views,
-        (a,b)=> b.like_rate - a.like_rate
-      ).slice(0, 10);
-
-      const cand = videos.filter(v=> v.views >= thr);
-      const topByRate = sortByMany(
-        (cand.length ? cand : videos),
-        (a,b)=> b.like_rate - a.like_rate,
-        (a,b)=> b.likes - a.likes,
-        (a,b)=> b.views - a.views
-      ).slice(0, 10);
-
-      const totalViews = videos.reduce((a,v)=> a+v.views, 0);
-      const totalLikes = videos.reduce((a,v)=> a+v.likes, 0);
-      const avgRate = videos.length ? videos.reduce((a,v)=> a+v.like_rate, 0) / videos.length : 0;
-
-      const meta = json.meta || {};
-      return {
-        ...json,
-        meta: {
-          ...meta,
-          total_items: safeNum(meta.total_items) || safeNum(meta.total_items_dedup) || videos.length
-        },
-        _derived: {
-          videos, topByLikes, topByRate, thr, totalViews, totalLikes, avgRate
-        }
-      };
-    }
-
-    // =========================
-    // RENDER UI
-    // =========================
     function kpiCard(label, value, hint){
       return `
         <div class="kpi">
@@ -771,7 +580,6 @@
     }
 
     function videoItem(i, t){
-      // t puede ser string (top_videos) o video object derivado
       if(typeof t === "string"){
         return `
           <div class="item">
@@ -807,124 +615,101 @@
       `;
     }
 
-    function chipItem(i, t){
-      return `
-        <div class="item">
-          <div class="badge">${i+1}</div>
-          <div class="itemMain">
-            <div class="itemTop">
-              <div class="itemTitle">${escapeHtml(t)}</div>
-            </div>
-          </div>
-        </div>
-      `;
+    function populateCreatorsDropdown(videos){
+      const sel = document.getElementById("creatorFilter");
+      const prev = UI_STATE.selectedCreator;
+
+      const names = Array.from(new Set(
+        (videos || []).map(v => (v.username || "").trim()).filter(Boolean)
+      )).sort((a,b)=> a.localeCompare(b));
+
+      sel.innerHTML = `<option value="">Todos los creadores</option>` +
+        names.map(u => `<option value="${escapeHtml(u)}">@${escapeHtml(u)}</option>`).join("");
+
+      sel.value = prev && names.includes(prev) ? prev : "";
+      UI_STATE.selectedCreator = sel.value;
+    }
+
+    function applyTopFiltersAndRender(){
+      const q = (UI_STATE.query || "").toLowerCase();
+      const creator = (UI_STATE.selectedCreator || "").toLowerCase();
+
+      let list = UI_STATE.topAll.slice();
+
+      if(creator){
+        list = list.filter(t => (typeof t === "string") ? true : ((t.username||"").toLowerCase() === creator));
+      }
+      if(q){
+        list = list.filter(t => {
+          const txt = (typeof t === "string")
+            ? t
+            : (`@${t.username||""} ${t.video_id||""} ${t.url||""} views ${t.views} likes ${t.likes}`);
+          return txt.toLowerCase().includes(q);
+        });
+      }
+
+      const topRoot = document.getElementById("topList");
+      topRoot.innerHTML = "";
+      if(list.length){
+        topRoot.innerHTML = list.map((t,i)=> videoItem(i,t)).join("");
+        show(document.getElementById("topEmpty"), false);
+      } else {
+        show(document.getElementById("topEmpty"), true);
+      }
+
+      setText("topHint", `top: ${list.length || 0}`);
     }
 
     function render(data, ymd, resolvedUrl){
-      // meta pills (misma lógica del panel por días)
-      setText("srcPill", "fuente: " + (data?.meta?.fuente ?? "—"));
+      setText("filePill", resolvedUrl ?? "—");
       setText("datePill", "día: " + (ymd ? formatNiceDate(ymd) : "—"));
       setText("fetchPill", "sync: " + new Date().toLocaleString("es-CO"));
-      setText("filePill", resolvedUrl ?? "—");
 
-      const derived = buildDerived(data);
-      const thr = derived?._derived?.thr ?? 0;
-      const videos = derived?._derived?.videos ?? [];
+      const metaFuente = data?.meta?.fuente ?? "—";
+      setText("srcPill", "fuente: " + metaFuente);
 
-      setText("metaCount", String(derived?.meta?.total_items ?? videos.length ?? 0));
+      const thr = getThreshold(data);
       setText("thr", String(thr || 0));
 
-      // Tu payload del día (por si existe)
-      const top_videos_raw = ensureArray(data?.top_videos);
-      const fet_raw = normalizeFetiches(data?.top_fetiches);
-      const ideas = ensureArray(data?.ideas_contenido);
-      const titles = ensureArray(data?.titulos_propuestos);
+      const videos = normalizeVideos(data);
+      UI_STATE.videosAll = videos;
 
-      // IMPORTANTE: si top_videos viene vacío, usamos derivados por likes
-      const topVideos =
-        top_videos_raw.length
-          ? top_videos_raw
-          : (derived?._derived?.topByLikes ?? []);
+      setText("metaCount", String(safeNum(data?.meta?.total_items) || videos.length));
 
-      // KPIs
-      const totalViews = derived?._derived?.totalViews ?? 0;
-      const totalLikes = derived?._derived?.totalLikes ?? 0;
-      const avgRate = derived?._derived?.avgRate ?? 0;
+      // Top: si existe top_videos, úsalo; si no, deriva de data.videos por likes
+      const topRaw = (Array.isArray(data?.top_videos) ? data.top_videos : []);
+      const topFromJson = topRaw.length ? topRaw : [];
 
-      const kpisHtml = [
-        kpiCard("Videos", videos.length, "dataset"),
+      const topDerived = sortByMany(
+        videos,
+        (a,b)=> b.likes - a.likes,
+        (a,b)=> b.views - a.views,
+        (a,b)=> b.like_rate - a.like_rate
+      ).slice(0, 10);
+
+      UI_STATE.topAll = topFromJson.length ? topFromJson : topDerived;
+
+      populateCreatorsDropdown(videos);
+
+      const totalViews = videos.reduce((a,v)=> a+v.views, 0);
+      const totalLikes = videos.reduce((a,v)=> a+v.likes, 0);
+      const avgRate = videos.length ? videos.reduce((a,v)=> a+v.like_rate, 0) / videos.length : 0;
+
+      document.getElementById("kpis").innerHTML = [
+        kpiCard("Videos", videos.length, "dataset (dedup)"),
         kpiCard("Views", fmtK(totalViews), "suma"),
         kpiCard("Likes", fmtK(totalLikes), "suma"),
         kpiCard("Avg rate", fmtPct(avgRate*100), "promedio"),
       ].join("");
 
-      document.getElementById("kpis").innerHTML = kpisHtml;
-
-      // Top videos
-      const topRoot = document.getElementById("topList");
-      topRoot.innerHTML = "";
-      if(topVideos.length){
-        topRoot.innerHTML = topVideos.map((t,i)=> videoItem(i,t)).join("");
-        show(document.getElementById("topEmpty"), false);
-      } else {
-        show(document.getElementById("topEmpty"), true);
-      }
-      setText("topHint", "top: " + String(topVideos.length || 0));
-
-      // Fetiches
-      const fetRoot = document.getElementById("fetList");
-      fetRoot.innerHTML = "";
-      if(fet_raw.length){
-        fetRoot.innerHTML = fet_raw.map((t,i)=> chipItem(i,t)).join("");
-        show(document.getElementById("fetEmpty"), false);
-      } else {
-        show(document.getElementById("fetEmpty"), true);
-      }
-      setText("fetHint", "items: " + String(fet_raw.length || 0));
-
-      // Analítica / correlaciones
-      setText("trendText", data?.analisis_tendencias ?? "—");
-      setText("corrText", data?.correlaciones ?? "—");
-      setText("anaHint", "ok");
-
-      // Ideas
-      const ideasRoot = document.getElementById("ideasList");
-      ideasRoot.innerHTML = "";
-      if(ideas.length){
-        ideasRoot.innerHTML = ideas.map((t,i)=> chipItem(i,t)).join("");
-        show(document.getElementById("ideasEmpty"), false);
-      } else {
-        show(document.getElementById("ideasEmpty"), true);
-      }
-
-      // Titles
-      const titlesRoot = document.getElementById("titlesList");
-      titlesRoot.innerHTML = "";
-      if(titles.length){
-        titlesRoot.innerHTML = titles.map((t,i)=> chipItem(i,t)).join("");
-        show(document.getElementById("titlesEmpty"), false);
-      } else {
-        show(document.getElementById("titlesEmpty"), true);
-      }
-
-      setText("ideaHint", `ideas: ${ideas.length || 0} · títulos: ${titles.length || 0}`);
-
-      // Notas
-      const notas = (Array.isArray(data?.meta?.notas_parseo) ? data.meta.notas_parseo : []);
-      setText("notesText", notas.length ? notas.join("\n") : "—");
-      setText("statusLine", `cargado: ${ymd} | fuente: ${data?.meta?.fuente ?? "—"}`);
-      document.getElementById("subtitle").textContent = "Panel diario con navegación por fechas (fallback activo)";
+      applyTopFiltersAndRender();
     }
 
-    // =========================
-    // LOAD WITH DAY NAV + FALLBACK
-    // =========================
     let selectedDate = new Date();
 
     async function loadDate(d){
       const ymd = toYMD(d);
-      const url = fileUrl(ymd);
-      setText("statusLine", `cargando: ${ymd}...`);
+      const url = fileUrl(ymd); // reports/YYYY-MM-DD.json
       try{
         const raw = await fetchJson(url);
         const data = unwrapMakePayload(raw);
@@ -943,52 +728,42 @@
         const ok = await loadDate(d);
         if(ok) return;
       }
-      // vaciar UI si no hay nada
-      setText("srcPill", "fuente: —");
+
+      // Sin datos
+      setText("filePill", "reports/YYYY-MM-DD.json (no encontrado)");
       setText("datePill", "día: —");
       setText("fetchPill", "sync: —");
-      setText("filePill", "—");
-      setText("metaCount", "0");
+      setText("srcPill", "fuente: —");
       setText("thr", "—");
-
-      document.getElementById("kpis").innerHTML = "";
+      setText("metaCount", "0");
+      document.getElementById("kpis").innerHTML = [
+        kpiCard("Videos", "0", "dataset"),
+        kpiCard("Views", "0", "suma"),
+        kpiCard("Likes", "0", "suma"),
+        kpiCard("Avg rate", "0%", "promedio"),
+      ].join("");
       document.getElementById("topList").innerHTML = "";
-      document.getElementById("fetList").innerHTML = "";
-      document.getElementById("ideasList").innerHTML = "";
-      document.getElementById("titlesList").innerHTML = "";
-
       show(document.getElementById("topEmpty"), true);
-      show(document.getElementById("fetEmpty"), true);
-      show(document.getElementById("ideasEmpty"), true);
-      show(document.getElementById("titlesEmpty"), true);
-
-      setText("trendText", "No se encontró ningún reporte en los últimos días. Verifica que existan archivos en /reports.");
-      setText("corrText", "—");
-
-      setText("statusLine", "sin datos (no se encontraron archivos recientes)");
-      setText("notesText", "—");
+      document.getElementById("creatorFilter").innerHTML = `<option value="">Todos los creadores</option>`;
     }
 
-    // =========================
-    // EVENTS
-    // =========================
+    // Events
     document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
     document.getElementById("btnReload").addEventListener("click", () => loadWithFallback(selectedDate));
     document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
     document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
 
-    // filtros
     document.getElementById("q").addEventListener("input", (e)=>{
-      const q = (e.target.value || "").trim().toLowerCase();
-      const topRoot = document.getElementById("topList");
-      const items = Array.from(topRoot.querySelectorAll(".item"));
-      items.forEach(it=>{
-        const txt = it.innerText.toLowerCase();
-        it.style.display = txt.includes(q) ? "" : "none";
-      });
+      UI_STATE.query = e.target.value || "";
+      applyTopFiltersAndRender();
     });
 
-    // auto-load + refresh
+    document.getElementById("creatorFilter").addEventListener("change", (e)=>{
+      UI_STATE.selectedCreator = e.target.value || "";
+      applyTopFiltersAndRender();
+    });
+
+    // Init
     loadWithFallback(new Date());
     setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
   </script>
