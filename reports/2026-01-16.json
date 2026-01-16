@@ -1,0 +1,448 @@
+{
+  "meta": {
+    "fecha_procesamiento": "",
+    "fuente": "",
+    "total_items": 7,
+    "notas_parseo": []
+  },
+  "parametros": {
+    "MIN_VIEWS_FOR_RATE": 10000,
+    "definicion_score_interaccion": "score_interaccion = likes"
+  },
+  "data": {
+    "top_videos_by_likes": [
+      {
+        "rank": 1,
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "@sondra_blust",
+        "video_id": "7595744200713391391",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oAIB0tAxchSMCBl5dVCiF9AAiBKSp4AEEAfiIg~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=2v6vy%2BX2SobLuk21uGS4qLQHDko%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 2600000,
+        "likes": 287600,
+        "score_interaccion": 287600,
+        "like_rate": 0.11061538461538462,
+        "like_rate_pct": 11.062
+      },
+      {
+        "rank": 2,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "@sophieraiin",
+        "video_id": "7596060610119388429",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ocEiPEag1zMG4jxBYRIlghPWBAqgiwB5oyUqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=Ty7Sv4jCW9q1woJHQtzh4TgQ%2FHU%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 166700,
+        "likes": 28300,
+        "score_interaccion": 28300,
+        "like_rate": 0.1697837162576667,
+        "like_rate_pct": 16.978
+      },
+      {
+        "rank": 3,
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350",
+        "username": "@realalinnarosee",
+        "video_id": "7595759350132526350",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ogpGUuBERIfAwSafrJIDtZDpsCbFEDUYBg5wja~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=7RZ80jGUJDtV3k6h4JbpIoIk9NY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 258000,
+        "likes": 19100,
+        "score_interaccion": 19100,
+        "like_rate": 0.07403100775193798,
+        "like_rate_pct": 7.403
+      },
+      {
+        "rank": 4,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596091839942348045",
+        "username": "@sophieraiin",
+        "video_id": "7596091839942348045",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/o4EiWBa9UwZ24QPt0IIBg5PWBAqbiGBtv2UqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=HlLtYovJrn23LRj64nB4%2BiK576k%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 71000,
+        "likes": 12700,
+        "score_interaccion": 12700,
+        "like_rate": 0.1788732394366197,
+        "like_rate_pct": 17.887
+      },
+      {
+        "rank": 5,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596040794771950861",
+        "username": "@sophieraiin",
+        "video_id": "7596040794771950861",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oQryAq5EoLEeaAkpALAIRjmFifBACuESDDPCgY~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=E8yYONljaEOQcqH8jmrXUmCFOA0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 68100,
+        "likes": 7705,
+        "score_interaccion": 7705,
+        "like_rate": 0.11318407960199005,
+        "like_rate_pct": 11.318
+      },
+      {
+        "rank": 6,
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "@summerxiriss",
+        "video_id": "7596064162837646605",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oEDCBtYpHIAVWDOcjhpDqfD8ZwiwYABx0IqIUi~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=%2FnJVZiBff8kyqNduDeBGF9GiHVw%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 23100,
+        "likes": 6376,
+        "score_interaccion": 6376,
+        "like_rate": 0.27602409638554215,
+        "like_rate_pct": 27.602
+      },
+      {
+        "rank": 7,
+        "url": "https://www.tiktok.com/@leximarvell/video/7596080700378369310",
+        "username": "@leximarvell",
+        "video_id": "7596080700378369310",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oooAIfZhAdYIWmqSjQaCIOkhnIQeQPLVZTY1eG~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=bGucLKTCPw2G5tSQlLxZL3OigpM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 20600,
+        "likes": 4798,
+        "score_interaccion": 4798,
+        "like_rate": 0.2329126213592233,
+        "like_rate_pct": 23.291
+      }
+    ],
+    "top_videos_by_like_rate_filtered": [
+      {
+        "rank": 1,
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "@summerxiriss",
+        "video_id": "7596064162837646605",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oEDCBtYpHIAVWDOcjhpDqfD8ZwiwYABx0IqIUi~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=%2FnJVZiBff8kyqNduDeBGF9GiHVw%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 23100,
+        "likes": 6376,
+        "score_interaccion": 6376,
+        "like_rate": 0.27602409638554215,
+        "like_rate_pct": 27.602
+      },
+      {
+        "rank": 2,
+        "url": "https://www.tiktok.com/@leximarvell/video/7596080700378369310",
+        "username": "@leximarvell",
+        "video_id": "7596080700378369310",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oooAIfZhAdYIWmqSjQaCIOkhnIQeQPLVZTY1eG~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=bGucLKTCPw2G5tSQlLxZL3OigpM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 20600,
+        "likes": 4798,
+        "score_interaccion": 4798,
+        "like_rate": 0.2329126213592233,
+        "like_rate_pct": 23.291
+      },
+      {
+        "rank": 3,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596091839942348045",
+        "username": "@sophieraiin",
+        "video_id": "7596091839942348045",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/o4EiWBa9UwZ24QPt0IIBg5PWBAqbiGBtv2UqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=HlLtYovJrn23LRj64nB4%2BiK576k%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 71000,
+        "likes": 12700,
+        "score_interaccion": 12700,
+        "like_rate": 0.1788732394366197,
+        "like_rate_pct": 17.887
+      },
+      {
+        "rank": 4,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "@sophieraiin",
+        "video_id": "7596060610119388429",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ocEiPEag1zMG4jxBYRIlghPWBAqgiwB5oyUqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=Ty7Sv4jCW9q1woJHQtzh4TgQ%2FHU%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 166700,
+        "likes": 28300,
+        "score_interaccion": 28300,
+        "like_rate": 0.1697837162576667,
+        "like_rate_pct": 16.978
+      },
+      {
+        "rank": 5,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596040794771950861",
+        "username": "@sophieraiin",
+        "video_id": "7596040794771950861",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oQryAq5EoLEeaAkpALAIRjmFifBACuESDDPCgY~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=E8yYONljaEOQcqH8jmrXUmCFOA0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 68100,
+        "likes": 7705,
+        "score_interaccion": 7705,
+        "like_rate": 0.11318407960199005,
+        "like_rate_pct": 11.318
+      },
+      {
+        "rank": 6,
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "@sondra_blust",
+        "video_id": "7595744200713391391",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oAIB0tAxchSMCBl5dVCiF9AAiBKSp4AEEAfiIg~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=2v6vy%2BX2SobLuk21uGS4qLQHDko%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 2600000,
+        "likes": 287600,
+        "score_interaccion": 287600,
+        "like_rate": 0.11061538461538462,
+        "like_rate_pct": 11.062
+      },
+      {
+        "rank": 7,
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350",
+        "username": "@realalinnarosee",
+        "video_id": "7595759350132526350",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ogpGUuBERIfAwSafrJIDtZDpsCbFEDUYBg5wja~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=7RZ80jGUJDtV3k6h4JbpIoIk9NY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 258000,
+        "likes": 19100,
+        "score_interaccion": 19100,
+        "like_rate": 0.07403100775193798,
+        "like_rate_pct": 7.403
+      }
+    ],
+    "top_videos_by_like_rate_unfiltered": [
+      {
+        "rank": 1,
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "@summerxiriss",
+        "video_id": "7596064162837646605",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oEDCBtYpHIAVWDOcjhpDqfD8ZwiwYABx0IqIUi~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=%2FnJVZiBff8kyqNduDeBGF9GiHVw%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 23100,
+        "likes": 6376,
+        "score_interaccion": 6376,
+        "like_rate": 0.27602409638554215,
+        "like_rate_pct": 27.602
+      },
+      {
+        "rank": 2,
+        "url": "https://www.tiktok.com/@leximarvell/video/7596080700378369310",
+        "username": "@leximarvell",
+        "video_id": "7596080700378369310",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oooAIfZhAdYIWmqSjQaCIOkhnIQeQPLVZTY1eG~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=bGucLKTCPw2G5tSQlLxZL3OigpM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 20600,
+        "likes": 4798,
+        "score_interaccion": 4798,
+        "like_rate": 0.2329126213592233,
+        "like_rate_pct": 23.291
+      },
+      {
+        "rank": 3,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596091839942348045",
+        "username": "@sophieraiin",
+        "video_id": "7596091839942348045",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/o4EiWBa9UwZ24QPt0IIBg5PWBAqbiGBtv2UqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=HlLtYovJrn23LRj64nB4%2BiK576k%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 71000,
+        "likes": 12700,
+        "score_interaccion": 12700,
+        "like_rate": 0.1788732394366197,
+        "like_rate_pct": 17.887
+      },
+      {
+        "rank": 4,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "@sophieraiin",
+        "video_id": "7596060610119388429",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ocEiPEag1zMG4jxBYRIlghPWBAqgiwB5oyUqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=Ty7Sv4jCW9q1woJHQtzh4TgQ%2FHU%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 166700,
+        "likes": 28300,
+        "score_interaccion": 28300,
+        "like_rate": 0.1697837162576667,
+        "like_rate_pct": 16.978
+      },
+      {
+        "rank": 5,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596040794771950861",
+        "username": "@sophieraiin",
+        "video_id": "7596040794771950861",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oQryAq5EoLEeaAkpALAIRjmFifBACuESDDPCgY~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=E8yYONljaEOQcqH8jmrXUmCFOA0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 68100,
+        "likes": 7705,
+        "score_interaccion": 7705,
+        "like_rate": 0.11318407960199005,
+        "like_rate_pct": 11.318
+      },
+      {
+        "rank": 6,
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "@sondra_blust",
+        "video_id": "7595744200713391391",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oAIB0tAxchSMCBl5dVCiF9AAiBKSp4AEEAfiIg~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=2v6vy%2BX2SobLuk21uGS4qLQHDko%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 2600000,
+        "likes": 287600,
+        "score_interaccion": 287600,
+        "like_rate": 0.11061538461538462,
+        "like_rate_pct": 11.062
+      },
+      {
+        "rank": 7,
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350",
+        "username": "@realalinnarosee",
+        "video_id": "7595759350132526350",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ogpGUuBERIfAwSafrJIDtZDpsCbFEDUYBg5wja~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=7RZ80jGUJDtV3k6h4JbpIoIk9NY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 258000,
+        "likes": 19100,
+        "score_interaccion": 19100,
+        "like_rate": 0.07403100775193798,
+        "like_rate_pct": 7.403
+      }
+    ]
+  },
+  "creators_ranking": [
+    {
+      "rank": 1,
+      "username": "@sophieraiin",
+      "videos_total_en_dataset": 3,
+      "top_count_likes": 3,
+      "sum_views": 305800,
+      "sum_likes": 48705,
+      "avg_like_rate": 0.1539476784327588,
+      "avg_like_rate_pct": 15.395,
+      "top_video_urls_likes": [
+        "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "https://www.tiktok.com/@sophieraiin/video/7596091839942348045",
+        "https://www.tiktok.com/@sophieraiin/video/7596040794771950861"
+      ]
+    },
+    {
+      "rank": 2,
+      "username": "@sondra_blust",
+      "videos_total_en_dataset": 1,
+      "top_count_likes": 1,
+      "sum_views": 2600000,
+      "sum_likes": 287600,
+      "avg_like_rate": 0.11061538461538462,
+      "avg_like_rate_pct": 11.062,
+      "top_video_urls_likes": [
+        "https://www.tiktok.com/@sondra_blust/video/7595744200713391391"
+      ]
+    },
+    {
+      "rank": 3,
+      "username": "@realalinnarosee",
+      "videos_total_en_dataset": 1,
+      "top_count_likes": 1,
+      "sum_views": 258000,
+      "sum_likes": 19100,
+      "avg_like_rate": 0.07403100775193798,
+      "avg_like_rate_pct": 7.403,
+      "top_video_urls_likes": [
+        "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350"
+      ]
+    },
+    {
+      "rank": 4,
+      "username": "@summerxiriss",
+      "videos_total_en_dataset": 1,
+      "top_count_likes": 1,
+      "sum_views": 23100,
+      "sum_likes": 6376,
+      "avg_like_rate": 0.27602409638554215,
+      "avg_like_rate_pct": 27.602,
+      "top_video_urls_likes": [
+        "https://www.tiktok.com/@summerxiriss/video/7596064162837646605"
+      ]
+    },
+    {
+      "rank": 5,
+      "username": "@leximarvell",
+      "videos_total_en_dataset": 1,
+      "top_count_likes": 1,
+      "sum_views": 20600,
+      "sum_likes": 4798,
+      "avg_like_rate": 0.2329126213592233,
+      "avg_like_rate_pct": 23.291,
+      "top_video_urls_likes": [
+        "https://www.tiktok.com/@leximarvell/video/7596080700378369310"
+      ]
+    }
+  ],
+  "outliers": {
+    "by_views": [
+      {
+        "rank": 1,
+        "url": "https://www.tiktok.com/@sondra_blust/video/7595744200713391391",
+        "username": "@sondra_blust",
+        "video_id": "7595744200713391391",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oAIB0tAxchSMCBl5dVCiF9AAiBKSp4AEEAfiIg~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=2v6vy%2BX2SobLuk21uGS4qLQHDko%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 2600000,
+        "likes": 287600,
+        "score_interaccion": 287600,
+        "like_rate": 0.11061538461538462,
+        "like_rate_pct": 11.062
+      },
+      {
+        "rank": 2,
+        "url": "https://www.tiktok.com/@realalinnarosee/video/7595759350132526350",
+        "username": "@realalinnarosee",
+        "video_id": "7595759350132526350",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ogpGUuBERIfAwSafrJIDtZDpsCbFEDUYBg5wja~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=7RZ80jGUJDtV3k6h4JbpIoIk9NY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 258000,
+        "likes": 19100,
+        "score_interaccion": 19100,
+        "like_rate": 0.07403100775193798,
+        "like_rate_pct": 7.403
+      },
+      {
+        "rank": 3,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596060610119388429",
+        "username": "@sophieraiin",
+        "video_id": "7596060610119388429",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/ocEiPEag1zMG4jxBYRIlghPWBAqgiwB5oyUqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=Ty7Sv4jCW9q1woJHQtzh4TgQ%2FHU%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 166700,
+        "likes": 28300,
+        "score_interaccion": 28300,
+        "like_rate": 0.1697837162576667,
+        "like_rate_pct": 16.978
+      }
+    ],
+    "by_like_rate_filtered": [
+      {
+        "rank": 1,
+        "url": "https://www.tiktok.com/@summerxiriss/video/7596064162837646605",
+        "username": "@summerxiriss",
+        "video_id": "7596064162837646605",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/oEDCBtYpHIAVWDOcjhpDqfD8ZwiwYABx0IqIUi~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=%2FnJVZiBff8kyqNduDeBGF9GiHVw%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 23100,
+        "likes": 6376,
+        "score_interaccion": 6376,
+        "like_rate": 0.27602409638554215,
+        "like_rate_pct": 27.602
+      },
+      {
+        "rank": 2,
+        "url": "https://www.tiktok.com/@leximarvell/video/7596080700378369310",
+        "username": "@leximarvell",
+        "video_id": "7596080700378369310",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast8-p-0068-tx2/oooAIfZhAdYIWmqSjQaCIOkhnIQeQPLVZTY1eG~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=bGucLKTCPw2G5tSQlLxZL3OigpM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 20600,
+        "likes": 4798,
+        "score_interaccion": 4798,
+        "like_rate": 0.2329126213592233,
+        "like_rate_pct": 23.291
+      },
+      {
+        "rank": 3,
+        "url": "https://www.tiktok.com/@sophieraiin/video/7596091839942348045",
+        "username": "@sophieraiin",
+        "video_id": "7596091839942348045",
+        "region": "",
+        "cover_url": "https://p16-common-sign.tiktokcdn-eu.com/tos-useast5-p-0068-tx/o4EiWBa9UwZ24QPt0IIBg5PWBAqbiGBtv2UqI~tplv-tiktokx-origin.image?dr=10395&x-expires=1768773600&x-signature=HlLtYovJrn23LRj64nB4%2BiK576k%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=no1a",
+        "views": 71000,
+        "likes": 12700,
+        "score_interaccion": 12700,
+        "like_rate": 0.1788732394366197,
+        "like_rate_pct": 17.887
+      }
+    ]
+  },
+  "resumen": "El video con más likes corresponde a @sondra_blust, pero @sophieraiin domina el ranking por volumen de videos destacados. Los mayores like rates se observan en creadores como @summerxiriss y @leximarvell.",
+  "insights": [
+    "El video de @sondra_blust destaca ampliamente en likes y vistas tot
