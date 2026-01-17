@@ -688,66 +688,50 @@
     let selectedDate = new Date();
 
     // Intenta cargar archivos con formato hora (YYYY-MM-DD-HH-mm)
-    // Busca desde la hora más reciente hacia atrás
+    // Busca desde 23:59 hacia atrás, TODOS los minutos (0-59) del día
     async function tryLoadWithTime(d){
       const errors = [];
       const ymd = toYMD(d);
       const now = new Date(d);
       
-      // Estrategia optimizada: buscar horas comunes primero, luego desde actual hacia atrás
-      const hoursToTry = [];
-      const currentHour = now.getHours();
-      const currentMin = Math.floor(now.getMinutes() / 15) * 15;
-      
-      // 1. Hora actual
-      hoursToTry.push({h: currentHour, m: currentMin});
-      
-      // 2. Horas comunes del día (cada hora, cada 15 min)
+      // Estrategia: buscar TODAS las horas del día desde 23:59 hacia atrás hasta 00:00
+      // Esto asegura encontrar cualquier archivo del día, sin importar la hora actual
       for(let h = 23; h >= 0; h--){
-        for(let m = 45; m >= 0; m -= 15){
-          if(h === currentHour && m === currentMin) continue;
-          hoursToTry.push({h, m});
-        }
-      }
-      
-      // Limitar a 100 intentos máximo por día
-      const toTry = hoursToTry.slice(0, 100);
-      
-      // Intentar cargar cada combinación
-      for(const {h, m} of toTry){
-        const testDate = new Date(now);
-        testDate.setHours(h, m, 0, 0);
-        
-        // Solo intentar si es del mismo día
-        if(toYMD(testDate) !== ymd) continue;
-        
-        const ymdhm = toYMDHM(testDate);
-        const url = fileUrl(ymdhm);
-        
-        try{
-          const raw = await fetchJson(url);
-          const obj = unwrapMake(raw);
-          if(!obj || typeof obj !== "object") continue;
-          const htmlText = String(obj.text || "");
-          if(!htmlText) continue;
+        for(let m = 59; m >= 0; m--){
+          const testDate = new Date(now);
+          testDate.setHours(h, m, 0, 0);
           
-          // Encontrado! Procesar y retornar (el más reciente)
-          let items = parseItemsFromText(htmlText, errors);
-          items = items.map(it => {
-            const { like_rate, like_rate_pct } = computeLikeRate(it);
-            return { ...it, like_rate, like_rate_pct };
-          });
+          // Solo intentar si es del mismo día
+          if(toYMD(testDate) !== ymd) continue;
           
-          items = dedupeByVideoId(items);
-          const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-          renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
+          const ymdhm = toYMDHM(testDate);
+          const url = fileUrl(ymdhm);
           
-          setText("dateLabel", `${ymd} ${pad2(h)}:${pad2(m)}`);
-          selectedDate = d;
-          return true;
-        } catch(e){
-          // Continuar buscando
-          continue;
+          try{
+            const raw = await fetchJson(url);
+            const obj = unwrapMake(raw);
+            if(!obj || typeof obj !== "object") continue;
+            const htmlText = String(obj.text || "");
+            if(!htmlText) continue;
+            
+            // Encontrado! Procesar y retornar (el más reciente)
+            let items = parseItemsFromText(htmlText, errors);
+            items = items.map(it => {
+              const { like_rate, like_rate_pct } = computeLikeRate(it);
+              return { ...it, like_rate, like_rate_pct };
+            });
+            
+            items = dedupeByVideoId(items);
+            const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+            renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
+            
+            setText("dateLabel", `${ymd} ${pad2(h)}:${pad2(m)}`);
+            selectedDate = d;
+            return true;
+          } catch(e){
+            // Continuar buscando
+            continue;
+          }
         }
       }
       return false;
@@ -767,10 +751,10 @@
         
         const ymd = toYMD(testDate);
         
-        // Buscar archivos con hora en este día (desde 23:45 hacia atrás)
+        // Buscar archivos con hora en este día (desde 23:59 hacia atrás, TODOS los minutos)
         let found = false;
         for(let h = 23; h >= 0 && !found; h--){
-          for(let m = 45; m >= 0; m -= 15){
+          for(let m = 59; m >= 0; m--){
             const testTime = new Date(testDate);
             testTime.setHours(h, m, 0, 0);
             const ymdhm = toYMDHM(testTime);
