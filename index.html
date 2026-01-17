@@ -694,7 +694,7 @@
       const currentHour = now.getHours();
       const currentMin = now.getMinutes();
 
-      // PRIORIDAD: Primero intentar formato con hora (YYYY-MM-DD-HH-mm) - más reciente
+      // SOLO buscar formato con hora (YYYY-MM-DD-HH-mm.json)
       // Buscar desde hora actual hacia atrás (máximo 24 horas, cada minuto)
       for(let hoursBack = 0; hoursBack < 24; hoursBack++){
         for(let m = (hoursBack === 0 ? currentMin : 59); m >= 0; m--){
@@ -740,37 +740,8 @@
         }
       }
 
-      // Si no encontró con hora, intentar formato solo fecha (YYYY-MM-DD)
-      const url = fileUrl(ymd);
-      setText("dateLabel", ymd);
-
-      try{
-        const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
-        const obj = unwrapMake(raw);
-        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
-        const htmlText = String(obj.text || "");
-        if(!htmlText) throw new Error("falta obj.text con los <li>");
-
-        let items = parseItemsFromText(htmlText, errors);
-
-        items = items.map(it => {
-          const { like_rate, like_rate_pct } = computeLikeRate(it);
-          return { ...it, like_rate, like_rate_pct };
-        });
-
-        const before = items.length;
-        items = dedupeByVideoId(items);
-        const after = items.length;
-
-        const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-
-        renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-
-        selectedDate = d;
-        return true;
-      } catch(e){
-        return false;
-      }
+      // No encontró ningún archivo con formato hora
+      return false;
     }
 
     async function loadWithFallback(startDate){
