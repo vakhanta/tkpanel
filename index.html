@@ -750,7 +750,7 @@
       }
     }
     
-    // Busca el archivo más reciente: intenta desde hoy hacia atrás
+    // Busca el archivo más reciente: intenta desde hoy hacia atrás (solo al inicio)
     async function findInitialFile(){
       const now = new Date();
       const currentHour = now.getHours();
@@ -761,7 +761,7 @@
         const testDate = new Date(now);
         testDate.setDate(testDate.getDate() - daysBack);
         
-        // Si es hoy, intentar desde hora actual hacia atrás (máximo 24 horas)
+        // Si es hoy, intentar desde hora actual hacia atrás (máximo 24 horas, cada minuto)
         if(daysBack === 0){
           for(let hoursBack = 0; hoursBack < 24; hoursBack++){
             for(let m = (hoursBack === 0 ? currentMin : 59); m >= 0; m--){
@@ -771,11 +771,9 @@
             }
           }
         } else {
-          // Días anteriores: intentar desde 23:59 hacia atrás (máximo 100 intentos por día)
-          let attempts = 0;
-          for(let h = 23; h >= 0 && attempts < 100; h--){
-            for(let m = 59; m >= 0 && attempts < 100; m--){
-              attempts++;
+          // Días anteriores: intentar desde 23:59 hacia atrás (cada minuto, máximo 24 horas)
+          for(let h = 23; h >= 0; h--){
+            for(let m = 59; m >= 0; m--){
               if(await loadFile(testDate, h, m)) return true;
             }
           }
@@ -791,7 +789,7 @@
       return false;
     }
     
-    // Navega al archivo anterior: intenta el minuto/hora/día anterior
+    // Navega al archivo anterior: intenta el minuto/hora/día anterior (simple, sin buscar mucho)
     async function loadPreviousFile(){
       if(!currentFileDate) return;
       
@@ -800,13 +798,12 @@
       let m = currentFileDate.minute;
       
       if(currentFileDate.hasTime){
-        // Intentar minuto anterior, luego hora anterior, luego día anterior
+        // Intentar minuto anterior, luego hora anterior, luego día anterior (máximo 10 intentos)
         m--;
         if(m < 0){ m = 59; h--; }
         if(h < 0){ h = 23; d.setDate(d.getDate() - 1); }
         
-        // Intentar máximo 100 veces hacia atrás
-        for(let i = 0; i < 100; i++){
+        for(let i = 0; i < 10; i++){
           if(await loadFile(d, h, m)) return;
           m--;
           if(m < 0){ m = 59; h--; }
@@ -823,7 +820,7 @@
       }
     }
     
-    // Navega al archivo siguiente: intenta el minuto/hora/día siguiente
+    // Navega al archivo siguiente: intenta el minuto/hora/día siguiente (simple, sin buscar mucho)
     async function loadNextFile(){
       if(!currentFileDate) return;
       
@@ -832,13 +829,12 @@
       let m = currentFileDate.minute;
       
       if(currentFileDate.hasTime){
-        // Intentar minuto siguiente, luego hora siguiente, luego día siguiente
+        // Intentar minuto siguiente, luego hora siguiente, luego día siguiente (máximo 10 intentos)
         m++;
         if(m > 59){ m = 0; h++; }
         if(h > 23){ h = 0; d.setDate(d.getDate() + 1); }
         
-        // Intentar máximo 100 veces hacia adelante
-        for(let i = 0; i < 100; i++){
+        for(let i = 0; i < 10; i++){
           if(await loadFile(d, h, m)) return;
           m++;
           if(m > 59){ m = 0; h++; }
