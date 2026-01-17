@@ -154,26 +154,6 @@
       background:rgba(0,0,0,.25);
       box-shadow:0 0 20px rgba(255,193,7,.15), 0 8px 32px rgba(0,0,0,.50);
     }
-    .item.top1:before{
-      content:"";position:absolute;inset:0;border-radius:14px;
-      padding:2px;background:conic-gradient(from 0deg, 
-        rgba(255,193,7,1) 0deg, 
-        rgba(255,235,59,.6) 90deg, 
-        rgba(255,193,7,.4) 180deg, 
-        rgba(255,235,59,.6) 270deg, 
-        rgba(255,193,7,1) 360deg);
-      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-      mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-      -webkit-mask-composite:xor;mask-composite:exclude;
-      animation:top1Border 3s linear infinite;
-      z-index:-1;
-    }
-    @media (min-width:640px){.item.top1:before{border-radius:16px}}
-    @keyframes top1Border{
-      0%{transform:rotate(0deg);opacity:.85}
-      50%{opacity:1}
-      100%{transform:rotate(360deg);opacity:.85}
-    }
     .item.top1:after{
       content:"";position:absolute;inset:-4px;border-radius:16px;
       background:radial-gradient(circle, rgba(255,193,7,.3) 0%, transparent 70%);
