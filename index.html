@@ -482,7 +482,6 @@
     // =========================
     const pad2 = (n) => String(n).padStart(2, "0");
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-    const toYMDHM = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}-${pad2(d.getHours())}-${pad2(d.getMinutes())}`;
     const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
 
     function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
@@ -676,48 +675,23 @@
       return payload;
     }
 
-    function fileUrl(ymd){ 
-      return `${REPORTS_DIR}/${ymd}.json`; 
-    }
+    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
 
     async function fetchJson(url){
       const res = await fetch(url, { cache: "no-store" });
       if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return await res.json();
     }
-    
-    // Función de debug para ver qué URLs se están intentando
-    function debugLog(message, data){
-      if(typeof console !== 'undefined' && console.log){
-        console.log(`[TikTok Panel] ${message}`, data);
-      }
-    }
 
     // ====== NAV state ======
     let selectedDate = new Date();
 
-    
-    // Estado de navegación: fecha/hora actual del archivo mostrado
-    let currentFileDate = null; // {date: Date, hasTime: boolean, hour: number, minute: number}
-
-    // Carga un archivo específico por fecha/hora (lógica del checkpoint)
-    async function loadFile(date, hour = null, minute = null){
+    async function loadDate(d){
       const errors = [];
-      let url, label;
-      
-      if(hour !== null && minute !== null){
-        // Formato con hora: YYYY-MM-DD-HH-mm.json
-        const testDate = new Date(date);
-        testDate.setHours(hour, minute, 0, 0);
-        const ymdhm = toYMDHM(testDate);
-        url = fileUrl(ymdhm);
-        label = `${toYMD(date)} ${pad2(hour)}:${pad2(minute)}`;
-      } else {
-        // Formato solo fecha: YYYY-MM-DD.json
-        const ymd = toYMD(date);
-        url = fileUrl(ymd);
-        label = ymd;
-      }
+      const ymd = toYMD(d);
+      const url = fileUrl(ymd);
+
+      setText("dateLabel", ymd);
 
       try{
         const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
@@ -741,146 +715,31 @@
 
         renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
 
-        setText("dateLabel", label);
-        selectedDate = date;
-        currentFileDate = {date: new Date(date), hasTime: hour !== null, hour, minute};
+        selectedDate = d;
         return true;
       } catch(e){
         return false;
       }
     }
-    
-    // Busca el archivo más reciente: intenta desde hoy hacia atrás (solo al inicio)
-    async function findInitialFile(){
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMin = now.getMinutes();
-      
-      // Intentar desde hoy hacia atrás (máximo 14 días)
-      for(let daysBack = 0; daysBack <= MAX_FALLBACK_DAYS; daysBack++){
-        const testDate = new Date(now);
-        testDate.setDate(testDate.getDate() - daysBack);
-        
-        // Si es hoy, intentar desde hora actual hacia atrás (máximo 24 horas, cada minuto)
-        if(daysBack === 0){
-          for(let hoursBack = 0; hoursBack < 24; hoursBack++){
-            for(let m = (hoursBack === 0 ? currentMin : 59); m >= 0; m--){
-              let h = currentHour - hoursBack;
-              if(h < 0) h += 24;
-              if(await loadFile(testDate, h, m)) return true;
-            }
-          }
-        } else {
-          // Días anteriores: intentar desde 23:59 hacia atrás (cada minuto, máximo 24 horas)
-          for(let h = 23; h >= 0; h--){
-            for(let m = 59; m >= 0; m--){
-              if(await loadFile(testDate, h, m)) return true;
-            }
-          }
-        }
-        
-        // Si no encontró con hora, intentar solo fecha
-        if(await loadFile(testDate)) return true;
+
+    async function loadWithFallback(startDate){
+      for(let i=0; i<=MAX_FALLBACK_DAYS; i++){
+        const d = addDays(startDate, -i);
+        const ok = await loadDate(d);
+        if(ok) return;
       }
-      
-      // Si no encontró nada
+
       document.getElementById("listTopLikes").innerHTML = "";
       show(document.getElementById("emptyTopLikes"), true);
-      return false;
-    }
-    
-    // Navega al archivo anterior: intenta el minuto/hora/día anterior (simple, sin buscar mucho)
-    async function loadPreviousFile(){
-      if(!currentFileDate) return;
-      
-      const d = new Date(currentFileDate.date);
-      let h = currentFileDate.hour;
-      let m = currentFileDate.minute;
-      
-      if(currentFileDate.hasTime){
-        // Intentar minuto anterior, luego hora anterior, luego día anterior (máximo 10 intentos)
-        m--;
-        if(m < 0){ m = 59; h--; }
-        if(h < 0){ h = 23; d.setDate(d.getDate() - 1); }
-        
-        for(let i = 0; i < 10; i++){
-          if(await loadFile(d, h, m)) return;
-          m--;
-          if(m < 0){ m = 59; h--; }
-          if(h < 0){ h = 23; d.setDate(d.getDate() - 1); }
-        }
-        
-        // Si no encuentra con hora, intentar solo fecha del día anterior
-        d.setDate(d.getDate() - 1);
-        if(await loadFile(d)) return;
-      } else {
-        // Si no tiene hora, intentar día anterior
-        d.setDate(d.getDate() - 1);
-        if(await loadFile(d)) return;
-      }
-    }
-    
-    // Navega al archivo siguiente: intenta el minuto/hora/día siguiente (simple, sin buscar mucho)
-    async function loadNextFile(){
-      if(!currentFileDate) return;
-      
-      const d = new Date(currentFileDate.date);
-      let h = currentFileDate.hour;
-      let m = currentFileDate.minute;
-      
-      if(currentFileDate.hasTime){
-        // Intentar minuto siguiente, luego hora siguiente, luego día siguiente (máximo 10 intentos)
-        m++;
-        if(m > 59){ m = 0; h++; }
-        if(h > 23){ h = 0; d.setDate(d.getDate() + 1); }
-        
-        for(let i = 0; i < 10; i++){
-          if(await loadFile(d, h, m)) return;
-          m++;
-          if(m > 59){ m = 0; h++; }
-          if(h > 23){ h = 0; d.setDate(d.getDate() + 1); }
-        }
-        
-        // Si no encuentra con hora, intentar solo fecha del día siguiente
-        d.setDate(d.getDate() + 1);
-        if(await loadFile(d)) return;
-      } else {
-        // Si no tiene hora, intentar día siguiente
-        d.setDate(d.getDate() + 1);
-        if(await loadFile(d)) return;
-      }
     }
 
-    // Event listeners de botones
-    document.getElementById("btnToday").addEventListener("click", async () => {
-      await findInitialFile();
-    });
-    
-    document.getElementById("btnReload").addEventListener("click", async () => {
-      if(currentFileDate){
-        await loadFile(currentFileDate.date, currentFileDate.hour, currentFileDate.minute);
-      } else {
-        await findInitialFile();
-      }
-    });
-    
-    document.getElementById("btnPrev").addEventListener("click", async () => {
-      await loadPreviousFile();
-    });
-    
-    document.getElementById("btnNext").addEventListener("click", async () => {
-      await loadNextFile();
-    });
+    document.getElementById("btnToday").addEventListener("click", () => loadWithFallback(new Date()));
+    document.getElementById("btnReload").addEventListener("click", () => loadWithFallback(selectedDate));
+    document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
+    document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
 
-    // Al cargar inicialmente, buscar el archivo más reciente
-    (async () => {
-      try {
-        await findInitialFile();
-      } catch(e) {
-        console.error("[TikTok Panel] Error al cargar:", e);
-        show(document.getElementById("emptyTopLikes"), true);
-      }
-    })();
+    loadWithFallback(new Date());
+    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
 
     // =========================
     // Countdown to next report (13:00 Colombia time, UTC-5)
