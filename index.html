@@ -700,7 +700,7 @@
     // Estado de navegación: fecha/hora actual del archivo mostrado
     let currentFileDate = null; // {date: Date, hasTime: boolean, hour: number, min: number}
 
-    // Carga un archivo específico por fecha/hora
+    // Carga un archivo específico por fecha/hora (lógica del checkpoint mejorada)
     async function loadFile(date, hour = null, minute = null){
       const errors = [];
       let url, label;
@@ -718,24 +718,29 @@
         url = fileUrl(ymd);
         label = ymd;
       }
-      
+
       try{
         const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
         const obj = unwrapMake(raw);
-        if(!obj || typeof obj !== "object") throw new Error("payload inválido");
+        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
         const htmlText = String(obj.text || "");
-        if(!htmlText) throw new Error("falta obj.text");
+        if(!htmlText) throw new Error("falta obj.text con los <li>");
 
         let items = parseItemsFromText(htmlText, errors);
+
         items = items.map(it => {
           const { like_rate, like_rate_pct } = computeLikeRate(it);
           return { ...it, like_rate, like_rate_pct };
         });
 
+        const before = items.length;
         items = dedupeByVideoId(items);
+        const after = items.length;
+
         const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+
         renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-        
+
         setText("dateLabel", label);
         selectedDate = date;
         currentFileDate = {date: new Date(date), hasTime: hour !== null, hour, minute};
@@ -746,28 +751,39 @@
     }
     
     // Busca el archivo más reciente disponible (solo al inicio)
+    // Lógica simple: busca desde hoy hacia atrás, primero con hora, luego sin hora
     async function findInitialFile(){
       const now = new Date();
       const currentHour = now.getHours();
       const currentMin = now.getMinutes();
       
-      // Buscar desde hoy, hora actual hacia atrás (máximo 7 días, máximo 100 intentos)
-      let attempts = 0;
-      for(let daysBack = 0; daysBack < 7 && attempts < 100; daysBack++){
+      // Buscar desde hoy hacia atrás (máximo 14 días)
+      for(let daysBack = 0; daysBack <= MAX_FALLBACK_DAYS; daysBack++){
         const testDate = new Date(now);
         testDate.setDate(testDate.getDate() - daysBack);
-        const startHour = daysBack === 0 ? currentHour : 23;
-        const startMin = daysBack === 0 ? currentMin : 59;
         
-        // Intentar con hora primero
-        for(let hoursBack = 0; hoursBack < 24 && attempts < 100; hoursBack++){
-          for(let m = startMin; m >= 0 && attempts < 100; m--){
-            attempts++;
-            let h = startHour - hoursBack;
-            if(h < 0) h += 24;
-            
-            if(await loadFile(testDate, h, m)){
-              return true;
+        // Si es hoy, buscar desde hora actual hacia atrás
+        if(daysBack === 0){
+          // Buscar con hora desde ahora hacia atrás (máximo 24 horas, cada minuto)
+          for(let hoursBack = 0; hoursBack < 24; hoursBack++){
+            for(let m = (hoursBack === 0 ? currentMin : 59); m >= 0; m--){
+              let h = currentHour - hoursBack;
+              if(h < 0) h += 24;
+              
+              if(await loadFile(testDate, h, m)){
+                return true;
+              }
+            }
+          }
+        } else {
+          // Para días anteriores, buscar desde 23:59 hacia atrás (máximo 100 intentos por día)
+          let attempts = 0;
+          for(let h = 23; h >= 0 && attempts < 100; h--){
+            for(let m = 59; m >= 0 && attempts < 100; m--){
+              attempts++;
+              if(await loadFile(testDate, h, m)){
+                return true;
+              }
             }
           }
         }
@@ -777,6 +793,10 @@
           return true;
         }
       }
+      
+      // Si no encontró nada, mostrar vacío
+      document.getElementById("listTopLikes").innerHTML = "";
+      show(document.getElementById("emptyTopLikes"), true);
       return false;
     }
     
