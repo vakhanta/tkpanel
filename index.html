@@ -313,9 +313,14 @@
     }
     .authModal{
       background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-      border-radius:var(--radius);padding:28px;max-width:400px;width:100%;
+      border-radius:var(--radius);padding:24px;max-width:380px;width:100%;
       box-shadow:0 16px 48px rgba(0,0,0,.60);backdrop-filter:blur(var(--blur));
       position:relative;overflow:hidden;
+    }
+    @media (min-width:640px){
+      .authModal{
+        padding:32px;max-width:420px;
+      }
     }
     .authModal:before{
       content:"";position:absolute;inset:-1px;
@@ -359,12 +364,17 @@
       position:relative;z-index:1;
     }
     .authInput{
-      width:100%;padding:14px 16px;border-radius:14px;
+      width:100%;padding:12px 16px;border-radius:999px;
       border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.20);
       color:var(--text);font-size:14px;font-weight:600;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
-      margin-bottom:16px;
+      margin-bottom:16px;min-height:44px;
+    }
+    @media (min-width:640px){
+      .authInput{
+        padding:14px 18px;font-size:15px;min-height:48px;
+      }
     }
     .authInput:focus{
       outline:none;border-color:rgba(79,5,247,.50);
@@ -375,15 +385,22 @@
       color:var(--muted2);
     }
     .authButton{
-      width:100%;padding:14px;border-radius:14px;
+      width:100%;padding:12px 20px;border-radius:999px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
         linear-gradient(135deg, rgba(52,99,250,.96), rgba(79,5,247,.86));
       border:1px solid rgba(255,255,255,.20);
-      color:rgba(255,255,255,.95);font-size:14px;font-weight:800;
+      color:rgba(255,255,255,.95);font-size:13px;font-weight:800;
       cursor:pointer;transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
       box-shadow:0 0 20px rgba(79,5,247,.60), 0 0 40px rgba(79,5,247,.40), 0 8px 24px rgba(0,0,0,.45);
-      letter-spacing:-.01em;
+      letter-spacing:-.01em;display:flex;align-items:center;justify-content:center;gap:8px;
+      min-height:44px;
+    }
+    @media (min-width:640px){
+      .authButton{
+        padding:14px 24px;font-size:14px;min-height:48px;
+        box-shadow:0 0 24px rgba(79,5,247,.65), 0 0 48px rgba(79,5,247,.45), 0 10px 28px rgba(0,0,0,.50);
+      }
     }
     .authButton:hover{
       filter:brightness(1.04);box-shadow:0 0 24px rgba(79,5,247,.65), 0 0 48px rgba(79,5,247,.45), 0 10px 28px rgba(0,0,0,.50);
@@ -561,7 +578,7 @@
           <span class="material-symbols-rounded">lock</span>
         </div>
         <h2 class="authTitle">Acceso Restringido</h2>
-        <p class="authSubtitle">Ingresa tu nombre para continuar</p>
+        <p class="authSubtitle">Ingresa tu LLAVE para continuar</p>
       </div>
       <form class="authForm" id="authForm">
         <input 
