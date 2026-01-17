@@ -696,252 +696,212 @@
     // ====== NAV state ======
     let selectedDate = new Date();
 
-    // Intenta cargar archivos con formato hora (YYYY-MM-DD-HH-mm)
-    // Busca desde la hora más reciente hacia atrás (máximo 24 horas)
-    async function tryLoadWithTime(d){
-      const errors = [];
-      const ymd = toYMD(d);
-      const now = new Date(d);
-      const currentHour = now.getHours();
-      const currentMin = now.getMinutes();
-      
-      // Buscar desde hora actual hacia atrás (máximo 24 horas, todos los minutos)
-      // Limitar a 500 intentos máximo para no bloquear el navegador
-      let attempts = 0;
-      const maxAttempts = 500;
-      
-      for(let hoursBack = 0; hoursBack < 24 && attempts < maxAttempts; hoursBack++){
-        for(let m = (hoursBack === 0 ? currentMin : 59); m >= 0 && attempts < maxAttempts; m--){
-          attempts++;
-          let h = currentHour - hoursBack;
-          if(h < 0) h += 24;
-          
-          const testDate = new Date(now);
-          testDate.setHours(h, m, 0, 0);
-          
-          // Solo intentar si es del mismo día
-          if(toYMD(testDate) !== ymd) continue;
-          
-          const ymdhm = toYMDHM(testDate);
-          const url = fileUrl(ymdhm);
-          
-          try{
-            const raw = await fetchJson(url);
-            const obj = unwrapMake(raw);
-            if(!obj || typeof obj !== "object") continue;
-            const htmlText = String(obj.text || "");
-            if(!htmlText) continue;
-            
-            // Encontrado! Procesar y retornar (el más reciente)
-            debugLog("Archivo encontrado:", url);
-            let items = parseItemsFromText(htmlText, errors);
-            items = items.map(it => {
-              const { like_rate, like_rate_pct } = computeLikeRate(it);
-              return { ...it, like_rate, like_rate_pct };
-            });
-            
-            items = dedupeByVideoId(items);
-            const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-            renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-            
-            setText("dateLabel", `${ymd} ${pad2(h)}:${pad2(m)}`);
-            selectedDate = d;
-            return true;
-          } catch(e){
-            continue;
-          }
-        }
-      }
-      
-      return false;
-    }
     
-    // Busca el archivo más reciente disponible (cualquier día)
-    // Optimizado: busca de forma inteligente, empezando por hoy y horas recientes
-    async function findLatestFile(){
+    // Estado de navegación: fecha/hora actual del archivo mostrado
+    let currentFileDate = null; // {date: Date, hasTime: boolean, hour: number, min: number}
+
+    // Carga un archivo específico por fecha/hora
+    async function loadFile(date, hour = null, minute = null){
       const errors = [];
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMin = now.getMinutes();
+      let url, label;
       
-      // Estrategia: buscar desde hoy, hora actual hacia atrás (máximo 2 días)
-      for(let daysBack = 0; daysBack < 2; daysBack++){
-        const testDate = new Date(now);
-        testDate.setDate(testDate.getDate() - daysBack);
-        const ymd = toYMD(testDate);
-        
-        // Si es hoy, empezar desde hora actual. Si es ayer, desde 23:59
-        let startHour = daysBack === 0 ? currentHour : 23;
-        let startMin = daysBack === 0 ? currentMin : 59;
-        
-        // Buscar archivos con hora (máximo 24 horas hacia atrás desde el punto de inicio)
-        for(let hoursBack = 0; hoursBack < 24; hoursBack++){
-          for(let m = startMin; m >= 0; m--){
-            let h = startHour - hoursBack;
-            if(h < 0) h += 24;
-            
-            // Solo en la primera iteración, limitar minutos
-            if(hoursBack === 0 && daysBack === 0 && m > startMin) continue;
-            
-            const testTime = new Date(testDate);
-            testTime.setHours(h, m, 0, 0);
-            
-            // Verificar que sea del día correcto
-            if(toYMD(testTime) !== ymd) continue;
-            
-            const ymdhm = toYMDHM(testTime);
-            const urlWithTime = fileUrl(ymdhm);
-            
-            try{
-              const raw = await fetchJson(urlWithTime);
-              const obj = unwrapMake(raw);
-              if(!obj || typeof obj !== "object") continue;
-              const htmlText = String(obj.text || "");
-              if(!htmlText) continue;
-              
-              // Encontrado! Procesar y retornar
-              debugLog("Archivo encontrado (findLatestFile):", urlWithTime);
-              let items = parseItemsFromText(htmlText, errors);
-              items = items.map(it => {
-                const { like_rate, like_rate_pct } = computeLikeRate(it);
-                return { ...it, like_rate, like_rate_pct };
-              });
-              
-              items = dedupeByVideoId(items);
-              const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-              renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-              
-              setText("dateLabel", `${ymd} ${pad2(h)}:${pad2(m)}`);
-              selectedDate = testTime;
-              return true;
-            } catch(e){
-              continue;
-            }
-          }
-          // Reset minutos para siguientes horas
-          startMin = 59;
-        }
-        
-        // Si no encontró con hora en este día, intentar formato solo fecha
-        const urlDateOnly = fileUrl(ymd);
-        try{
-          const raw = await fetchJson(urlDateOnly);
-          const obj = unwrapMake(raw);
-          if(!obj || typeof obj !== "object") continue;
-          const htmlText = String(obj.text || "");
-          if(!htmlText) continue;
-          
-          // Encontrado! Procesar y retornar
-          debugLog("Archivo encontrado (solo fecha):", urlDateOnly);
-          let items = parseItemsFromText(htmlText, errors);
-          items = items.map(it => {
-            const { like_rate, like_rate_pct } = computeLikeRate(it);
-            return { ...it, like_rate, like_rate_pct };
-          });
-          
-          items = dedupeByVideoId(items);
-          const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-          renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-          
-          setText("dateLabel", ymd);
-          selectedDate = testDate;
-          return true;
-        } catch(e2){
-          continue;
-        }
+      if(hour !== null && minute !== null){
+        // Formato con hora
+        const testDate = new Date(date);
+        testDate.setHours(hour, minute, 0, 0);
+        const ymdhm = toYMDHM(testDate);
+        url = fileUrl(ymdhm);
+        label = `${toYMD(date)} ${pad2(hour)}:${pad2(minute)}`;
+      } else {
+        // Formato solo fecha
+        const ymd = toYMD(date);
+        url = fileUrl(ymd);
+        label = ymd;
       }
-      return false;
-    }
-
-    async function loadDate(d){
-      const errors = [];
-      const ymd = toYMD(d);
-      debugLog("Cargando fecha:", ymd);
-
-      // PRIORIDAD: Primero intentar formato con hora (YYYY-MM-DD-HH-mm) - más reciente
-      debugLog("Buscando archivos con formato hora para:", ymd);
-      const foundWithTime = await tryLoadWithTime(d);
-      if(foundWithTime){
-        debugLog("Archivo con hora encontrado para:", ymd);
-        return true;
-      }
-      debugLog("No se encontró archivo con hora, intentando formato solo fecha");
-
-      // Si no encuentra con hora, intentar formato solo fecha (YYYY-MM-DD)
-      const url = fileUrl(ymd);
-      setText("dateLabel", ymd);
       
       try{
         const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
         const obj = unwrapMake(raw);
-        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
+        if(!obj || typeof obj !== "object") throw new Error("payload inválido");
         const htmlText = String(obj.text || "");
-        if(!htmlText) throw new Error("falta obj.text con los <li>");
+        if(!htmlText) throw new Error("falta obj.text");
 
         let items = parseItemsFromText(htmlText, errors);
-
         items = items.map(it => {
           const { like_rate, like_rate_pct } = computeLikeRate(it);
           return { ...it, like_rate, like_rate_pct };
         });
 
-        const before = items.length;
         items = dedupeByVideoId(items);
-        const after = items.length;
-
         const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-
         renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
-
-        selectedDate = d;
+        
+        setText("dateLabel", label);
+        selectedDate = date;
+        currentFileDate = {date: new Date(date), hasTime: hour !== null, hour, minute};
         return true;
       } catch(e){
         return false;
       }
     }
-
-    async function loadWithFallback(startDate){
-      for(let i=0; i<=MAX_FALLBACK_DAYS; i++){
-        const d = addDays(startDate, -i);
-        const ok = await loadDate(d);
-        if(ok) return;
+    
+    // Busca el archivo más reciente disponible (solo al inicio)
+    async function findInitialFile(){
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+      
+      // Buscar desde hoy, hora actual hacia atrás (máximo 7 días, máximo 100 intentos)
+      let attempts = 0;
+      for(let daysBack = 0; daysBack < 7 && attempts < 100; daysBack++){
+        const testDate = new Date(now);
+        testDate.setDate(testDate.getDate() - daysBack);
+        const startHour = daysBack === 0 ? currentHour : 23;
+        const startMin = daysBack === 0 ? currentMin : 59;
+        
+        // Intentar con hora primero
+        for(let hoursBack = 0; hoursBack < 24 && attempts < 100; hoursBack++){
+          for(let m = startMin; m >= 0 && attempts < 100; m--){
+            attempts++;
+            let h = startHour - hoursBack;
+            if(h < 0) h += 24;
+            
+            if(await loadFile(testDate, h, m)){
+              return true;
+            }
+          }
+        }
+        
+        // Si no encontró con hora, intentar solo fecha
+        if(await loadFile(testDate)){
+          return true;
+        }
       }
-
-      document.getElementById("listTopLikes").innerHTML = "";
-      show(document.getElementById("emptyTopLikes"), true);
+      return false;
+    }
+    
+    // Navega al archivo anterior (más antiguo)
+    async function loadPreviousFile(){
+      if(!currentFileDate) return;
+      
+      const d = new Date(currentFileDate.date);
+      
+      if(currentFileDate.hasTime){
+        // Si tiene hora, buscar archivo anterior en el mismo día o día anterior
+        let h = currentFileDate.hour;
+        let m = currentFileDate.minute - 1;
+        
+        if(m < 0){
+          m = 59;
+          h--;
+          if(h < 0){
+            h = 23;
+            d.setDate(d.getDate() - 1);
+          }
+        }
+        
+        // Buscar hacia atrás (máximo 50 intentos)
+        for(let i = 0; i < 50; i++){
+          if(await loadFile(d, h, m)){
+            return;
+          }
+          m--;
+          if(m < 0){
+            m = 59;
+            h--;
+            if(h < 0){
+              h = 23;
+              d.setDate(d.getDate() - 1);
+            }
+          }
+        }
+        
+        // Si no encuentra con hora, intentar solo fecha del día anterior
+        d.setDate(d.getDate() - 1);
+        if(await loadFile(d)) return;
+      } else {
+        // Si no tiene hora, buscar día anterior
+        d.setDate(d.getDate() - 1);
+        if(await loadFile(d)) return;
+      }
+    }
+    
+    // Navega al archivo siguiente (más nuevo)
+    async function loadNextFile(){
+      if(!currentFileDate) return;
+      
+      const d = new Date(currentFileDate.date);
+      
+      if(currentFileDate.hasTime){
+        // Si tiene hora, buscar archivo siguiente en el mismo día o día siguiente
+        let h = currentFileDate.hour;
+        let m = currentFileDate.minute + 1;
+        
+        if(m > 59){
+          m = 0;
+          h++;
+          if(h > 23){
+            h = 0;
+            d.setDate(d.getDate() + 1);
+          }
+        }
+        
+        // Buscar hacia adelante (máximo 50 intentos)
+        for(let i = 0; i < 50; i++){
+          if(await loadFile(d, h, m)){
+            return;
+          }
+          m++;
+          if(m > 59){
+            m = 0;
+            h++;
+            if(h > 23){
+              h = 0;
+              d.setDate(d.getDate() + 1);
+            }
+          }
+        }
+        
+        // Si no encuentra con hora, intentar solo fecha del día siguiente
+        d.setDate(d.getDate() + 1);
+        if(await loadFile(d)) return;
+      } else {
+        // Si no tiene hora, buscar día siguiente
+        d.setDate(d.getDate() + 1);
+        if(await loadFile(d)) return;
+      }
     }
 
+    // Event listeners de botones
     document.getElementById("btnToday").addEventListener("click", async () => {
-      // Al hacer clic en "Hoy", buscar el archivo más reciente disponible
-      const found = await findLatestFile();
-      if(!found) await loadWithFallback(new Date());
+      await findInitialFile();
     });
     
     document.getElementById("btnReload").addEventListener("click", async () => {
-      await loadWithFallback(selectedDate);
+      if(currentFileDate){
+        await loadFile(currentFileDate.date, currentFileDate.hour, currentFileDate.minute);
+      } else {
+        await findInitialFile();
+      }
     });
     
     document.getElementById("btnPrev").addEventListener("click", async () => {
-      await loadWithFallback(addDays(selectedDate, -1));
+      await loadPreviousFile();
     });
     
     document.getElementById("btnNext").addEventListener("click", async () => {
-      await loadWithFallback(addDays(selectedDate, +1));
+      await loadNextFile();
     });
 
-    // Al cargar inicialmente, buscar el archivo más reciente con hora
-    // Usar loadWithFallback directamente que es más eficiente
+    // Al cargar inicialmente, buscar el archivo más reciente
     (async () => {
       try {
-        debugLog("Iniciando carga de datos...");
-        await loadWithFallback(new Date());
-        debugLog("Carga completada");
+        await findInitialFile();
       } catch(e) {
         console.error("[TikTok Panel] Error al cargar:", e);
         show(document.getElementById("emptyTopLikes"), true);
       }
     })();
-    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
 
     // =========================
     // Countdown to next report (13:00 Colombia time, UTC-5)
