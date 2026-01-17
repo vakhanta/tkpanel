@@ -145,10 +145,79 @@
       padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
       background:rgba(0,0,0,.20);display:flex;gap:10px;align-items:flex-start;
       transition:background .2s ease, border-color .2s ease;
-      flex-wrap:nowrap;
+      flex-wrap:nowrap;position:relative;
     }
     @media (min-width:640px){.item{padding:14px;gap:12px;border-radius:16px}}
     .item:hover{background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.22)}
+    .item.top1{
+      border:2px solid rgba(255,193,7,.40);
+      background:rgba(0,0,0,.25);
+      box-shadow:0 0 20px rgba(255,193,7,.15), 0 8px 32px rgba(0,0,0,.50);
+    }
+    .item.top1:before{
+      content:"";position:absolute;inset:-3px;border-radius:16px;
+      background:linear-gradient(45deg, rgba(255,193,7,.8), rgba(255,235,59,.6), rgba(255,193,7,.8));
+      background-size:200% 200%;
+      animation:top1Glow 3s ease-in-out infinite;
+      z-index:-1;filter:blur(8px);opacity:.6;
+    }
+    @media (min-width:640px){.item.top1:before{border-radius:18px}}
+    @keyframes top1Glow{
+      0%,100%{background-position:0% 50%;opacity:.6}
+      50%{background-position:100% 50%;opacity:.9}
+    }
+    .item.top1:after{
+      content:"";position:absolute;inset:-3px;border-radius:16px;
+      background:conic-gradient(from 0deg at 50% 50%, 
+        rgba(255,193,7,1) 0deg, 
+        rgba(255,235,59,.9) 90deg, 
+        rgba(255,193,7,1) 180deg, 
+        rgba(255,235,59,.9) 270deg, 
+        rgba(255,193,7,1) 360deg);
+      animation:top1Border 3s linear infinite;
+      z-index:-1;opacity:.75;
+    }
+    @media (min-width:640px){.item.top1:after{border-radius:18px}}
+    @keyframes top1Border{
+      0%{transform:rotate(0deg);opacity:.75}
+      50%{opacity:.95}
+      100%{transform:rotate(360deg);opacity:.75}
+    }
+    .top1Tag{
+      position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(135deg, rgba(255,193,7,.95), rgba(255,235,59,.85));
+      color:rgba(0,0,0,.95);font-weight:950;font-size:10px;
+      padding:4px 12px;border-radius:12px;
+      border:2px solid rgba(255,255,255,.30);
+      box-shadow:0 4px 16px rgba(255,193,7,.50), 0 0 20px rgba(255,193,7,.30);
+      display:flex;align-items:center;gap:4px;letter-spacing:.08em;
+      text-transform:uppercase;z-index:10;white-space:nowrap;
+      animation:top1TagPulse 2s ease-in-out infinite;
+    }
+    @media (min-width:640px){.top1Tag{font-size:11px;padding:5px 14px;top:-14px}}
+    @keyframes top1TagPulse{
+      0%,100%{transform:translateX(-50%) scale(1);box-shadow:0 4px 16px rgba(255,193,7,.50), 0 0 20px rgba(255,193,7,.30)}
+      50%{transform:translateX(-50%) scale(1.05);box-shadow:0 6px 20px rgba(255,193,7,.70), 0 0 30px rgba(255,193,7,.50)}
+    }
+    .top1Tag .material-symbols-rounded{
+      font-size:14px;animation:top1Fire 1.5s ease-in-out infinite;
+    }
+    @media (min-width:640px){.top1Tag .material-symbols-rounded{font-size:16px}}
+    @keyframes top1Fire{
+      0%,100%{transform:scale(1) rotate(0deg);opacity:1}
+      25%{transform:scale(1.1) rotate(-5deg);opacity:.9}
+      50%{transform:scale(1.15) rotate(5deg);opacity:1}
+      75%{transform:scale(1.1) rotate(-3deg);opacity:.95}
+    }
+    .badge.top1Badge{
+      background:linear-gradient(135deg, rgba(255,193,7,1), rgba(255,235,59,.9));
+      box-shadow:0 0 20px rgba(255,193,7,.60), 0 8px 24px rgba(0,0,0,.40);
+      animation:top1BadgeGlow 2s ease-in-out infinite;
+    }
+    @keyframes top1BadgeGlow{
+      0%,100%{box-shadow:0 0 20px rgba(255,193,7,.60), 0 8px 24px rgba(0,0,0,.40)}
+      50%{box-shadow:0 0 30px rgba(255,193,7,.90), 0 10px 32px rgba(0,0,0,.50)}
+    }
     .badge{
       min-width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
       font-weight:950;color:rgba(0,0,0,.92);
@@ -409,9 +478,10 @@
       const cover = v.cover_url || "";
 
       const li = document.createElement("li");
-      li.className = "item";
+      li.className = rank === 1 ? "item top1" : "item";
       li.innerHTML = `
-        <div class="badge">${escapeHtml(String(rank))}</div>
+        ${rank === 1 ? `<div class="top1Tag"><span class="material-symbols-rounded">local_fire_department</span>TOP 1 LAST 24 HOURS</div>` : ``}
+        <div class="badge ${rank === 1 ? 'top1Badge' : ''}">${escapeHtml(String(rank))}</div>
         ${cover ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"><div class="playBtn"><span class="material-symbols-rounded">play_circle</span></div></a>` : ``}
         <div class="text">
           <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")}</div>
