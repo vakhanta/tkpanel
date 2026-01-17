@@ -262,11 +262,13 @@
     .kv.likes b{color:rgba(255,150,150,.95)}
     .kv.likes span{color:rgba(255,180,180,.85)}
     .text{font-size:12.5px;color:rgba(255,255,255,.90);line-height:1.35;overflow-wrap:anywhere;word-break:break-word;flex:1 1 auto;min-width:0;width:100%;display:flex;flex-direction:column;align-items:flex-end}
-    .text > div:first-child{align-self:flex-start;width:100%}
+    .text > div:first-child{align-self:flex-end;width:auto;margin-bottom:8px}
     @media (min-width:640px){.text{font-size:13.5px;width:auto}}
-    .rows{display:flex;flex-direction:column;gap:8px;margin-top:8px;width:100%}
-    .row{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.82);font-size:11.5px;justify-content:flex-end;width:100%}
-    @media (min-width:640px){.row{gap:10px;font-size:12.5px;justify-content:flex-end}}
+    @media (min-width:640px){.text > div:first-child{align-self:flex-start;width:100%;margin-bottom:0}}
+    .rows{display:flex;flex-direction:column;gap:8px;margin-top:0;width:100%;align-items:flex-end}
+    @media (min-width:640px){.rows{margin-top:8px;align-items:stretch}}
+    .row{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.82);font-size:11.5px;justify-content:flex-end;width:auto}
+    @media (min-width:640px){.row{gap:10px;font-size:12.5px;justify-content:flex-end;width:100%}}
     .kv{
       display:inline-flex;gap:5px;align-items:center;padding:6px 9px;border-radius:999px;
       border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
@@ -278,7 +280,7 @@
     .kv .material-symbols-rounded{font-size:14px;opacity:.95}
     @media (min-width:640px){.kv .material-symbols-rounded{font-size:16px}}
     .btnLink{
-      display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:10px;border-radius:12px;
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;padding:10px 14px;border-radius:12px;
       text-decoration:none;font-weight:950;letter-spacing:-.01em;color:rgba(0,0,0,.92);
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
@@ -287,12 +289,13 @@
       box-shadow:0 14px 36px rgba(0,0,0,.45);
       transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
       width:fit-content;align-self:flex-end;margin-left:auto;
+      font-size:12px;white-space:nowrap;
     }
-    @media (min-width:640px){.btnLink{padding:12px}}
+    @media (min-width:640px){.btnLink{padding:12px 16px;font-size:13px;gap:7px}}
     .btnLink:hover{filter:brightness(1.04);box-shadow:0 18px 44px rgba(0,0,0,.55);transform:scale(1.05)}
     .btnLink:active{transform:translateY(1px) scale(1.02)}
-    .btnLink .material-symbols-rounded{font-size:22px}
-    @media (min-width:640px){.btnLink .material-symbols-rounded{font-size:24px}}
+    .btnLink .material-symbols-rounded{font-size:18px;flex-shrink:0}
+    @media (min-width:640px){.btnLink .material-symbols-rounded{font-size:20px}}
     .empty{
       border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
@@ -621,6 +624,7 @@
           </div>
           <a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="Abrir en TikTok">
             <span class="material-symbols-rounded">open_in_new</span>
+            <span>ver tiktok</span>
           </a>
         </div>
       `;
