@@ -12,7 +12,7 @@
 
   <style>
     :root{
-      --bg0:#070812; --bg1:#0b1022;
+      --bg0:#1a1f3a; --bg1:#15182e;
       --text:rgba(255,255,255,.92);
       --muted:rgba(255,255,255,.70);
       --muted2:rgba(255,255,255,.55);
@@ -28,13 +28,9 @@
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(1200px 680px at 10% 0%, rgba(57,217,255,.22), transparent 58%),
-        radial-gradient(900px 600px at 90% 0%, rgba(168,85,255,.18), transparent 60%),
-        radial-gradient(900px 700px at 40% 105%, rgba(255,59,212,.16), transparent 60%),
-        radial-gradient(700px 500px at 80% 90%, rgba(25,243,168,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background:#050414;
       overflow-x:hidden;
+      min-height:100vh;
     }
     .wrap{max-width:var(--max);margin:0 auto;padding:20px 14px 40px}
     @media (min-width:640px){.wrap{padding:28px 18px 46px}}
@@ -45,7 +41,7 @@
       width:42px;height:42px;border-radius:14px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.26), transparent 42%),
-        linear-gradient(135deg, rgba(57,217,255,.95), rgba(168,85,255,.85));
+        linear-gradient(135deg, rgba(52,99,250,.95), rgba(79,5,247,.85));
       box-shadow:0 18px 48px rgba(0,0,0,.60);
       display:flex;align-items:center;justify-content:center;
       border:1px solid rgba(255,255,255,.20);
@@ -54,8 +50,8 @@
     .logo:after{
       content:"";position:absolute;inset:-55%;
       background:
-        radial-gradient(circle at 25% 25%, rgba(255,59,212,.28), transparent 42%),
-        radial-gradient(circle at 70% 70%, rgba(25,243,168,.18), transparent 46%);
+        radial-gradient(circle at 25% 25%, rgba(136,247,5,.28), transparent 42%),
+        radial-gradient(circle at 70% 70%, rgba(247,231,5,.18), transparent 46%);
       transform:rotate(18deg);filter:blur(1px);opacity:.9;
     }
     .logo .material-symbols-rounded{font-size:22px;color:rgba(0,0,0,.92);z-index:1}
@@ -92,9 +88,9 @@
     .primary{
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
-        linear-gradient(135deg, rgba(57,217,255,.95), rgba(255,59,212,.75));
+        linear-gradient(135deg, rgba(52,99,250,.95), rgba(79,5,247,.75));
       border-color:rgba(255,255,255,.22);
-      color:rgba(0,0,0,.92);
+      color:rgba(255,255,255,.95);
     }
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:14px}
     @media (min-width:640px){.grid{gap:14px}}
@@ -112,11 +108,11 @@
     .card:before{
       content:"";position:absolute;inset:-1px;
       background:
-        radial-gradient(circle at 12% 20%, rgba(57,217,255,.12), transparent 26%),
-        radial-gradient(circle at 85% 30%, rgba(168,85,255,.10), transparent 30%),
-        radial-gradient(circle at 70% 85%, rgba(255,59,212,.10), transparent 30%),
-        radial-gradient(circle at 30% 85%, rgba(25,243,168,.08), transparent 30%),
-        radial-gradient(circle at 10% 70%, rgba(255,210,74,.07), transparent 28%);
+        radial-gradient(circle at 12% 20%, rgba(52,99,250,.12), transparent 26%),
+        radial-gradient(circle at 85% 30%, rgba(79,5,247,.10), transparent 30%),
+        radial-gradient(circle at 70% 85%, rgba(136,247,5,.10), transparent 30%),
+        radial-gradient(circle at 30% 85%, rgba(136,247,5,.08), transparent 30%),
+        radial-gradient(circle at 10% 70%, rgba(247,231,5,.07), transparent 28%);
       pointer-events:none;
     }
     .cardhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;position:relative;z-index:1}
@@ -131,10 +127,10 @@
     }
     .kpi .ic{
       width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;
-      background:rgba(57,217,255,.16);border:1px solid rgba(57,217,255,.26);
+      background:rgba(52,99,250,.16);border:1px solid rgba(52,99,250,.26);
       box-shadow:0 12px 32px rgba(0,0,0,.35);
     }
-    .kpi .ic.purple{background:rgba(168,85,255,.16);border-color:rgba(168,85,255,.26)}
+    .kpi .ic.purple{background:rgba(79,5,247,.16);border-color:rgba(79,5,247,.26)}
     .kpi .ic .material-symbols-rounded{color:rgba(255,255,255,.92)}
     .kpi .label{color:var(--muted);font-size:12.5px;font-weight:800}
     .kpi .val{font-size:20px;font-weight:950;letter-spacing:-.03em;margin-top:2px}
@@ -145,14 +141,65 @@
       padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
       background:rgba(0,0,0,.20);display:flex;gap:10px;align-items:flex-start;
       transition:background .2s ease, border-color .2s ease;
-      flex-wrap:nowrap;
+      flex-wrap:nowrap;position:relative;
     }
     @media (min-width:640px){.item{padding:14px;gap:12px;border-radius:16px}}
     .item:hover{background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.22)}
+    .item.top1{
+      border:2px solid rgba(247,231,5,.40);
+      background:rgba(0,0,0,.25);
+      box-shadow:0 0 20px rgba(247,231,5,.15), 0 8px 32px rgba(0,0,0,.50);
+    }
+    .item.top1:after{
+      content:"";position:absolute;inset:-4px;border-radius:16px;
+      background:radial-gradient(circle, rgba(247,231,5,.3) 0%, transparent 70%);
+      animation:top1Glow 2s ease-in-out infinite;
+      z-index:-2;pointer-events:none;
+    }
+    @media (min-width:640px){.item.top1:after{border-radius:18px}}
+    @keyframes top1Glow{
+      0%,100%{opacity:.4;transform:scale(1)}
+      50%{opacity:.7;transform:scale(1.02)}
+    }
+    .top1Tag{
+      position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(135deg, rgba(247,231,5,.95), rgba(136,247,5,.85));
+      color:rgba(0,0,0,.95);font-weight:950;font-size:10px;
+      padding:4px 12px;border-radius:12px;
+      border:2px solid rgba(255,255,255,.30);
+      box-shadow:0 4px 16px rgba(247,231,5,.50), 0 0 20px rgba(247,231,5,.30);
+      display:flex;align-items:center;gap:4px;letter-spacing:.08em;
+      text-transform:uppercase;z-index:10;white-space:nowrap;
+      animation:top1TagPulse 2s ease-in-out infinite;
+    }
+    @media (min-width:640px){.top1Tag{font-size:11px;padding:5px 14px;top:-14px}}
+    @keyframes top1TagPulse{
+      0%,100%{transform:translateX(-50%) scale(1);box-shadow:0 4px 16px rgba(247,231,5,.50), 0 0 20px rgba(247,231,5,.30)}
+      50%{transform:translateX(-50%) scale(1.05);box-shadow:0 6px 20px rgba(247,231,5,.70), 0 0 30px rgba(247,231,5,.50)}
+    }
+    .top1Tag .material-symbols-rounded{
+      font-size:14px;animation:top1Fire 1.5s ease-in-out infinite;
+    }
+    @media (min-width:640px){.top1Tag .material-symbols-rounded{font-size:16px}}
+    @keyframes top1Fire{
+      0%,100%{transform:scale(1) rotate(0deg);opacity:1}
+      25%{transform:scale(1.1) rotate(-5deg);opacity:.9}
+      50%{transform:scale(1.15) rotate(5deg);opacity:1}
+      75%{transform:scale(1.1) rotate(-3deg);opacity:.95}
+    }
+    .badge.top1Badge{
+      background:linear-gradient(135deg, rgba(247,231,5,1), rgba(136,247,5,.9));
+      box-shadow:0 0 20px rgba(247,231,5,.60), 0 8px 24px rgba(0,0,0,.40);
+      animation:top1BadgeGlow 2s ease-in-out infinite;
+    }
+    @keyframes top1BadgeGlow{
+      0%,100%{box-shadow:0 0 20px rgba(247,231,5,.60), 0 8px 24px rgba(0,0,0,.40)}
+      50%{box-shadow:0 0 30px rgba(247,231,5,.90), 0 10px 32px rgba(0,0,0,.50)}
+    }
     .badge{
       min-width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
       font-weight:950;color:rgba(0,0,0,.92);
-      background:linear-gradient(135deg, rgba(57,217,255,.98), rgba(255,59,212,.78));
+      background:linear-gradient(135deg, rgba(52,99,250,.98), rgba(79,5,247,.78));
       border:1px solid rgba(255,255,255,.22);font-size:11px;
       box-shadow:0 12px 28px rgba(0,0,0,.30);flex:0 0 auto;
     }
@@ -203,7 +250,7 @@
       text-decoration:none;font-weight:950;letter-spacing:-.01em;color:rgba(0,0,0,.92);
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
-        linear-gradient(135deg, rgba(57,217,255,.96), rgba(168,85,255,.86));
+        linear-gradient(135deg, rgba(52,99,250,.96), rgba(79,5,247,.86));
       border:1px solid rgba(255,255,255,.20);
       box-shadow:0 14px 36px rgba(0,0,0,.45);
       transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
@@ -217,6 +264,91 @@
     .empty{
       border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
+    }
+    .footer{
+      margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.55);font-size:12px;text-align:center;
+      display:flex;justify-content:center;align-items:center;
+    }
+    @media (min-width:640px){.footer{font-size:12.5px}}
+    .countdown{
+      margin-bottom:24px;padding:16px;border-radius:var(--radius);
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 16px 48px rgba(0,0,0,.60);backdrop-filter:blur(var(--blur));
+      position:relative;overflow:hidden;
+    }
+    .countdown:after{
+      content:"";position:absolute;inset:-4px;border-radius:18px;
+      background:radial-gradient(circle, rgba(136,247,5,.3) 0%, transparent 70%);
+      animation:countdownGlow 2s ease-in-out infinite;
+      z-index:-2;pointer-events:none;
+    }
+    @keyframes countdownGlow{
+      0%,100%{opacity:.4;transform:scale(1)}
+      50%{opacity:.7;transform:scale(1.02)}
+    }
+    .countdownHead{
+      display:flex;align-items:center;gap:8px;margin-bottom:14px;position:relative;z-index:1;
+    }
+    .countdownHead h3{
+      font-size:12px;margin:0;color:rgba(255,255,255,.85);font-weight:800;
+      letter-spacing:.08em;text-transform:uppercase;
+    }
+    .countdownHead .material-symbols-rounded{
+      font-size:16px;color:rgba(136,247,5,.85);
+    }
+    .countdownBar{
+      position:relative;z-index:1;margin-bottom:12px;
+    }
+    .countdownBarTrack{
+      width:100%;height:8px;border-radius:999px;
+      background:rgba(0,0,0,.30);border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;position:relative;
+    }
+    .countdownBarFill{
+      height:100%;border-radius:999px;
+      background:linear-gradient(90deg, rgba(136,247,5,.9), rgba(136,247,5,1));
+      box-shadow:0 0 12px rgba(136,247,5,.50);
+      transition:width 1s linear;
+      position:relative;
+    }
+    .countdownBarFill:after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+      animation:countdownShine 2s ease-in-out infinite;
+    }
+    @keyframes countdownShine{
+      0%{transform:translateX(-100%)}
+      100%{transform:translateX(100%)}
+    }
+    .countdownInfo{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:11px;color:rgba(255,255,255,.65);position:relative;z-index:1;
+    }
+    .countdownTime{
+      display:flex;gap:12px;align-items:center;
+    }
+    .countdownTimeItem{
+      display:flex;align-items:baseline;gap:4px;
+    }
+    .countdownTimeValue{
+      font-size:14px;font-weight:950;color:rgba(136,247,5,.95);
+      letter-spacing:-.01em;
+    }
+    .countdownTimeLabel{
+      font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;
+      letter-spacing:.08em;font-weight:800;
+    }
+    .countdownNext{
+      font-size:10px;color:rgba(255,255,255,.55);
+    }
+    @media (min-width:640px){
+      .countdownHead h3{font-size:13px}
+      .countdownHead .material-symbols-rounded{font-size:18px}
+      .countdownBarTrack{height:10px}
+      .countdownTimeValue{font-size:16px}
+      .countdownTimeLabel{font-size:10px}
+      .countdownNext{font-size:11px}
     }
   </style>
 </head>
@@ -243,6 +375,35 @@
       </div>
     </div>
 
+    <div class="countdown">
+      <div class="countdownHead">
+        <span class="material-symbols-rounded">schedule</span>
+        <h3>Próximo Reporte</h3>
+      </div>
+      <div class="countdownBar">
+        <div class="countdownBarTrack">
+          <div class="countdownBarFill" id="countdownBarFill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="countdownInfo">
+        <div class="countdownTime">
+          <div class="countdownTimeItem">
+            <span class="countdownTimeValue" id="countdownHours">00</span>
+            <span class="countdownTimeLabel">h</span>
+          </div>
+          <div class="countdownTimeItem">
+            <span class="countdownTimeValue" id="countdownMinutes">00</span>
+            <span class="countdownTimeLabel">m</span>
+          </div>
+          <div class="countdownTimeItem">
+            <span class="countdownTimeValue" id="countdownSeconds">00</span>
+            <span class="countdownTimeLabel">s</span>
+          </div>
+        </div>
+        <div class="countdownNext">13:00 (Colombia)</div>
+      </div>
+    </div>
+
     <div class="grid">
       <div class="card col6">
         <div class="cardhead">
@@ -256,13 +417,17 @@
       </div>
     </div>
 
+    <div class="footer">
+      <div>Resumen automático por quintabot para happybanana</div>
+    </div>
+
   </div>
 
   <script>
     // =========================
     // CONFIG
     // =========================
-    const MAX_TOP = 10;
+    const MAX_TOP = 20;
 
     // ====== NAV ======
     const REPORTS_DIR = "reports";
@@ -409,9 +574,10 @@
       const cover = v.cover_url || "";
 
       const li = document.createElement("li");
-      li.className = "item";
+      li.className = rank === 1 ? "item top1" : "item";
       li.innerHTML = `
-        <div class="badge">${escapeHtml(String(rank))}</div>
+        ${rank === 1 ? `<div class="top1Tag"><span class="material-symbols-rounded">local_fire_department</span>TOP 1 LAST 24 HOURS</div>` : ``}
+        <div class="badge ${rank === 1 ? 'top1Badge' : ''}">${escapeHtml(String(rank))}</div>
         ${cover ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"><div class="playBtn"><span class="material-symbols-rounded">play_circle</span></div></a>` : ``}
         <div class="text">
           <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")}</div>
@@ -520,6 +686,64 @@
 
     loadWithFallback(new Date());
     setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
+
+    // =========================
+    // Countdown to next report (13:00 Colombia time, UTC-5)
+    // =========================
+    function getNextReportTime(){
+      const now = new Date();
+      const colombiaOffset = -5 * 60; // UTC-5 in minutes
+      const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const colombiaTime = new Date(utcTime + (colombiaOffset * 60000));
+      
+      const target = new Date(colombiaTime);
+      target.setHours(13, 0, 0, 0);
+      
+      // If it's past 13:00 today, target tomorrow
+      if(colombiaTime.getHours() >= 13){
+        target.setDate(target.getDate() + 1);
+      }
+      
+      return target;
+    }
+
+    function updateCountdown(){
+      const nextReport = getNextReportTime();
+      const now = new Date();
+      const colombiaOffset = -5 * 60;
+      const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const colombiaNow = new Date(utcTime + (colombiaOffset * 60000));
+      
+      // Calculate previous 13:00 for progress bar
+      const prevReport = new Date(nextReport);
+      prevReport.setDate(prevReport.getDate() - 1);
+      
+      const totalTime = nextReport.getTime() - prevReport.getTime();
+      const elapsedTime = colombiaNow.getTime() - prevReport.getTime();
+      const progress = Math.max(0, Math.min(100, (elapsedTime / totalTime) * 100));
+      
+      const diff = nextReport.getTime() - colombiaNow.getTime();
+      
+      if(diff <= 0){
+        setText("countdownHours", "00");
+        setText("countdownMinutes", "00");
+        setText("countdownSeconds", "00");
+        document.getElementById("countdownBarFill").style.width = "100%";
+        return;
+      }
+      
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      setText("countdownHours", String(hours).padStart(2, "0"));
+      setText("countdownMinutes", String(minutes).padStart(2, "0"));
+      setText("countdownSeconds", String(seconds).padStart(2, "0"));
+      document.getElementById("countdownBarFill").style.width = `${progress}%`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
