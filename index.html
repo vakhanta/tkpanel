@@ -269,6 +269,12 @@
       border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
     }
+    .footer{
+      margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.55);font-size:12px;text-align:center;
+      display:flex;justify-content:center;align-items:center;
+    }
+    @media (min-width:640px){.footer{font-size:12.5px}}
   </style>
 </head>
 
@@ -305,6 +311,10 @@
         <ul class="list" id="listTopLikes"></ul>
         <div id="emptyTopLikes" class="empty" style="display:none;">No hay items válidos.</div>
       </div>
+    </div>
+
+    <div class="footer">
+      <div>Resumen automático por quintabot para happybanana</div>
     </div>
 
   </div>
