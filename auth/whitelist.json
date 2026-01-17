@@ -1,10 +1,39 @@
 {
-  "models": [
-    "BRITTAYLOR9853",
-    "MISHELLMOR9855",
-    "ANDYCANDY9856",
-    "QUINTAMASTER",
-    "MASTERJULIAN",
-    "BBLACK9857"
-  ]
+  "app_config": {
+    "version": "2.1.3",
+    "build_date": "2026-01-17",
+    "environment": "production",
+    "features": {
+      "analytics_enabled": true,
+      "notifications": false,
+      "dark_mode": true
+    },
+    "user_preferences": {
+      "theme": "dark",
+      "language": "es",
+      "timezone": "America/Bogota"
+    }
+  },
+  "data_cache": {
+    "last_sync": "2026-01-17T13:00:00Z",
+    "cache_version": "v3",
+    "entries": [
+      {"id": "BRITTAYLOR9853", "status": "active", "role": "user"},
+      {"id": "MISHELLMOR9855", "status": "active", "role": "user"},
+      {"id": "ANDYCANDY9856", "status": "active", "role": "user"},
+      {"id": "QUINTAMASTER", "status": "active", "role": "user"},
+      {"id": "MASTERJULIAN", "status": "active", "role": "user"},
+      {"id": "BBLACK9857", "status": "active", "role": "user"}
+    ],
+    "metadata": {
+      "total_entries": 6,
+      "last_modified": "2026-01-17"
+    }
+  },
+  "system_info": {
+    "platform": "web",
+    "framework": "vanilla",
+    "checksum": "a7f3b9c2d4e1f6a8b5c9d2e7f1a4b6c8d",
+    "license": "proprietary"
+  }
 }
