@@ -356,9 +356,9 @@
       background:rgba(52,99,250,.16);border-color:rgba(52,99,250,.26);
       color:rgba(255,255,255,.92);
       box-shadow:0 2px 8px rgba(52,99,250,.30);
-      padding:4px;width:24px;height:24px;
+      padding:4px 10px;
     }
-    @media (min-width:640px){.trendBadge.up{width:26px;height:26px;padding:5px}}
+    @media (min-width:640px){.trendBadge.up{padding:5px 12px}}
     .trendBadge.up:after{
       background:radial-gradient(circle, rgba(52,99,250,.3) 0%, transparent 70%);
     }
@@ -694,6 +694,7 @@
         } else if(trend.type === 'up'){
           trendBadge = `<span class="trendBadge ${trend.type}" title="Subió ${trend.diff} posiciones vs ayer">
             <span class="material-symbols-rounded">${trend.icon}</span>
+            <span>${escapeHtml(trend.label)}</span>
           </span>`;
         } else if(trend.type === 'down'){
           trendBadge = `<span class="trendBadge ${trend.type}" title="Bajó ${Math.abs(trend.diff)} posiciones vs ayer">
@@ -831,7 +832,7 @@
       
       // Si no se encontró en el histórico de ayer, es nuevo
       if(found === -1){
-        return { type: 'new', label: '🆕 Nuevo', icon: 'new_releases' };
+        return { type: 'new', label: 'Nuevo', icon: 'new_releases' };
       }
       
       // Calcular diferencia de posición
@@ -840,7 +841,7 @@
       
       // Si subió 3+ posiciones
       if(diff >= 3){
-        return { type: 'up', label: '', icon: 'trending_up', diff };
+        return { type: 'up', label: `+${diff}`, icon: 'trending_up', diff };
       }
       // Si bajó 3+ posiciones
       if(diff <= -3){
