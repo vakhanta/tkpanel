@@ -155,33 +155,35 @@
       box-shadow:0 0 20px rgba(255,193,7,.15), 0 8px 32px rgba(0,0,0,.50);
     }
     .item.top1:before{
-      content:"";position:absolute;inset:-3px;border-radius:16px;
-      background:linear-gradient(45deg, rgba(255,193,7,.8), rgba(255,235,59,.6), rgba(255,193,7,.8));
-      background-size:200% 200%;
-      animation:top1Glow 3s ease-in-out infinite;
-      z-index:-1;filter:blur(8px);opacity:.6;
+      content:"";position:absolute;inset:0;border-radius:14px;
+      padding:2px;background:conic-gradient(from 0deg, 
+        rgba(255,193,7,1) 0deg, 
+        rgba(255,235,59,.6) 90deg, 
+        rgba(255,193,7,.4) 180deg, 
+        rgba(255,235,59,.6) 270deg, 
+        rgba(255,193,7,1) 360deg);
+      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+      mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      animation:top1Border 3s linear infinite;
+      z-index:-1;
     }
-    @media (min-width:640px){.item.top1:before{border-radius:18px}}
-    @keyframes top1Glow{
-      0%,100%{background-position:0% 50%;opacity:.6}
-      50%{background-position:100% 50%;opacity:.9}
+    @media (min-width:640px){.item.top1:before{border-radius:16px}}
+    @keyframes top1Border{
+      0%{transform:rotate(0deg);opacity:.85}
+      50%{opacity:1}
+      100%{transform:rotate(360deg);opacity:.85}
     }
     .item.top1:after{
-      content:"";position:absolute;inset:-3px;border-radius:16px;
-      background:conic-gradient(from 0deg at 50% 50%, 
-        rgba(255,193,7,1) 0deg, 
-        rgba(255,235,59,.9) 90deg, 
-        rgba(255,193,7,1) 180deg, 
-        rgba(255,235,59,.9) 270deg, 
-        rgba(255,193,7,1) 360deg);
-      animation:top1Border 3s linear infinite;
-      z-index:-1;opacity:.75;
+      content:"";position:absolute;inset:-4px;border-radius:16px;
+      background:radial-gradient(circle, rgba(255,193,7,.3) 0%, transparent 70%);
+      animation:top1Glow 2s ease-in-out infinite;
+      z-index:-2;pointer-events:none;
     }
     @media (min-width:640px){.item.top1:after{border-radius:18px}}
-    @keyframes top1Border{
-      0%{transform:rotate(0deg);opacity:.75}
-      50%{opacity:.95}
-      100%{transform:rotate(360deg);opacity:.75}
+    @keyframes top1Glow{
+      0%,100%{opacity:.4;transform:scale(1)}
+      50%{opacity:.7;transform:scale(1.02)}
     }
     .top1Tag{
       position:absolute;top:-12px;left:50%;transform:translateX(-50%);
