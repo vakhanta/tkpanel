@@ -482,6 +482,7 @@
     // =========================
     const pad2 = (n) => String(n).padStart(2, "0");
     const toYMD = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+    const toYMDHM = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}-${pad2(d.getHours())}-${pad2(d.getMinutes())}`;
     const addDays = (d, days) => { const x = new Date(d); x.setDate(x.getDate() + days); return x; };
 
     function setText(id, val){ document.getElementById(id).textContent = (val ?? "—"); }
@@ -686,12 +687,119 @@
     // ====== NAV state ======
     let selectedDate = new Date();
 
+    // Intenta cargar archivos con formato hora (YYYY-MM-DD-HH-mm)
+    async function tryLoadWithTime(d){
+      const errors = [];
+      const ymd = toYMD(d);
+      const now = new Date(d);
+      
+      // Estrategia: intentar horas comunes y recientes (máximo 20 intentos)
+      const hoursToTry = [];
+      
+      // 1. Hora actual (redondeada a múltiplos de 15 minutos)
+      const currentHour = now.getHours();
+      const currentMin = Math.floor(now.getMinutes() / 15) * 15;
+      hoursToTry.push({h: currentHour, m: currentMin});
+      
+      // 2. Horas comunes del día (13:00, 12:00, 14:00, 11:00, 15:00, etc.)
+      const commonHours = [13, 12, 14, 11, 15, 10, 16, 9, 17, 8, 18];
+      for(const h of commonHours){
+        for(let m = 0; m < 60; m += 15){
+          if(h === currentHour && m === currentMin) continue; // Ya agregado
+          hoursToTry.push({h, m});
+        }
+      }
+      
+      // 3. Últimas horas desde la actual hacia atrás (cada 15 min, máximo 4 horas)
+      for(let offset = 1; offset <= 4; offset++){
+        let h = currentHour - offset;
+        if(h < 0) h += 24;
+        const m = currentMin;
+        hoursToTry.push({h, m});
+      }
+      
+      // Limitar a 20 intentos máximo
+      const toTry = hoursToTry.slice(0, 20);
+      
+      // Intentar cargar cada combinación
+      for(const {h, m} of toTry){
+        const testDate = new Date(now);
+        testDate.setHours(h, m, 0, 0);
+        
+        // Solo intentar si es del mismo día
+        if(toYMD(testDate) !== ymd) continue;
+        
+        const ymdhm = toYMDHM(testDate);
+        const url = fileUrl(ymdhm);
+        
+        try{
+          const raw = await fetchJson(url);
+          const obj = unwrapMake(raw);
+          if(!obj || typeof obj !== "object") continue;
+          const htmlText = String(obj.text || "");
+          if(!htmlText) continue;
+          
+          // Encontrado! Procesar y retornar
+          let items = parseItemsFromText(htmlText, errors);
+          items = items.map(it => {
+            const { like_rate, like_rate_pct } = computeLikeRate(it);
+            return { ...it, like_rate, like_rate_pct };
+          });
+          
+          items = dedupeByVideoId(items);
+          const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+          renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
+          
+          setText("dateLabel", `${ymd} ${pad2(h)}:${pad2(m)}`);
+          selectedDate = d;
+          return true;
+        } catch(e){
+          // Continuar buscando
+          continue;
+        }
+      }
+      return false;
+    }
+
     async function loadDate(d){
       const errors = [];
       const ymd = toYMD(d);
-      const url = fileUrl(ymd);
 
+      // Primero intentar formato solo fecha (YYYY-MM-DD) - más común y rápido
+      const url = fileUrl(ymd);
       setText("dateLabel", ymd);
+      
+      try{
+        const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
+        const obj = unwrapMake(raw);
+        if(!obj || typeof obj !== "object") throw new Error("payload inválido (json)");
+        const htmlText = String(obj.text || "");
+        if(!htmlText) throw new Error("falta obj.text con los <li>");
+
+        let items = parseItemsFromText(htmlText, errors);
+
+        items = items.map(it => {
+          const { like_rate, like_rate_pct } = computeLikeRate(it);
+          return { ...it, like_rate, like_rate_pct };
+        });
+
+        const before = items.length;
+        items = dedupeByVideoId(items);
+        const after = items.length;
+
+        const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+
+        renderList("listTopLikes", "emptyTopLikes", topLikes, makeVideoItem);
+
+        selectedDate = d;
+        return true;
+      } catch(e){
+        // Si falla, intentar con formato hora (YYYY-MM-DD-HH-mm)
+        const foundWithTime = await tryLoadWithTime(d);
+        if(foundWithTime) return true;
+        
+        return false;
+      }
 
       try{
         const raw = BUNDLE_PAYLOAD ? BUNDLE_PAYLOAD : await fetchJson(url);
