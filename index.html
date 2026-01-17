@@ -306,6 +306,101 @@
       border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
     }
+    .authOverlay{
+      position:fixed;inset:0;background:rgba(5,4,20,.95);backdrop-filter:blur(20px);
+      display:flex;align-items:center;justify-content:center;z-index:10000;
+      padding:20px;
+    }
+    .authModal{
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+      border-radius:var(--radius);padding:28px;max-width:400px;width:100%;
+      box-shadow:0 16px 48px rgba(0,0,0,.60);backdrop-filter:blur(var(--blur));
+      position:relative;overflow:hidden;
+    }
+    .authModal:before{
+      content:"";position:absolute;inset:-1px;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(52,99,250,.12), transparent 26%),
+        radial-gradient(circle at 85% 30%, rgba(79,5,247,.10), transparent 30%),
+        radial-gradient(circle at 70% 85%, rgba(136,247,5,.10), transparent 30%);
+      pointer-events:none;z-index:-1;
+    }
+    .authHeader{
+      text-align:center;margin-bottom:24px;position:relative;z-index:1;
+    }
+    .authLogo{
+      width:64px;height:64px;border-radius:18px;margin:0 auto 16px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.26), transparent 42%),
+        linear-gradient(135deg, rgba(52,99,250,.95), rgba(79,5,247,.85));
+      box-shadow:0 18px 48px rgba(0,0,0,.60);
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.20);
+      position:relative;overflow:hidden;
+    }
+    .authLogo:after{
+      content:"";position:absolute;inset:-55%;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(136,247,5,.28), transparent 42%),
+        radial-gradient(circle at 70% 70%, rgba(247,231,5,.18), transparent 46%);
+      transform:rotate(18deg);filter:blur(1px);opacity:.9;
+    }
+    .authLogo .material-symbols-rounded{
+      font-size:32px;color:rgba(0,0,0,.92);z-index:1;
+    }
+    .authTitle{
+      font-size:20px;font-weight:900;letter-spacing:-.02em;margin:0 0 8px;
+      color:rgba(255,255,255,.95);
+    }
+    .authSubtitle{
+      font-size:13px;color:var(--muted);margin:0;
+    }
+    .authForm{
+      position:relative;z-index:1;
+    }
+    .authInput{
+      width:100%;padding:14px 16px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.20);
+      color:var(--text);font-size:14px;font-weight:600;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      margin-bottom:16px;
+    }
+    .authInput:focus{
+      outline:none;border-color:rgba(79,5,247,.50);
+      background:rgba(0,0,0,.25);
+      box-shadow:0 0 20px rgba(79,5,247,.20);
+    }
+    .authInput::placeholder{
+      color:var(--muted2);
+    }
+    .authButton{
+      width:100%;padding:14px;border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
+        linear-gradient(135deg, rgba(52,99,250,.96), rgba(79,5,247,.86));
+      border:1px solid rgba(255,255,255,.20);
+      color:rgba(255,255,255,.95);font-size:14px;font-weight:800;
+      cursor:pointer;transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
+      box-shadow:0 0 20px rgba(79,5,247,.60), 0 0 40px rgba(79,5,247,.40), 0 8px 24px rgba(0,0,0,.45);
+      letter-spacing:-.01em;
+    }
+    .authButton:hover{
+      filter:brightness(1.04);box-shadow:0 0 24px rgba(79,5,247,.65), 0 0 48px rgba(79,5,247,.45), 0 10px 28px rgba(0,0,0,.50);
+      transform:scale(1.02);
+    }
+    .authButton:active{
+      transform:translateY(1px) scale(1);
+    }
+    .authError{
+      margin-top:12px;padding:12px;border-radius:12px;
+      background:rgba(255,82,82,.15);border:1px solid rgba(255,82,82,.30);
+      color:rgba(255,150,150,.95);font-size:13px;text-align:center;
+      display:none;
+    }
+    .authError.show{
+      display:block;
+    }
     .trendBadge{
       display:inline-flex;align-items:center;justify-content:center;gap:4px;
       padding:4px 10px;border-radius:999px;font-size:10px;font-weight:950;
@@ -458,7 +553,35 @@
 </head>
 
 <body>
-  <div class="wrap">
+  <!-- Auth Modal -->
+  <div id="authOverlay" class="authOverlay" style="display:none;">
+    <div class="authModal">
+      <div class="authHeader">
+        <div class="authLogo">
+          <span class="material-symbols-rounded">lock</span>
+        </div>
+        <h2 class="authTitle">Acceso Restringido</h2>
+        <p class="authSubtitle">Ingresa tu nombre para continuar</p>
+      </div>
+      <form class="authForm" id="authForm">
+        <input 
+          type="text" 
+          class="authInput" 
+          id="authInput" 
+          placeholder="Nombre" 
+          autocomplete="off"
+          required
+          autofocus
+        />
+        <button type="submit" class="authButton">Acceder</button>
+        <div class="authError" id="authError">
+          Nombre no autorizado. Verifica e intenta nuevamente.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="wrap" id="mainContent" style="display:none;">
     <div class="topbar">
       <div class="brand">
         <div class="logo"><span class="material-symbols-rounded">sensors</span></div>
@@ -913,8 +1036,118 @@
     document.getElementById("btnPrev").addEventListener("click", () => loadWithFallback(addDays(selectedDate, -1)));
     document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
 
-    loadWithFallback(new Date());
-    setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
+    // =========================
+    // Authentication System
+    // =========================
+    const AUTH_WHITELIST_URL = "auth/whitelist.json";
+    const AUTH_STORAGE_KEY = "tkpanel_auth_name";
+    let whitelist = null;
+
+    async function loadWhitelist(){
+      try{
+        const res = await fetch(AUTH_WHITELIST_URL, { cache: "no-store" });
+        if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const data = await res.json();
+        whitelist = data.models || [];
+        return true;
+      } catch(e){
+        console.error("[Auth] Error loading whitelist:", e);
+        // Si no puede cargar whitelist, permitir acceso (fallback)
+        whitelist = [];
+        return false;
+      }
+    }
+
+    function isAuthorized(name){
+      if(!whitelist || whitelist.length === 0) return true; // Si no hay whitelist, permitir acceso
+      const normalizedName = String(name || "").trim().toLowerCase();
+      return whitelist.some(model => model.toLowerCase() === normalizedName);
+    }
+
+    function getStoredName(){
+      try{
+        return localStorage.getItem(AUTH_STORAGE_KEY);
+      } catch(e){
+        return null;
+      }
+    }
+
+    function storeName(name){
+      try{
+        localStorage.setItem(AUTH_STORAGE_KEY, String(name).trim());
+      } catch(e){
+        console.error("[Auth] Error storing name:", e);
+      }
+    }
+
+    function showAuthModal(){
+      document.getElementById("authOverlay").style.display = "flex";
+      document.getElementById("mainContent").style.display = "none";
+      document.getElementById("authInput").focus();
+    }
+
+    function hideAuthModal(){
+      document.getElementById("authOverlay").style.display = "none";
+      document.getElementById("mainContent").style.display = "";
+      document.getElementById("authError").classList.remove("show");
+    }
+
+    function showAuthError(){
+      const errorEl = document.getElementById("authError");
+      errorEl.classList.add("show");
+      setTimeout(() => {
+        errorEl.classList.remove("show");
+      }, 3000);
+    }
+
+    function startApp(){
+      // Iniciar carga de datos
+      loadWithFallback(new Date());
+      setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
+    }
+
+    async function checkAuth(){
+      // Cargar whitelist primero
+      await loadWhitelist();
+      
+      const storedName = getStoredName();
+      
+      if(storedName && isAuthorized(storedName)){
+        // Usuario autorizado, mostrar contenido
+        hideAuthModal();
+        startApp();
+      } else {
+        // No autorizado o sin nombre guardado, mostrar modal
+        showAuthModal();
+      }
+    }
+
+    // Event listener para el formulario de autenticación
+    document.getElementById("authForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const input = document.getElementById("authInput");
+      const name = input.value.trim();
+      
+      if(!name){
+        showAuthError();
+        return;
+      }
+
+      if(isAuthorized(name)){
+        // Autorizado
+        storeName(name);
+        hideAuthModal();
+        startApp();
+      } else {
+        // No autorizado
+        showAuthError();
+        input.value = "";
+        input.focus();
+      }
+    });
+
+    // Iniciar verificación de autenticación
+    checkAuth();
 
     // =========================
     // Countdown to next report (13:00 Colombia time, UTC-5)
