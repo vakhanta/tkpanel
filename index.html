@@ -391,7 +391,7 @@
         <div class="badge">${escapeHtml(String(rank))}</div>
         ${cover ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="thumb"><img src="${escapeHtml(cover)}" alt="cover" referrerpolicy="no-referrer"><div class="playBtn"><span class="material-symbols-rounded">play_circle</span></div></a>` : ``}
         <div class="text">
-          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")} — ${escapeHtml(fmtInt(likes))} likes</div>
+          <div style="font-weight:950; letter-spacing:-0.01em;">@${escapeHtml(user || "—")}</div>
           <div class="rows">
             <div class="row">
               <span class="kv"><span><span class="material-symbols-rounded">play_circle</span>views</span> <b>${escapeHtml(fmtInt(views))}</b></span>
