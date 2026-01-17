@@ -307,25 +307,67 @@
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
     }
     .trendBadge{
-      display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:8px;
-      font-size:10px;font-weight:800;white-space:nowrap;flex-shrink:0;
+      display:inline-flex;align-items:center;justify-content:center;gap:4px;
+      padding:4px 10px;border-radius:999px;font-size:10px;font-weight:950;
+      white-space:nowrap;flex-shrink:0;position:relative;overflow:hidden;
+      border:2px solid rgba(255,255,255,.30);
+      box-shadow:0 2px 8px rgba(0,0,0,.30);
     }
-    @media (min-width:640px){.trendBadge{font-size:11px;padding:4px 10px}}
+    @media (min-width:640px){.trendBadge{font-size:11px;padding:5px 12px}}
+    .trendBadge:after{
+      content:"";position:absolute;inset:-2px;border-radius:999px;
+      background:radial-gradient(circle, rgba(255,255,255,.3) 0%, transparent 70%);
+      animation:trendBadgeGlow 2s ease-in-out infinite;
+      z-index:-1;pointer-events:none;
+    }
+    @keyframes trendBadgeGlow{
+      0%,100%{opacity:.4;transform:scale(1)}
+      50%{opacity:.7;transform:scale(1.02)}
+    }
     .trendBadge.new{
-      background:rgba(136,247,5,.20);border:1px solid rgba(136,247,5,.40);
-      color:rgba(136,247,5,.95);
+      background:linear-gradient(135deg, rgba(247,231,5,.95), rgba(136,247,5,.85));
+      color:rgba(0,0,0,.95);
+      box-shadow:0 2px 8px rgba(247,231,5,.50), 0 0 12px rgba(247,231,5,.30);
     }
-    .trendBadge.up{
-      background:rgba(52,99,250,.20);border:1px solid rgba(52,99,250,.40);
-      color:rgba(150,200,255,.95);
-    }
-    .trendBadge.down{
-      background:rgba(255,82,82,.20);border:1px solid rgba(255,82,82,.40);
-      color:rgba(255,150,150,.95);
+    .trendBadge.new:after{
+      background:radial-gradient(circle, rgba(247,231,5,.3) 0%, transparent 70%);
     }
     .trendBadge.same{
-      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
-      color:rgba(255,255,255,.65);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
+        linear-gradient(135deg, rgba(52,99,250,.96), rgba(79,5,247,.86));
+      color:rgba(255,255,255,.95);
+      box-shadow:0 0 12px rgba(79,5,247,.60), 0 0 24px rgba(79,5,247,.40), 0 2px 8px rgba(0,0,0,.30);
+    }
+    .trendBadge.same:after{
+      background:radial-gradient(circle, rgba(79,5,247,.3) 0%, transparent 70%);
+    }
+    .trendBadge.down{
+      background:rgba(255,82,82,.21);border-color:rgba(255,82,82,.35);
+      color:rgba(255,150,150,.95);
+      box-shadow:0 2px 8px rgba(255,82,82,.30);
+      padding:4px;width:24px;height:24px;
+    }
+    @media (min-width:640px){.trendBadge.down{width:26px;height:26px;padding:5px}}
+    .trendBadge.down:after{
+      background:radial-gradient(circle, rgba(255,82,82,.3) 0%, transparent 70%);
+    }
+    .trendBadge.up{
+      background:rgba(52,99,250,.16);border-color:rgba(52,99,250,.26);
+      color:rgba(255,255,255,.92);
+      box-shadow:0 2px 8px rgba(52,99,250,.30);
+      padding:4px;width:24px;height:24px;
+    }
+    @media (min-width:640px){.trendBadge.up{width:26px;height:26px;padding:5px}}
+    .trendBadge.up:after{
+      background:radial-gradient(circle, rgba(52,99,250,.3) 0%, transparent 70%);
+    }
+    .trendBadge .material-symbols-rounded{
+      font-size:14px;color:inherit;
+    }
+    @media (min-width:640px){.trendBadge .material-symbols-rounded{font-size:16px}}
+    .trendBadge.new .material-symbols-rounded{
+      color:rgba(0,0,0,.95);
     }
     .footer{
       margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
@@ -636,9 +678,29 @@
       const cover = v.cover_url || "";
       const videoId = v.video_id || "";
 
-      // Obtener estado del trend (comparación con históricos)
+      // Obtener estado del trend (comparación con ayer - 24 horas)
       const trend = getTrendStatus(videoId, rank, historicalData);
-      const trendBadge = trend ? `<span class="trendBadge ${trend.type}" title="Comparado con últimos 3 días">${escapeHtml(trend.label)}</span>` : "";
+      let trendBadge = "";
+      if(trend){
+        if(trend.type === 'new'){
+          trendBadge = `<span class="trendBadge ${trend.type}" title="Nuevo - no estaba ayer">
+            <span class="material-symbols-rounded">${trend.icon}</span>
+            <span>${escapeHtml(trend.label)}</span>
+          </span>`;
+        } else if(trend.type === 'same'){
+          trendBadge = `<span class="trendBadge ${trend.type}" title="Sin cambio significativo vs ayer">
+            <span>${escapeHtml(trend.label)}</span>
+          </span>`;
+        } else if(trend.type === 'up'){
+          trendBadge = `<span class="trendBadge ${trend.type}" title="Subió ${trend.diff} posiciones vs ayer">
+            <span class="material-symbols-rounded">${trend.icon}</span>
+          </span>`;
+        } else if(trend.type === 'down'){
+          trendBadge = `<span class="trendBadge ${trend.type}" title="Bajó ${Math.abs(trend.diff)} posiciones vs ayer">
+            <span class="material-symbols-rounded">${trend.icon}</span>
+          </span>`;
+        }
+      }
 
       const li = document.createElement("li");
       li.className = rank === 1 ? "item top1" : "item";
@@ -714,7 +776,7 @@
 
     // ====== NAV state ======
     let selectedDate = new Date();
-    let historicalData = null; // {1: [...], 2: [...], 3: [...]} - datos de hace 1, 2, 3 días
+    let historicalData = null; // {1: [...]} - datos de hace 1 día (24 horas)
 
     // Helper: Obtener fecha de Colombia (UTC-5) para determinar el día actual
     function getColombiaDate(date){
@@ -724,89 +786,68 @@
       return new Date(utcTime + (colombiaOffset * 60000));
     }
 
-    // Carga datos históricos en paralelo (opcional, no bloquea)
+    // Carga datos históricos en paralelo (opcional, no bloquea) - solo hace 1 día (24 horas)
     async function loadHistoricalData(currentDate){
       historicalData = null;
       const colombiaDate = getColombiaDate(currentDate);
       const promises = [];
       
-      // Intentar cargar archivos de hace 1, 2, 3 días
-      for(let daysBack = 1; daysBack <= 3; daysBack++){
-        const histDate = new Date(colombiaDate);
-        histDate.setDate(histDate.getDate() - daysBack);
-        const ymd = toYMD(histDate);
-        const url = fileUrl(ymd);
+      // Solo cargar archivo de hace 1 día (24 horas)
+      const daysBack = 1;
+      const histDate = new Date(colombiaDate);
+      histDate.setDate(histDate.getDate() - daysBack);
+      const ymd = toYMD(histDate);
+      const url = fileUrl(ymd);
+      
+      try{
+        const raw = await fetchJson(url);
+        const obj = unwrapMake(raw);
+        if(!obj || typeof obj !== "object") return;
+        const htmlText = String(obj.text || "");
+        if(!htmlText) return;
         
-        promises.push(
-          fetchJson(url)
-            .then(raw => {
-              const obj = unwrapMake(raw);
-              if(!obj || typeof obj !== "object") return null;
-              const htmlText = String(obj.text || "");
-              if(!htmlText) return null;
-              
-              const errors = [];
-              let items = parseItemsFromText(htmlText, errors);
-              items = items.map(it => {
-                const { like_rate, like_rate_pct } = computeLikeRate(it);
-                return { ...it, like_rate, like_rate_pct };
-              });
-              items = dedupeByVideoId(items);
-              const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
-              
-              return { daysBack, items: topLikes };
-            })
-            .catch(() => null)
-        );
-      }
-      
-      const results = await Promise.all(promises);
-      const data = {};
-      results.forEach(result => {
-        if(result) data[result.daysBack] = result.items;
-      });
-      
-      if(Object.keys(data).length > 0){
-        historicalData = data;
+        const errors = [];
+        let items = parseItemsFromText(htmlText, errors);
+        items = items.map(it => {
+          const { like_rate, like_rate_pct } = computeLikeRate(it);
+          return { ...it, like_rate, like_rate_pct };
+        });
+        items = dedupeByVideoId(items);
+        const topLikes = sortTopLikes(items).slice(0, MAX_TOP);
+        
+        historicalData = { 1: topLikes };
+      } catch(e){
+        // Si no encuentra archivo histórico, simplemente no hay datos
+        historicalData = null;
       }
     }
 
-    // Compara posición actual con históricos y retorna estado del trend
+    // Compara posición actual con histórico de ayer (24 horas) y retorna estado del trend
     function getTrendStatus(videoId, currentRank, historicalData){
-      if(!historicalData || !videoId) return null;
+      if(!historicalData || !videoId || !historicalData[1]) return null;
       
-      // Buscar en históricos (prioridad: más reciente primero)
-      let prevRank = null;
-      let foundDaysAgo = null;
+      // Buscar en histórico de ayer (hace 1 día)
+      const found = historicalData[1].findIndex(item => item.video_id === videoId);
       
-      for(let daysBack = 1; daysBack <= 3; daysBack++){
-        if(!historicalData[daysBack]) continue;
-        const found = historicalData[daysBack].findIndex(item => item.video_id === videoId);
-        if(found !== -1){
-          prevRank = found + 1; // +1 porque es índice 0-based
-          foundDaysAgo = daysBack;
-          break;
-        }
-      }
-      
-      // Si no se encontró en ningún histórico, es nuevo
-      if(prevRank === null){
-        return { type: 'new', label: '🆕 Nuevo' };
+      // Si no se encontró en el histórico de ayer, es nuevo
+      if(found === -1){
+        return { type: 'new', label: '🆕 Nuevo', icon: 'new_releases' };
       }
       
       // Calcular diferencia de posición
+      const prevRank = found + 1; // +1 porque es índice 0-based
       const diff = prevRank - currentRank;
       
       // Si subió 3+ posiciones
       if(diff >= 3){
-        return { type: 'up', label: `⬆️ +${diff}`, diff };
+        return { type: 'up', label: '', icon: 'trending_up', diff };
       }
       // Si bajó 3+ posiciones
       if(diff <= -3){
-        return { type: 'down', label: `⬇️ ${diff}`, diff };
+        return { type: 'down', label: '', icon: 'trending_down', diff };
       }
       // Cambio pequeño o sin cambio
-      return { type: 'same', label: '➡️ Igual', diff };
+      return { type: 'same', label: 'Igual', icon: null, diff };
     }
 
     async function loadDate(d){
