@@ -4,6 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TikTok Trends Panel</title>
+  <meta name="description" content="Panel de tendencias de TikTok. Monitoreo automático de videos virales, top likes y contenido replicable. Actualizado diariamente por quintabot." />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TikTok Trends Panel" />
+  <meta property="og:description" content="Panel de tendencias de TikTok. Monitoreo automático de videos virales, top likes y contenido replicable." />
+  <meta property="og:site_name" content="TikTok Trends Panel" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TikTok Trends Panel" />
+  <meta name="twitter:description" content="Panel de tendencias de TikTok. Monitoreo automático de videos virales, top likes y contenido replicable." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233463FA;stop-opacity:0.95' /%3E%3Cstop offset='100%25' style='stop-color:%234F05F7;stop-opacity:0.85' /%3E%3C/linearGradient%3E%3CradialGradient id='shine' cx='30%25' cy='30%25' r='42%25'%3E%3Cstop offset='0%25' style='stop-color:rgba(255,255,255,0.26);stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:rgba(255,255,255,0);stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grad)' rx='14'/%3E%3Crect width='100' height='100' fill='url(%23shine)' rx='14'/%3E%3Cpath d='M30 30 L35 25 L40 30 L45 25 L50 30 L55 25 L60 30 M30 50 L35 45 L40 50 L45 45 L50 50 L55 45 L60 50 M30 70 L35 65 L40 70 L45 65 L50 70 L55 65 L60 70' stroke='rgba(0,0,0,0.92)' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='35' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='35' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='35' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3C/svg%3E" />
+  <link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233463FA;stop-opacity:0.95' /%3E%3Cstop offset='100%25' style='stop-color:%234F05F7;stop-opacity:0.85' /%3E%3C/linearGradient%3E%3CradialGradient id='shine' cx='30%25' cy='30%25' r='42%25'%3E%3Cstop offset='0%25' style='stop-color:rgba(255,255,255,0.26);stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:rgba(255,255,255,0);stop-opacity:0' /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grad)' rx='14'/%3E%3Crect width='100' height='100' fill='url(%23shine)' rx='14'/%3E%3Cpath d='M30 30 L35 25 L40 30 L45 25 L50 30 L55 25 L60 30 M30 50 L35 45 L40 50 L45 45 L50 50 L55 45 L60 50 M30 70 L35 65 L40 70 L45 65 L50 70 L55 65 L60 70' stroke='rgba(0,0,0,0.92)' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='35' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='30' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='35' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='50' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='35' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='45' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3Ccircle cx='55' cy='70' r='2' fill='rgba(0,0,0,0.92)'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,21 +84,36 @@
       backdrop-filter:blur(var(--blur));
     }
     .pill .material-symbols-rounded{font-size:16px;color:rgba(255,255,255,.70)}
-    .actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%}
-    @media (min-width:480px){.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;width:auto;gap:10px}}
+    .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;width:100%}
+    @media (min-width:480px){.actions{gap:8px}}
+    @media (min-width:640px){.actions{gap:10px}}
     button{
-      cursor:pointer;border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);color:var(--text);
-      padding:10px 12px;border-radius:14px;font-weight:800;letter-spacing:-.01em;
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      cursor:pointer;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);color:var(--text);
+      padding:8px;border-radius:12px;font-weight:800;letter-spacing:-.01em;
+      display:inline-flex;align-items:center;justify-content:center;
       transition:transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
       backdrop-filter:blur(var(--blur));
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      font-size:12.5px;white-space:nowrap;
+      box-shadow:0 8px 24px rgba(0,0,0,.30);
+      min-width:36px;min-height:36px;
+      aspect-ratio:1;
     }
-    @media (min-width:480px){button{font-size:13.5px;gap:8px;padding:10px 14px}}
+    @media (min-width:480px){
+      button{
+        padding:10px;min-width:42px;min-height:42px;
+        border-radius:14px;border-color:rgba(255,255,255,.16);
+        background:rgba(255,255,255,.06);
+        box-shadow:0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+    @media (min-width:640px){
+      button{
+        padding:12px;min-width:48px;min-height:48px;
+      }
+    }
     button .material-symbols-rounded{font-size:18px;flex-shrink:0}
     @media (min-width:480px){button .material-symbols-rounded{font-size:20px}}
+    @media (min-width:640px){button .material-symbols-rounded{font-size:22px}}
     button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);box-shadow:0 14px 40px rgba(0,0,0,.45)}
     button:active{transform:translateY(1px)}
     .primary{
@@ -139,11 +170,12 @@
     .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
     .item{
       padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
-      background:rgba(0,0,0,.20);display:flex;gap:10px;align-items:flex-start;
+      background:rgba(0,0,0,.20);display:flex;gap:10px;align-items:center;
       transition:background .2s ease, border-color .2s ease;
       flex-wrap:nowrap;position:relative;
+      cursor:pointer;
     }
-    @media (min-width:640px){.item{padding:14px;gap:12px;border-radius:16px}}
+    @media (min-width:640px){.item{padding:14px;gap:12px;border-radius:16px;align-items:center}}
     .item:hover{background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.22)}
     .item.top1{
       border:2px solid rgba(247,231,5,.40);
@@ -225,16 +257,18 @@
     }
     @media (min-width:640px){.thumb .playBtn .material-symbols-rounded{font-size:48px}}
     .kv.likes{
-      background:rgba(255,82,82,.15);border-color:rgba(255,82,82,.25);
+      background:rgba(255,82,82,.21);border-color:rgba(255,82,82,.35);
     }
     .kv.likes b{color:rgba(255,150,150,.95)}
     .kv.likes span{color:rgba(255,180,180,.85)}
     .text{font-size:12.5px;color:rgba(255,255,255,.90);line-height:1.35;overflow-wrap:anywhere;word-break:break-word;flex:1 1 auto;min-width:0;width:100%;display:flex;flex-direction:column;align-items:flex-end}
-    .text > div:first-child{align-self:flex-start;width:100%}
+    .text > div:first-child{align-self:flex-end;width:auto;margin-bottom:8px}
     @media (min-width:640px){.text{font-size:13.5px;width:auto}}
-    .rows{display:flex;flex-direction:column;gap:8px;margin-top:8px;width:100%}
-    .row{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.82);font-size:11.5px;justify-content:flex-end;width:100%}
-    @media (min-width:640px){.row{gap:10px;font-size:12.5px;justify-content:flex-end}}
+    @media (min-width:640px){.text > div:first-child{align-self:flex-start;width:100%;margin-bottom:0}}
+    .rows{display:flex;flex-direction:column;gap:8px;margin-top:0;width:100%;align-items:flex-end}
+    @media (min-width:640px){.rows{margin-top:8px;align-items:stretch}}
+    .row{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.82);font-size:11.5px;justify-content:flex-end;width:auto}
+    @media (min-width:640px){.row{gap:10px;font-size:12.5px;justify-content:flex-end;width:100%}}
     .kv{
       display:inline-flex;gap:5px;align-items:center;padding:6px 9px;border-radius:999px;
       border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
@@ -246,21 +280,28 @@
     .kv .material-symbols-rounded{font-size:14px;opacity:.95}
     @media (min-width:640px){.kv .material-symbols-rounded{font-size:16px}}
     .btnLink{
-      display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:10px;border-radius:12px;
-      text-decoration:none;font-weight:950;letter-spacing:-.01em;color:rgba(0,0,0,.92);
+      display:inline-flex;align-items:center;justify-content:center;gap:5px;margin-top:10px;padding:6px 12px;border-radius:999px;
+      text-decoration:none;font-weight:300;letter-spacing:-.01em;color:rgba(255,255,255,.95);
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 46%),
         linear-gradient(135deg, rgba(52,99,250,.96), rgba(79,5,247,.86));
       border:1px solid rgba(255,255,255,.20);
-      box-shadow:0 14px 36px rgba(0,0,0,.45);
+      box-shadow:0 0 20px rgba(79,5,247,.60), 0 0 40px rgba(79,5,247,.40), 0 14px 36px rgba(0,0,0,.45);
       transition:transform .08s ease, filter .2s ease, box-shadow .2s ease;
       width:fit-content;align-self:flex-end;margin-left:auto;
+      font-size:11px;white-space:nowrap;
+      height:fit-content;
     }
-    @media (min-width:640px){.btnLink{padding:12px}}
+    @media (min-width:640px){
+      .btnLink{
+        padding:7px 16px;font-size:13px;gap:7px;border-radius:999px;font-weight:300;
+        box-shadow:0 0 24px rgba(79,5,247,.65), 0 0 48px rgba(79,5,247,.45), 0 14px 36px rgba(0,0,0,.45);
+      }
+    }
     .btnLink:hover{filter:brightness(1.04);box-shadow:0 18px 44px rgba(0,0,0,.55);transform:scale(1.05)}
     .btnLink:active{transform:translateY(1px) scale(1.02)}
-    .btnLink .material-symbols-rounded{font-size:22px}
-    @media (min-width:640px){.btnLink .material-symbols-rounded{font-size:24px}}
+    .btnLink .material-symbols-rounded{font-size:16px;flex-shrink:0}
+    @media (min-width:640px){.btnLink .material-symbols-rounded{font-size:20px}}
     .empty{
       border:1px dashed rgba(255,255,255,.20);background:rgba(0,0,0,.16);
       padding:14px;border-radius:16px;color:var(--muted);line-height:1.35;font-size:13px;position:relative;z-index:1;
@@ -368,10 +409,10 @@
       </div>
 
       <div class="actions">
-        <button id="btnPrev"><span class="material-symbols-rounded">chevron_left</span>día anterior</button>
-        <button id="btnNext"><span class="material-symbols-rounded">chevron_right</span>día siguiente</button>
-        <button class="primary" id="btnToday"><span class="material-symbols-rounded">today</span>hoy</button>
-        <button id="btnReload"><span class="material-symbols-rounded">refresh</span>recargar</button>
+        <button id="btnPrev" title="Día anterior"><span class="material-symbols-rounded">chevron_left</span></button>
+        <button id="btnNext" title="Día siguiente"><span class="material-symbols-rounded">chevron_right</span></button>
+        <button class="primary" id="btnToday" title="Hoy"><span class="material-symbols-rounded">today</span></button>
+        <button id="btnReload" title="Recargar"><span class="material-symbols-rounded">refresh</span></button>
       </div>
     </div>
 
@@ -589,9 +630,22 @@
           </div>
           <a class="btnLink" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="Abrir en TikTok">
             <span class="material-symbols-rounded">open_in_new</span>
+            <span>ver tiktok</span>
           </a>
         </div>
       `;
+      
+      // Hacer el contenedor clickeable para abrir TikTok
+      li.addEventListener("click", (e) => {
+        // No abrir si se hizo clic en un link o botón
+        if (e.target.closest("a") || e.target.closest("button")) {
+          return;
+        }
+        if (url) {
+          window.open(url, "_blank", "noopener,noreferrer");
+        }
+      });
+      
       return li;
     }
 
