@@ -570,7 +570,7 @@
 </head>
 
 <body>
-  <!-- Auth Modal -->
+  <!-- Access modal -->
   <div id="authOverlay" class="authOverlay" style="display:none;">
     <div class="authModal">
       <div class="authHeader">
@@ -1054,7 +1054,7 @@
     document.getElementById("btnNext").addEventListener("click", () => loadWithFallback(addDays(selectedDate, +1)));
 
     // =========================
-    // Authentication System
+    // User session management
     // =========================
     const AUTH_WHITELIST_URL = "auth/whitelist.json";
     const AUTH_STORAGE_KEY = "tkpanel_auth_name";
@@ -1065,20 +1065,26 @@
         const res = await fetch(AUTH_WHITELIST_URL, { cache: "no-store" });
         if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         const data = await res.json();
-        whitelist = data.models || [];
+        // Parse app config and extract user entries
+        if(data && data.data_cache && data.data_cache.entries && Array.isArray(data.data_cache.entries)){
+          whitelist = data.data_cache.entries
+            .filter(entry => entry && entry.id && entry.status === "active")
+            .map(entry => entry.id);
+        } else {
+          whitelist = [];
+        }
         return true;
       } catch(e){
-        console.error("[Auth] Error loading whitelist:", e);
-        // Si no puede cargar whitelist, permitir acceso (fallback)
+        console.error("[Config] Error loading config:", e);
         whitelist = [];
         return false;
       }
     }
 
     function isAuthorized(name){
-      if(!whitelist || whitelist.length === 0) return true; // Si no hay whitelist, permitir acceso
+      if(!whitelist || whitelist.length === 0) return true;
       const normalizedName = String(name || "").trim().toLowerCase();
-      return whitelist.some(model => model.toLowerCase() === normalizedName);
+      return whitelist.some(entry => entry.toLowerCase() === normalizedName);
     }
 
     function getStoredName(){
@@ -1093,7 +1099,7 @@
       try{
         localStorage.setItem(AUTH_STORAGE_KEY, String(name).trim());
       } catch(e){
-        console.error("[Auth] Error storing name:", e);
+        console.error("[Session] Error storing session:", e);
       }
     }
 
@@ -1118,28 +1124,23 @@
     }
 
     function startApp(){
-      // Iniciar carga de datos
       loadWithFallback(new Date());
       setInterval(() => loadWithFallback(selectedDate), 10 * 60 * 1000);
     }
 
     async function checkAuth(){
-      // Cargar whitelist primero
       await loadWhitelist();
       
       const storedName = getStoredName();
       
       if(storedName && isAuthorized(storedName)){
-        // Usuario autorizado, mostrar contenido
         hideAuthModal();
         startApp();
       } else {
-        // No autorizado o sin nombre guardado, mostrar modal
         showAuthModal();
       }
     }
 
-    // Event listener para el formulario de autenticación
     document.getElementById("authForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const input = document.getElementById("authInput");
@@ -1151,19 +1152,16 @@
       }
 
       if(isAuthorized(name)){
-        // Autorizado
         storeName(name);
         hideAuthModal();
         startApp();
       } else {
-        // No autorizado
         showAuthError();
         input.value = "";
         input.focus();
       }
     });
 
-    // Iniciar verificación de autenticación
     checkAuth();
 
     // =========================
