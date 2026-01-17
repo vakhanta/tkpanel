@@ -676,7 +676,9 @@
       return payload;
     }
 
-    function fileUrl(ymd){ return `${REPORTS_DIR}/${ymd}.json`; }
+    function fileUrl(ymd){ 
+      return `${REPORTS_DIR}/${ymd}.json`; 
+    }
 
     async function fetchJson(url){
       const res = await fetch(url, { cache: "no-store" });
