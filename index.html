@@ -84,24 +84,36 @@
       backdrop-filter:blur(var(--blur));
     }
     .pill .material-symbols-rounded{font-size:16px;color:rgba(255,255,255,.70)}
-    .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%}
-    @media (min-width:480px){.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;width:auto;gap:10px}}
+    .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;width:100%}
+    @media (min-width:480px){.actions{gap:8px}}
+    @media (min-width:640px){.actions{gap:10px}}
     button{
-      cursor:pointer;border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);color:var(--text);
-      padding:10px;border-radius:14px;font-weight:800;letter-spacing:-.01em;
+      cursor:pointer;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);color:var(--text);
+      padding:8px;border-radius:12px;font-weight:800;letter-spacing:-.01em;
       display:inline-flex;align-items:center;justify-content:center;
       transition:transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
       backdrop-filter:blur(var(--blur));
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      min-width:44px;min-height:44px;
+      box-shadow:0 8px 24px rgba(0,0,0,.30);
+      min-width:36px;min-height:36px;
       aspect-ratio:1;
     }
-    @media (min-width:480px){button{padding:12px;min-width:48px;min-height:48px}}
-    @media (min-width:640px){button{padding:13px;min-width:50px;min-height:50px}}
-    button .material-symbols-rounded{font-size:20px;flex-shrink:0}
-    @media (min-width:480px){button .material-symbols-rounded{font-size:22px}}
-    @media (min-width:640px){button .material-symbols-rounded{font-size:24px}}
+    @media (min-width:480px){
+      button{
+        padding:10px;min-width:42px;min-height:42px;
+        border-radius:14px;border-color:rgba(255,255,255,.16);
+        background:rgba(255,255,255,.06);
+        box-shadow:0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+    @media (min-width:640px){
+      button{
+        padding:12px;min-width:48px;min-height:48px;
+      }
+    }
+    button .material-symbols-rounded{font-size:18px;flex-shrink:0}
+    @media (min-width:480px){button .material-symbols-rounded{font-size:20px}}
+    @media (min-width:640px){button .material-symbols-rounded{font-size:22px}}
     button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);box-shadow:0 14px 40px rgba(0,0,0,.45)}
     button:active{transform:translateY(1px)}
     .primary{
